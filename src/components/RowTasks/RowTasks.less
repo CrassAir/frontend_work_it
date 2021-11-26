@@ -1,0 +1,38 @@
+.main_grid {
+  max-width: 820px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-content: space-around;
+
+  .g_row {
+    margin: 5px;
+    flex: content;
+    flex-basis: 35px;
+    flex-grow: 0;
+    flex-shrink: 1;
+    transition: 500ms;
+
+    div {
+      height: 100px;
+      //min-width: 25px;
+      //width: 35px;
+    }
+
+    span:nth-child(1) {
+      top: 50%;
+      left: 50%;
+      position: relative;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      user-select: none;
+      z-index: 15;
+    }
+  }
+
+  .selected {
+    background-color: lawngreen;
+  }
+}
