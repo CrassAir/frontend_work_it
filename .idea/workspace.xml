@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/frontend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/craco.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/urls.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/action/authActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/action/locationActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/craco.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/craco.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Less File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -53,6 +53,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProjectId" id="21JDolyKV8j0d1eKIN8qNG8pT7x" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -63,19 +66,40 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="16.11.1" />
+    <property name="javascript.nodejs.core.library.configured.version" value="17.1.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.1" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="Less" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <package-manager value="npm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="" />
@@ -89,11 +113,14 @@
       <workItem from="1637726602907" duration="9872000" />
       <workItem from="1637739638824" duration="8894000" />
       <workItem from="1637817897807" duration="19859000" />
+      <workItem from="1637904462279" duration="12000" />
+      <workItem from="1637909066714" duration="31000" />
+      <workItem from="1637909261967" duration="5992000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -106,6 +133,44 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637914565826">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637914565826" />
+    <state x="715" y="318" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1637914834212">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="715" y="318" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637914834212" />
+    <state x="669" y="54" key="#rollup-plugin-off-main-thread/Dockerfile" timestamp="1637909409661">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="669" y="54" key="#rollup-plugin-off-main-thread/Dockerfile/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637909409661" />
+    <state x="740" y="257" key="FileChooserDialogImpl" timestamp="1637912085119">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="740" y="257" key="FileChooserDialogImpl/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637912085119" />
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1637915186676">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637915186676" />
+    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1637915186676">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637915186676" />
+    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1637915186676">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637915186676" />
+    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1637915186676">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637915186676" />
+    <state x="461" y="161" key="SettingsEditor" timestamp="1638158768519">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638158768519" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

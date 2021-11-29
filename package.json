@@ -18,7 +18,6 @@
     "js-cookie": "^3.0.1",
     "moment": "^2.29.1",
     "muicss": "^0.10.3",
-    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-big-calendar": "^0.38.1",
     "react-dom": "^17.0.2",
@@ -29,9 +28,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "craco --openssl-legacy-provider start",
+    "build": "craco --openssl-legacy-provider build",
+    "test": "craco --openssl-legacy-provider test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
