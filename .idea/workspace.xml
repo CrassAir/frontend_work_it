@@ -21,10 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="change row">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +131,7 @@
       <workItem from="1637909261967" duration="6192000" />
       <workItem from="1638172593038" duration="1164000" />
       <workItem from="1638173789778" duration="67256000" />
-      <workItem from="1638382093710" duration="3388000" />
+      <workItem from="1638382093710" duration="4750000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -141,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638158952020</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="change row">
+      <created>1638385567286</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1638385567286</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,10 +206,11 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638173980917" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1638158960086">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1638385572854">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638158960086" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638385572854" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

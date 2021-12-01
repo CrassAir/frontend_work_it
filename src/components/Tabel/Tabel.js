@@ -18,6 +18,7 @@ import 'moment/locale/ru'
 import CircularProgress from "@mui/material/CircularProgress";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
+import Splitter, {SplitDirection} from '@devbookhq/splitter'
 
 
 const Tabel = (props) => {
@@ -140,10 +141,14 @@ const Tabel = (props) => {
     }
 
     return (
-        <Row gutter={16} className={'calendar_row'}>
-            <Col span={4}>
+        <div className={'main_tabel'}>
+            <Splitter direction={SplitDirection.Horizontal}
+                      gutterClassName="custom-gutter-horizontal"
+                      draggerClassName="custom-dragger-horizontal"
+                      initialSizes={[20, 80]}
+                      minWidths={[200, 1000]}>
                 <Paper className={'paper'}>
-                    {loading ? <LinearProgress /> : <div style={{height: 4}}/>}
+                    {loading ? <LinearProgress/> : <div style={{height: 4}}/>}
                     <MenuList>
                         <MenuItem sx={{marginBottom: 3}}>
                             <ConfigProvider locale={locale}>
@@ -167,11 +172,9 @@ const Tabel = (props) => {
                         }
                     </MenuList>
                 </Paper>
-            </Col>
-            <Col span={20}>
                 {generateTabel()}
-            </Col>
-        </Row>
+            </Splitter>
+        </div>
     )
 }
 
