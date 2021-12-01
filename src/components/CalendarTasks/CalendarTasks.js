@@ -198,6 +198,7 @@ const CalendarTasks = (props) => {
 
     const centerPaperGen = () => {
         if (create) {
+            console.log(props.greenhouses)
             return <Stepper activeStep={activeStep} orientation="vertical">
                 {Step1()}
                 {Step2()}
@@ -221,7 +222,6 @@ const CalendarTasks = (props) => {
 
     return (
         <Row gutter={16} className={'calendar_row'}>
-
             <Col span={3}>
                 {/*{editable ?*/}
                 <Paper className={'paper'}>
@@ -272,7 +272,9 @@ const CalendarTasks = (props) => {
     )
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+    greenhouses: state.greenhouses
+})
 
 const mapDispatchToProps = (dispatch) => ({})
 

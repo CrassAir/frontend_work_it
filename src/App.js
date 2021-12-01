@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import {authCheckState} from './store/action/authActions';
 import CalendarTasks from "./components/CalendarTasks/CalendarTasks";
 import RowTasks from "./components/RowTasks/RowTasks";
+import Tabel from "./components/Tabel/Tabel";
 
 const App = (props) => {
 
@@ -16,11 +17,11 @@ const App = (props) => {
     }, [])
 
     const routes = () => {
-        if (props.token) {
+        if (!props.token) {
             return (
                 <Routes>
+                    <Route path={'*'} element={<Navigate replace to={'login'}/>}/>
                     <Route exact path="login" element={<LoginPage/>}/>
-                    <Route path={'/'} element={<Navigate replace to={'login'}/>}/>
                 </Routes>
             )
         }
@@ -30,13 +31,14 @@ const App = (props) => {
             {window.innerWidth < 500 ? <MobileTaskFromItForm /> : <TaskForItForm />}
           </Route> */}
                 {/*<Route exact path="/" element={<Navigate to={'main'}/>}/>*/}
-                <Route exact path="login" element={<Navigate to={'main'}/>}/>
+                <Route exact path="login" element={<Navigate to={'/'}/>}/>
                 <Route exact path="logout" element={() => {
                     props.logout()
                 }}/>
                 <Route path="/" element={<MainPage/>}>
                     <Route path="calendar" element={<CalendarTasks/>}/>
                     <Route path="row" element={<RowTasks/>}/>
+                    <Route path="tabel" element={<Tabel/>}/>
                 </Route>
             </Routes>
         )

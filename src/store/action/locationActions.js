@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
-import {getApiUrl, getRestAuthUrl} from "../../api/urls";
+import {getApiUrl} from "../../api/urls";
 import api from "../../api/api";
 
 const getGreenhousesStart = () => {
@@ -26,7 +25,7 @@ const getGreenhousesFail = (error) => {
 export const getGreenhouses = () => {
     return dispatch => {
         dispatch(getGreenhousesStart());
-        api.get(getApiUrl() + "greenhouse/").then(res => {
+        api.get(getApiUrl() + "greenhouses/").then(res => {
                 let greenhouses = res.data
                 dispatch(getGreenhousesSuccess(greenhouses));
             }

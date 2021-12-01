@@ -6,6 +6,8 @@ const initialState = {
     error: null,
     loading: false,
     user: null,
+    greenhouse: null,
+    tabels: null,
 }
 
 const authStart = (state, action) => {
@@ -59,6 +61,27 @@ const getGreenhousesFail = (state, action) => {
     })
 }
 
+const getTabelStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getTabelSuccess = (state, action) => {
+    return updateObject(state, {
+        tabels: action.tabels,
+        loading: false,
+    })
+}
+
+const getTabelFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -76,6 +99,12 @@ const reducer = (state = initialState, action) => {
             return getGreenhousesSuccess(state, action);
         case actionTypes.GET_GREENHOUSES_FAIL:
             return getGreenhousesFail(state, action);
+        case actionTypes.GET_TABEL_START:
+            return getTabelStart(state, action);
+        case actionTypes.GET_TABEL_SUCCESS:
+            return getTabelSuccess(state, action);
+        case actionTypes.GET_TABEL_FAIL:
+            return getTabelFail(state, action);
         default:
             return state;
     }
