@@ -29,6 +29,7 @@ const Tabel = (props) => {
     const [data, setData] = useState([])
     const [selectTabel, setSelectTabel] = useState([])
     const [loading, setLoading] = useState(true)
+    const [inintSplitter, setInintSplitter] = useState([20, 80])
 
     useEffect(() => {
         if (!props.tabels) return
@@ -145,7 +146,7 @@ const Tabel = (props) => {
             <Splitter direction={SplitDirection.Horizontal}
                       gutterClassName="custom-gutter-horizontal"
                       draggerClassName="custom-dragger-horizontal"
-                      initialSizes={[20, 80]}
+                      initialSizes={inintSplitter}
                       minWidths={[200, 1000]}>
                 <Paper className={'paper'}>
                     {loading ? <LinearProgress/> : <div style={{height: 4}}/>}

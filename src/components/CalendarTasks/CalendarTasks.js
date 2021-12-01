@@ -19,7 +19,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import moment from 'moment'
 import 'moment/locale/ru'
 import {Form, Row, Col} from "antd";
-import RowTasks from "../RowTasks/RowTasks";  // without this line it didn't work
+import RowTasks from "../RowTasks/RowTasks";
+import Splitter, {SplitDirection} from "@devbookhq/splitter";  // without this line it didn't work
 moment.locale('ru')
 
 const localizer = momentLocalizer(moment)
@@ -31,6 +32,7 @@ const CalendarTasks = (props) => {
     const [newEventTitle, setNewEventTitle] = useState()
     const [selectedRow, setSelectedRow] = useState([])
     const [events, setEvents] = useState([])
+    const [inintSplitter, setInintSplitter] = useState([15, 70, 15])
 
 
     const messages = {
@@ -221,9 +223,61 @@ const CalendarTasks = (props) => {
 
 
     return (
-        <Row gutter={16} className={'calendar_row'}>
-            <Col span={3}>
-                {/*{editable ?*/}
+        // <Row gutter={16} className={'calendar_row'}>
+        //     <Col span={3}>
+        //         {/*{editable ?*/}
+        //         <Paper className={'paper'}>
+        //             <MenuList>
+        //                 <MenuItem>Теплица 1</MenuItem>
+        //                 <MenuItem>Теплица 2</MenuItem>
+        //                 <MenuItem>Теплица 3</MenuItem>
+        //             </MenuList>
+        //         </Paper>
+        //         {/*: null}*/}
+        //     </Col>
+        //
+        //     <Col span={17}>
+        //         <Paper className={'center_paper'}>
+        //             {centerPaperGen()}
+        //         </Paper>
+        //     </Col>
+        //     <Col span={4}>
+        //         <Paper>
+        //             {!create ?
+        //                 <MenuList>
+        //                     <MenuItem onClick={() => setCreate(true)}>
+        //                         <ListItemIcon>
+        //                             <AddIcon fontSize="small"/>
+        //                         </ListItemIcon>
+        //                         <Typography variant="inherit" noWrap>Запланировать</Typography>
+        //                     </MenuItem>
+        //                     <MenuItem>
+        //                         <ListItemIcon>
+        //                             <CreateIcon fontSize="small"/>
+        //                         </ListItemIcon>
+        //                         <Typography variant="inherit" noWrap>Редактировать</Typography>
+        //                     </MenuItem>
+        //                 </MenuList>
+        //                 :
+        //                 <MenuList>
+        //                     <MenuItem onClick={onCancel}>
+        //                         <ListItemIcon>
+        //                             <CancelIcon fontSize="small"/>
+        //                         </ListItemIcon>
+        //                         Отмена
+        //                     </MenuItem>
+        //                 </MenuList>
+        //             }
+        //         </Paper>
+        //     </Col>
+        // </Row>
+        <div className={'calendar_row'}>
+            <Splitter direction={SplitDirection.Horizontal}
+                      gutterClassName="custom-gutter-horizontal"
+                      draggerClassName="custom-dragger-horizontal"
+                      initialSizes={inintSplitter}
+                      minWidths={[100, 700, 100]}
+            >
                 <Paper className={'paper'}>
                     <MenuList>
                         <MenuItem>Теплица 1</MenuItem>
@@ -231,15 +285,9 @@ const CalendarTasks = (props) => {
                         <MenuItem>Теплица 3</MenuItem>
                     </MenuList>
                 </Paper>
-                {/*: null}*/}
-            </Col>
-
-            <Col span={17}>
                 <Paper className={'center_paper'}>
                     {centerPaperGen()}
                 </Paper>
-            </Col>
-            <Col span={4}>
                 <Paper>
                     {!create ?
                         <MenuList>
@@ -267,8 +315,8 @@ const CalendarTasks = (props) => {
                         </MenuList>
                     }
                 </Paper>
-            </Col>
-        </Row>
+            </Splitter>
+        </div>
     )
 }
 
