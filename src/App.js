@@ -17,7 +17,7 @@ const App = (props) => {
     }, [])
 
     const routes = () => {
-        if (!props.token) {
+        if (props.token) {
             return (
                 <Routes>
                     <Route path={'*'} element={<Navigate replace to={'login'}/>}/>

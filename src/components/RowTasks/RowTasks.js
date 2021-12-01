@@ -11,7 +11,8 @@ const RowTasks = (props) => {
     const [startSelect, setStartSelect] = useState(false)
     const [startDeselect, setStartDeselect] = useState(false)
     const [paperList, setPaperList] = useState([])
-    const [selectedRow, setSelectedRow] = useState([])
+    const [selectedRow, setSelectedRow] = useState(new Set())
+    let timer;
 
     useEffect(() => {
         if (paperList.length > 0) return
@@ -22,24 +23,24 @@ const RowTasks = (props) => {
     }, [])
 
     useEffect(() => {
-        if (props.sendSelectRow) props.sendSelectRow(selectedRow)
+        if (props.sendSelectRow) props.sendSelectRow([...selectedRow])
     }, [selectedRow])
 
     const rowGen = () => {
         let rows = []
         let className = 'g_row'
         for (let i = 0; i < paperList.length; i++) {
-            if (selectedRow.includes(paperList[i].index)) {
-                className = 'g_row selected'
+            if (selectedRow.has(paperList[i].index)) {
+                className = 'selected'
             } else {
-                className = 'g_row'
+                className = null
             }
             rows.push(
-                <Card className={className} elevation={3} key={'g_row_' + i}
+                <Card className={'g_row'} elevation={3} key={'g_row_' + i}
                       onMouseDown={(e) => onStartSelect(e, paperList[i].index)}
-                      onMouseEnter={(e) => onSelect(e, paperList[i].index)}>
+                      onMouseOver={(e) => onSelect(e, paperList[i].index)}>
                     <CardActionArea>
-                        <div>
+                        <div className={className}>
                             <span>{paperList[i].title}</span>
                         </div>
                     </CardActionArea>
@@ -50,36 +51,34 @@ const RowTasks = (props) => {
     }
 
     const onStartSelect = (e, i) => {
-        if (selectedRow.includes(i)) {
+        if (selectedRow.has(i)) {
             setStartDeselect(true)
-            selectedRow.splice(selectedRow.indexOf(i), 1)
-            setSelectedRow([...selectedRow])
+            selectedRow.delete(i)
             return
         }
+        if (e.target.nodeName === "DIV") e.target.classList.add('selected')
         setStartSelect(true)
-        selectedRow.push(i)
-        setSelectedRow([...selectedRow])
+        selectedRow.add(i)
     }
 
     const onSelect = (e, i) => {
-        if (startDeselect && selectedRow.includes(i)) {
-            selectedRow.splice(selectedRow.indexOf(i), 1)
-            setSelectedRow([...selectedRow])
+        if (startDeselect && selectedRow.has(i)) {
+            selectedRow.delete(i)
             return
         }
-        if (startSelect && !selectedRow.includes(i)) {
-            selectedRow.push(i)
-            setSelectedRow([...selectedRow])
+        if (startSelect) {
+            if (e.target.nodeName === "DIV") e.target.classList.add('selected')
+            selectedRow.add(i)
         }
     }
 
     const selectRowByCount = (startIndex, endIndex) => {
         for (startIndex; startIndex <= endIndex; startIndex++) {
-            if (!selectedRow.includes(startIndex)) {
-                selectedRow.push(startIndex)
+            if (!selectedRow.has(startIndex)) {
+                selectedRow.add(startIndex)
             }
         }
-        setSelectedRow([...selectedRow])
+        setSelectedRow(new Set(selectedRow))
     }
 
     return (
@@ -87,6 +86,8 @@ const RowTasks = (props) => {
             <div className={'main_grid'} onMouseUp={() => {
                 setStartSelect(false)
                 setStartDeselect(false)
+                console.log(selectedRow)
+                setSelectedRow(new Set(selectedRow))
             }}>
                 {rowGen()}
             </div>
@@ -103,15 +104,15 @@ const RowTasks = (props) => {
                 <Button onClick={() => selectRowByCount(55, 72)}>
                     55 - 72
                 </Button>
-                <Button color={selectedRow.length > 0 ? 'error' : 'primary'}
+                <Button color={selectedRow.size > 0 ? 'error' : 'primary'}
                         onClick={() => {
-                            if (selectedRow.length > 0) {
-                                setSelectedRow([])
+                            if (selectedRow.size > 0) {
+                                setSelectedRow(new Set())
                                 return
                             }
-                            setSelectedRow([...paperList.map(value => value.index)])
+                            setSelectedRow(new Set(paperList.map(value => value.index)))
                         }}>
-                    {selectedRow.length > 0 ? 'Отменить' : 'Выбрать все'}
+                    {selectedRow.size > 0 ? 'Отменить' : 'Выбрать все'}
                 </Button>
             </ButtonGroup>
         </Space>

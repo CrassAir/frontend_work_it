@@ -20,22 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="change row">
-      <change afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/action/tabelActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/urls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/styles.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/locationActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/locationActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,6 +132,7 @@
       <workItem from="1637909261967" duration="6192000" />
       <workItem from="1638172593038" duration="1164000" />
       <workItem from="1638173789778" duration="67256000" />
+      <workItem from="1638382093710" duration="3388000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
