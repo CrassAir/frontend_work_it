@@ -76,7 +76,7 @@ export const getTabels = (date_time) => {
 
 export const trySendCellsData = (cells) => {
     return dispatch => {
-        api.post(getApiUrl() + "tabel/", cells).then(res => {
+        api.post(getApiUrl() + "tabel-cell/set_hour_to_cell/", cells).then(res => {
             dispatch(trySendCellsDataSuccess())
         }).catch(err => {
             dispatch(trySendCellsDataFail(err))

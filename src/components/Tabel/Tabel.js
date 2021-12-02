@@ -15,10 +15,10 @@ import {MenuItem, MenuList} from "@mui/material";
 import moment from "moment";
 import locale from 'antd/lib/locale/ru_RU'
 import 'moment/locale/ru'
-import CircularProgress from "@mui/material/CircularProgress";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Splitter, {SplitDirection} from '@devbookhq/splitter'
+import Box from "@mui/material/Box";
 
 
 const Tabel = (props) => {
@@ -52,6 +52,7 @@ const Tabel = (props) => {
             setSelectTabel(data[0])
             setLoading(false)
             setTimeout(() => document.getElementsByClassName('now')[0]?.scrollIntoView({
+                block: 'start',
                 inline: "center",
                 behavior: "smooth"
             }), 1000)
@@ -147,7 +148,7 @@ const Tabel = (props) => {
                       gutterClassName="custom-gutter-horizontal"
                       draggerClassName="custom-dragger-horizontal"
                       initialSizes={inintSplitter}
-                      minWidths={[200, 1000]}>
+                      minWidths={[200, 700]}>
                 <Paper className={'paper'}>
                     {loading ? <LinearProgress/> : <div style={{height: 4}}/>}
                     <MenuList>

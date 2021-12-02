@@ -54,6 +54,7 @@ const RowTasks = (props) => {
         if (selectedRow.has(i)) {
             setStartDeselect(true)
             selectedRow.delete(i)
+            if (e.target.nodeName === "DIV") e.target.classList.remove('selected')
             return
         }
         if (e.target.nodeName === "DIV") e.target.classList.add('selected')
@@ -64,6 +65,7 @@ const RowTasks = (props) => {
     const onSelect = (e, i) => {
         if (startDeselect && selectedRow.has(i)) {
             selectedRow.delete(i)
+            if (e.target.nodeName === "DIV") e.target.classList.remove('selected')
             return
         }
         if (startSelect) {
