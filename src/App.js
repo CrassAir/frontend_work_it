@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import MainPage from './pages/MainPage/MainPage';
 import {Navigate, Route, Routes} from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
-import {authCheckState} from './store/action/authActions';
+import {authCheckState, logout} from './store/action/authActions';
 import CalendarTasks from "./components/CalendarTasks/CalendarTasks";
 import RowTasks from "./components/RowTasks/RowTasks";
 import Tabel from "./components/Tabel/Tabel";
@@ -57,7 +57,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    authCheckState: () => dispatch(authCheckState())
+    authCheckState: () => dispatch(authCheckState()),
+    logout: () => dispatch(logout())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
