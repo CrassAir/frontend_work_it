@@ -19,7 +19,15 @@ import 'moment/locale/ru'
 import Typography from "@mui/material/Typography";
 import Splitter, {SplitDirection} from '@devbookhq/splitter'
 import Box from "@mui/material/Box";
+import Slide from "@mui/material/Slide";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Tabel = (props) => {
     const now = moment()
@@ -28,9 +36,11 @@ const Tabel = (props) => {
     const [month, setMonth] = useState(now)
     const [selectTabel, setSelectTabel] = useState([])
     const [initSplitter] = useState([20, 80])
+    const [visibleDialog, setVisibleDialog] = useState(false)
 
     useEffect(() => {
         if (!props.tabels?.length > 0) return
+        setTimeout(() => setVisibleDialog(true), 1000)
         setSelectTabel(props.tabels[0])
         if (!props.cells?.length > 0) props.tryGetCellsByTabel(props.tabels[0].id)
     }, [props.tabels])
@@ -55,6 +65,26 @@ const Tabel = (props) => {
     const setCellClassName = (index) => {
         if (month.month() === yesterday.month() && yesterday.date() === index) return 'now'
         if ([6, 7].includes(moment(month).date(index).isoWeekday())) return 'weekend'
+    }
+
+    const reviewDialog = () => {
+        return (
+            <Dialog
+                open={visibleDialog}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => setVisibleDialog(false)}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle>{'Пожалйуста оцените качество табеля'}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        <a href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
+                           target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</a>
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+        )
     }
 
     const generateTabel = () => {
@@ -156,8 +186,8 @@ const Tabel = (props) => {
                       initialSizes={initSplitter}
                       minWidths={[200, 700]}>
                 <Paper className={'paper'}>
-                    <MenuList>
-                        <MenuItem sx={{marginBottom: 3}}>
+                    <MenuList disableListWrap>
+                        <MenuItem sx={{marginBottom: '10px'}}>
                             <ConfigProvider locale={locale}>
                                 <DatePicker
                                     onChange={(e) => {
@@ -173,7 +203,7 @@ const Tabel = (props) => {
                         {!props.tabels ? null :
                             props.tabels.map(tabel => {
                                 return <MenuItem
-                                    className={tabel.checked_cro ? 'checked' : null}
+                                    className={tabel.checked_cro ? 'checked' : 'test'}
                                     selected={tabel === selectTabel}
                                     onClick={() => {
                                         setSelectTabel(tabel)
@@ -187,6 +217,7 @@ const Tabel = (props) => {
                 </Paper>
                 {generateTabel()}
             </Splitter>
+            {reviewDialog()}
         </div>
     )
 }

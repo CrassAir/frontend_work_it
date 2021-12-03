@@ -52,7 +52,6 @@ export const logout = () => {
 }
 
 export const authLogin = (username, password) => {
-    console.log(username, password)
     return dispatch => {
         dispatch(authStart());
         axios.post(getRestAuthUrl() + "login/", {

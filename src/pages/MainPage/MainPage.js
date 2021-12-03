@@ -5,16 +5,23 @@ import {Outlet, useNavigate} from "react-router-dom"
 import {getGreenhouses} from "../../store/action/locationActions";
 import LinearProgress from "@mui/material/LinearProgress";
 import {logout} from "../../store/action/authActions";
+import {useLocation} from "react-router";
 
 
 const MainPage = (props) => {
     const [tabVal, setTabVal] = useState(0)
     const navigate = useNavigate()
+    let location = useLocation();
 
-    const listUrl = ['calendar', 'row', 'tabel']
+    const listUrl = ['/calendar', '/row', '/tabel']
 
     useEffect(() => {
-        navigate(listUrl[tabVal])
+        if (location.pathname !== '/'){
+            setTabVal(listUrl.indexOf(location.pathname))
+        } else {
+            setTabVal(0)
+            navigate(listUrl[0])
+        }
         props.getGreenhouses()
     }, [])
 
