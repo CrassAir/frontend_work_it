@@ -24,6 +24,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import {cleanup} from "@testing-library/react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -40,9 +42,10 @@ const Tabel = (props) => {
 
     useEffect(() => {
         if (!props.tabels?.length > 0) return
-        setTimeout(() => setVisibleDialog(true), 1000)
+        setTimeout(() => setVisibleDialog(true), 15000)
         setSelectTabel(props.tabels[0])
         if (!props.cells?.length > 0) props.tryGetCellsByTabel(props.tabels[0].id)
+        return () => cleanup()
     }, [props.tabels])
 
     useEffect(() => {
@@ -76,13 +79,16 @@ const Tabel = (props) => {
                 onClose={() => setVisibleDialog(false)}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{'Пожалйуста оцените качество табеля'}</DialogTitle>
+                <DialogTitle>{'Спасибо что пользуетесь нашем табелем'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <a href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
-                           target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</a>
+                       {'Пожалйуста оцените качество табеля'}
                     </DialogContentText>
                 </DialogContent>
+                <DialogActions>
+                     <Button variant={'contained'} href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
+                           target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</Button>
+                </DialogActions>
             </Dialog>
         )
     }

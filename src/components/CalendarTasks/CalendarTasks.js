@@ -18,7 +18,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import CancelIcon from '@mui/icons-material/Cancel';
 import moment from 'moment'
 import 'moment/locale/ru'
-import {Form, Row, Col} from "antd";
+import {Form} from "antd";
 import RowTasks from "../RowTasks/RowTasks";
 import Splitter, {SplitDirection} from "@devbookhq/splitter";  // without this line it didn't work
 moment.locale('ru')
@@ -31,7 +31,7 @@ const CalendarTasks = (props) => {
     const [newEvents, setNewEvents] = useState([])
     const [newEventTitle, setNewEventTitle] = useState()
     const [selectedRow, setSelectedRow] = useState([])
-    const [events, setEvents] = useState([])
+    const [events] = useState([])
     const [initSplitter] = useState([15, 70, 15])
 
 

@@ -12,7 +12,6 @@ const RowTasks = (props) => {
     const [startDeselect, setStartDeselect] = useState(false)
     const [paperList, setPaperList] = useState([])
     const [selectedRow, setSelectedRow] = useState(new Set())
-    let timer;
 
     useEffect(() => {
         if (paperList.length > 0) return
