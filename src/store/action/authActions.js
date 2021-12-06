@@ -112,6 +112,7 @@ export const authLogin = (username, password) => {
 
 export const authCheckState = () => {
     return dispatch => {
+        dispatch(authStart());
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
         if (token) {
