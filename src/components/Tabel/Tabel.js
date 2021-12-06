@@ -42,7 +42,7 @@ const Tabel = (props) => {
     const [visibleDialog, setVisibleDialog] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => setVisibleDialog(true), 15000)
+        if (!localStorage.getItem('is_rating')) setTimeout(() => setVisibleDialog(true), 15000)
         return () => cleanup()
     }, [])
 
@@ -86,13 +86,20 @@ const Tabel = (props) => {
                 <DialogTitle>{'Спасибо что пользуетесь нашем табелем'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {'Пожалйуста оцените качество табеля'}
+                        <Space direction={"vertical"}>
+                            {'Пожалйуста оцените качество табеля'}
+                            {/*<Rating name="customized-10" defaultValue={2} value={rating} max={10} onChange={e => setRating(parseInt(e.target.value))} />*/}
+                        </Space>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button variant={'contained'}
                             href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
-                            target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</Button>
+                            target={'_blank'}
+                            onClick={() => {
+                                setVisibleDialog(false)
+                                localStorage.setItem('is_rating', true)
+                            }}>Оценить</Button>
                 </DialogActions>
             </Dialog>
         )
@@ -127,6 +134,7 @@ const Tabel = (props) => {
                     </Space>
                     <Button className={'send_btn'} variant={'contained'} color={'success'}
                             type={'submit'}>Сохранить</Button>
+                    <Button className={'send_btn'} variant={'contained'} onClick={() => window.print()}>Печать</Button>
                     <TableContainer component={Box}>
                         <SimpleBar style={{maxHeight: '100%'}}>
                             <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
