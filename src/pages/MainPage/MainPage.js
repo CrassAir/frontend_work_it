@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {AppBar, Toolbar, Button, Tabs, Tab} from '@mui/material'
 import {Outlet, useNavigate} from "react-router-dom"
-import {getGreenhouses} from "../../store/action/locationActions";
-import LinearProgress from "@mui/material/LinearProgress";
-import {logout} from "../../store/action/authActions";
-import {useLocation} from "react-router";
-import {cleanup} from "@testing-library/react";
+import {getGreenhouses} from "../../store/action/locationActions"
+import LinearProgress from "@mui/material/LinearProgress"
+import {logout} from "../../store/action/authActions"
+import {useLocation} from "react-router"
+import {cleanup} from "@testing-library/react"
+import {getWsChatUrl} from "../../api/urls";
 
 
 const MainPage = (props) => {
@@ -16,7 +17,44 @@ const MainPage = (props) => {
     const [tabVal, setTabVal] = useState(0)
     const [activeList, setActiveList] = useState(listUrl)
     const navigate = useNavigate()
-    let location = useLocation();
+    let location = useLocation()
+
+    const connect = () => {
+        let ws = new WebSocket(getWsChatUrl())
+        let timeout = 500
+        let connectInterval
+
+        ws.onopen = () => {
+            console.log("connected websocket main component")
+            clearTimeout(connectInterval)
+        };
+
+        ws.onmessage = ev => {
+            console.log(ev)
+        }
+
+        ws.onclose = e => {
+            console.log(
+                `Socket is closed. Reconnect will be attempted in ${Math.min(
+                    10000 / 1000,
+                    (timeout) / 1000
+                )} second.`
+            );
+
+            connectInterval = setTimeout(() => {
+                if (!ws || ws.readyState === WebSocket.CLOSED) connect()
+            }, Math.min(10000, timeout))
+        };
+
+        ws.onerror = err => {
+            console.error(
+                "Socket encountered error",
+                "Closing socket"
+            );
+
+            ws.close();
+        };
+    };
 
     useEffect(() => {
         let aList = listUrl
@@ -30,6 +68,8 @@ const MainPage = (props) => {
             navigate(aList[0])
         }
         props.getGreenhouses()
+        connect()
+        return () => cleanup()
     }, [])
 
 

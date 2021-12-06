@@ -1,12 +1,21 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {authLogin} from '../../store/action/authActions'
 import {Form, Card} from 'antd'
+import {useSnackbar} from "notistack";
 
 
 const LoginPage = (props) => {
+    const {enqueueSnackbar} = useSnackbar()
+
+    useEffect(() => {
+        if (props.error) {
+            enqueueSnackbar(props.error.response.data.detail, {variant: 'error'});
+        }
+    }, [props.error])
+
     return (
         <Card className={'login_card'}>
             <Form
@@ -50,7 +59,9 @@ const LoginPage = (props) => {
     )
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+    error: state.error
+})
 
 const mapDispatchToProps = (dispatch) => ({
     auth: (username, password) => dispatch(authLogin(username, password)),

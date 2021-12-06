@@ -1,15 +1,13 @@
 // const localAddresses = ["localhost", "127.0.0.1"];
 // const productionPorts = ["", "80", "443"];
+const hostname = '192.168.252.198'
+const port = "9009";
+
 
 export function getHostname() {
     // const { protocol, hostname, port } = window.location;
-    const { protocol } = window.location;
-    // const hostname = '192.168.252.198'
-    const hostname = 'test.ecoferma56.ru'
-    // const port = "9009";
-    const port = "";
-    // return hostname + port;
-    return protocol+'//'+hostname+(port ? ':'+port : '');
+    const {protocol} = window.location;
+    return protocol + '//' + hostname + (port ? ':' + port : '');
 }
 
 export function getApiUrl() {
@@ -24,11 +22,11 @@ export function getRestAuthUrl() {
     return `${getHostname()}/rest-auth/`;
 }
 
-// export function getWsChatUrl() {
-//     return `ws://${getHostname()}/chat`;
-// }
-//
+export function getWsChatUrl() {
+    return `ws://${hostname}:${port}/liveData`;
+}
+
 export function getWsLiveDataUrl() {
-    const { hostname } = window.location;
+    const {hostname} = window.location;
     return `wss://${hostname}/liveData`;
 }

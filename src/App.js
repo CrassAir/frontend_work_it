@@ -11,6 +11,7 @@ import CalendarTasks from "./components/CalendarTasks/CalendarTasks";
 import RowTasks from "./components/RowTasks/RowTasks";
 import Tabel from "./components/Tabel/Tabel";
 import ChangePassword from "./pages/LoginPage/ChangePassword";
+import {SnackbarProvider} from "notistack";
 
 
 const App = (props) => {
@@ -51,25 +52,27 @@ const App = (props) => {
             return (
                 <Routes>
                     <Route path={'*'} element={<Navigate replace to={'change_password'}/>}/>
-                    <Route exact path="change_password" element={<ChangePassword />}/>
+                    <Route exact path="change_password" element={<ChangePassword/>}/>
                 </Routes>
             )
         }
         return (
-                <Routes>
-                    <Route exact path="login" element={<Navigate to={'/'}/>}/>
-                    <Route exact path="change_password" element={<Navigate to={'/'}/>}/>
-                    <Route path="/" element={<MainPage/>}>
-                        <Route path="tabel" element={<Tabel/>}/>
-                    </Route>
-                </Routes>
+            <Routes>
+                <Route exact path="login" element={<Navigate to={'/'}/>}/>
+                <Route exact path="change_password" element={<Navigate to={'/'}/>}/>
+                <Route path="/" element={<MainPage/>}>
+                    <Route path="tabel" element={<Tabel/>}/>
+                </Route>
+            </Routes>
         )
     }
 
     return (
+        <SnackbarProvider maxSnack={3}>
             <div className="App">
                 {routes()}
             </div>
+        </SnackbarProvider>
     )
 }
 
