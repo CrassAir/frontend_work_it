@@ -4,7 +4,7 @@ import {AppBar, Toolbar, Button, Tabs, Tab} from '@mui/material'
 import {Outlet, useNavigate} from "react-router-dom"
 import {getGreenhouses} from "../../store/action/locationActions"
 import LinearProgress from "@mui/material/LinearProgress"
-import {logout} from "../../store/action/authActions"
+import {authCheckState, getAccount, logout} from "../../store/action/authActions"
 import {useLocation} from "react-router"
 import {cleanup} from "@testing-library/react"
 import {getWsChatUrl} from "../../api/urls";
@@ -16,6 +16,7 @@ const MainPage = (props) => {
 
     const [tabVal, setTabVal] = useState(0)
     const [activeList, setActiveList] = useState(listUrl)
+    const [webSocket, setWebSocket] = useState(null)
     const navigate = useNavigate()
     let location = useLocation()
 
@@ -26,11 +27,20 @@ const MainPage = (props) => {
 
         ws.onopen = () => {
             console.log("connected websocket main component")
+            setWebSocket(ws)
             clearTimeout(connectInterval)
         };
 
         ws.onmessage = ev => {
-            console.log(ev)
+            let data = JSON.parse(ev.data)
+            console.log(data)
+            // if (data.logoff === props.user.username) {
+            //     props.logout()
+            //     return
+            // }
+            if (data.account_change === props.user.username) {
+                props.getAccount(props.user.username)
+            }
         }
 
         ws.onclose = e => {
@@ -42,7 +52,7 @@ const MainPage = (props) => {
             );
 
             connectInterval = setTimeout(() => {
-                if (!ws || ws.readyState === WebSocket.CLOSED) connect()
+                if (!webSocket || webSocket.readyState === WebSocket.CLOSED) connect()
             }, Math.min(10000, timeout))
         };
 
@@ -123,7 +133,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getGreenhouses: () => dispatch(getGreenhouses()),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    authCheckState: () => dispatch(authCheckState()),
+    getAccount: (username) => dispatch(getAccount(username))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

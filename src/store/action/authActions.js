@@ -3,7 +3,6 @@ import {getApiUrl, getRestAuthUrl} from '../../api/urls'
 import * as actionTypes from "./actionTypes";
 import api from "../../api/api";
 import axios from "axios";
-import {useSnackbar} from "notistack";
 
 export const authStart = () => {
     return {
@@ -57,6 +56,26 @@ export const changePasswordFail = (error) => {
     }
 }
 
+export const getAccountStart = () => {
+    return {
+        type: actionTypes.GET_ACCOUNT_START
+    }
+}
+
+export const getAccountSuccess = (user) => {
+    return {
+        type: actionTypes.GET_ACCOUNT_SUCCESS,
+        user: user,
+    }
+}
+
+export const getAccountFail = (error) => {
+    return {
+        type: actionTypes.GET_ACCOUNT_FAIL,
+        error: error
+    }
+}
+
 export const logout = () => {
     return dispatch => {
         localStorage.removeItem('token');
@@ -96,7 +115,11 @@ export const authCheckState = () => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
         if (token) {
-            dispatch(authSuccess(token, user))
+            api.post(getApiUrl() + 'check_token/', {token: token}).then(res => {
+                dispatch(authSuccess(token, user))
+            }).catch(err => {
+                dispatch(logout())
+            })
         } else if (token === undefined) {
             dispatch(logout());
 
@@ -115,8 +138,23 @@ export const changePassword = (username, password) => {
         dispatch(changePasswordStart())
         api.post(getApiUrl() + `account/${username}/change_password/`, {password: password})
             .then(res => {
-                console.log(res.data)
                 dispatch(changePasswordSuccess(res.data))
             }).catch(err => dispatch(changePasswordFail(err)))
+    }
+}
+
+export const getAccount = (username) => {
+    return dispatch => {
+        dispatch(getAccountStart())
+        api.get(getApiUrl() + `account/${username}/`)
+            .then(res => {
+                console.log(res.data)
+                const account = JSON.stringify(res.data);
+                localStorage.setItem('user', account)
+                dispatch(getAccountSuccess(account))
+            }).catch(err => {
+            dispatch(logout())
+            dispatch(getAccountFail(err))
+        })
     }
 }
