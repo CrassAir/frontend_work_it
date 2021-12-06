@@ -16,7 +16,7 @@
 
   .paper {
     height: 100%;
-    overflow: auto;
+
   }
 
   .tabel_container {
@@ -35,11 +35,16 @@
 
     .MuiBox-root {
       height: 90%;
+      overflow: hidden;
     }
   }
 
   .tabel_table {
     //border: lightgray solid 1px;
+
+    .fixed.MuiTableCell-head {
+      z-index: 3;
+    }
 
     .fixed {
       position: sticky;

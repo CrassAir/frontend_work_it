@@ -4,8 +4,10 @@
 export function getHostname() {
     // const { protocol, hostname, port } = window.location;
     const { protocol } = window.location;
-    const hostname = '192.168.252.198'
-    const port = "9009";
+    // const hostname = '192.168.252.198'
+    const hostname = 'test.ecoferma56.ru'
+    // const port = "9009";
+    const port = "";
     // return hostname + port;
     return protocol+'//'+hostname+(port ? ':'+port : '');
 }

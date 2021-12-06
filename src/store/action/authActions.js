@@ -1,18 +1,16 @@
-import {getRestAuthUrl} from '../../api/urls'
+import {getApiUrl, getRestAuthUrl} from '../../api/urls'
 
 import * as actionTypes from "./actionTypes";
 import api from "../../api/api";
 import axios from "axios";
 
 export const authStart = () => {
-    console.log(actionTypes.AUTH_START)
     return {
         type: actionTypes.AUTH_START
     }
 }
 
 export const authSuccess = (token, account) => {
-    console.log(actionTypes.AUTH_SUCCESS)
     let acc = JSON.parse(account)
     api.interceptors.request.use(config => {
         config.headers["Authorization"] = `Token ${localStorage.getItem('token')}`;
@@ -26,7 +24,6 @@ export const authSuccess = (token, account) => {
 }
 
 export const authFail = error => {
-    console.log(actionTypes.AUTH_FAIL)
     return {
         type: actionTypes.AUTH_FAIL,
         error: error
@@ -34,9 +31,28 @@ export const authFail = error => {
 }
 
 export const authLogout = () => {
-    console.log(actionTypes.AUTH_LOGOUT)
     return {
         type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+export const changePasswordStart = () => {
+    return {
+        type: actionTypes.CHANGE_PASSWORD_START
+    }
+}
+
+export const changePasswordSuccess = (user) => {
+    return {
+        type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+        user: user
+    }
+}
+
+export const changePasswordFail = (error) => {
+    return {
+        type: actionTypes.CHANGE_PASSWORD_FAIL,
+        error: error
     }
 }
 
@@ -56,7 +72,8 @@ export const authLogin = (username, password) => {
         dispatch(authStart());
         axios.post(getRestAuthUrl() + "login/", {
             username: username,
-            password: password
+            password: password,
+            source: 'frontend'
         },).then(res => {
                 const token = res.data.key
                 const account = JSON.stringify(res.data.account);
@@ -89,5 +106,16 @@ export const authCheckState = () => {
         } else {
             dispatch(authFail())
         }
+    }
+}
+
+export const changePassword = (username, password) => {
+    return dispatch => {
+        dispatch(changePasswordStart())
+        api.post(getApiUrl() + `account/${username}/change_password/`, {password: password})
+            .then(res => {
+                console.log(res.data)
+                dispatch(changePasswordSuccess(res.data))
+            }).catch(err => dispatch(changePasswordFail(err)))
     }
 }

@@ -26,6 +26,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import {cleanup} from "@testing-library/react";
+import SimpleBar from "simplebar-react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -41,16 +42,19 @@ const Tabel = (props) => {
     const [visibleDialog, setVisibleDialog] = useState(false)
 
     useEffect(() => {
-        if (!props.tabels?.length > 0) return
         setTimeout(() => setVisibleDialog(true), 15000)
+        return () => cleanup()
+    }, [])
+
+    useEffect(() => {
+        if (!props.tabels?.length > 0) return
         setSelectTabel(props.tabels[0])
         if (!props.cells?.length > 0) props.tryGetCellsByTabel(props.tabels[0].id)
-        return () => cleanup()
     }, [props.tabels])
 
     useEffect(() => {
         setTimeout(() => document.getElementsByClassName('now')[0]?.scrollIntoView({
-            block: 'start',
+            block: 'nearest',
             inline: "end",
             behavior: "smooth"
         }), 1000)
@@ -82,16 +86,18 @@ const Tabel = (props) => {
                 <DialogTitle>{'Спасибо что пользуетесь нашем табелем'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                       {'Пожалйуста оцените качество табеля'}
+                        {'Пожалйуста оцените качество табеля'}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                     <Button variant={'contained'} href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
-                           target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</Button>
+                    <Button variant={'contained'}
+                            href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
+                            target={'_blank'} onClick={() => setVisibleDialog(false)}>Оценить</Button>
                 </DialogActions>
             </Dialog>
         )
     }
+
 
     const generateTabel = () => {
         if (!props.cells?.length > 0) return null
@@ -119,65 +125,68 @@ const Tabel = (props) => {
                         {selectTabel.department_name}
                         {selectTabel.checked_cro ? <CheckCircleIcon color={'success'}/> : null}
                     </Space>
-                    <Button className={'send_btn'} variant={'contained'} type={'submit'}>Отправить</Button>
+                    <Button className={'send_btn'} variant={'contained'} color={'success'}
+                            type={'submit'}>Сохранить</Button>
                     <TableContainer component={Box}>
-                        <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Сотрудник</TableCell>
-                                    <TableCell align="center">Табельный номер</TableCell>
-                                    <TableCell align="center">Должность</TableCell>
-                                    {Array.from({length: dayInMonth}, (_, index) => (
-                                        <TableCell
-                                            className={setCellClassName(index + 1)}
-                                            align="center">{index + 1}</TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {props.cells.map((row) => (
+                        <SimpleBar style={{maxHeight: '100%'}}>
+                            <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
+                                <TableHead>
                                     <TableRow>
-                                        <TableCell className={'fixed'} component={'th'}
-                                                   scope="row">{row.full_name}</TableCell>
-                                        <TableCell align="center">{row.employee_code}</TableCell>
-                                        <TableCell align="center">{row.post}</TableCell>
-                                        {Array.from({length: dayInMonth}, (_, index) => {
-                                            let data = row.cells[index]
-                                            if (!data) return false
-                                            let hours = data.hours_control ? data.hours_control : data.hours_manual
-                                            let className = setCellClassName(index + 1)
-                                            if (data.hours_perco && data.hours_perco < data.hours_manual && !data.hours_control) className = 'warning'
-                                            let cellComp = <Tooltip title={'Фактические часы'}
-                                                                    placement={"right"}>
-                                                {hours}
-                                            </Tooltip>
-
-                                            if (data.can_edit || props.user?.rules_template_account.can_check_cro) {
-                                                cellComp = <Form.Item style={{width: 40, margin: 'auto'}}
-                                                                      initialValue={hours}
-                                                                      name={data.pk}
-                                                >
-                                                    <Input style={{padding: 2, textAlign: 'center'}}
-                                                           maxLength={2}
-                                                           size="small"/>
-                                                </Form.Item>
-
-                                            }
-
-                                            return <TableCell
-                                                className={className}
-                                                align="center">
-                                                <Space direction={"vertical"}>
-                                                    {cellComp}
-                                                    <Tooltip title={'Часы перко'}
-                                                             placement={"right"}>{data.hours_perco ? Math.round(data.hours_perco) : null}</Tooltip>
-                                                </Space>
-                                            </TableCell>
-                                        })}
+                                        <TableCell className={'fixed'}>Сотрудник</TableCell>
+                                        <TableCell align="center">Табельный номер</TableCell>
+                                        <TableCell align="center">Должность</TableCell>
+                                        {Array.from({length: dayInMonth}, (_, index) => (
+                                            <TableCell
+                                                className={setCellClassName(index + 1)}
+                                                align="center">{index + 1}</TableCell>
+                                        ))}
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                </TableHead>
+                                <TableBody>
+                                    {props.cells.map((row) => (
+                                        <TableRow>
+                                            <TableCell className={'fixed'} component={'th'}
+                                                       scope="row">{row.full_name}</TableCell>
+                                            <TableCell align="center">{row.employee_code}</TableCell>
+                                            <TableCell align="center">{row.post}</TableCell>
+                                            {Array.from({length: dayInMonth}, (_, index) => {
+                                                let data = row.cells[index]
+                                                if (!data) return false
+                                                let hours = data.hours_control ? data.hours_control : data.hours_manual
+                                                let className = setCellClassName(index + 1)
+                                                if (data.hours_perco && data.hours_perco < data.hours_manual && !data.hours_control) className = 'warning'
+                                                let cellComp = <Tooltip title={'Фактические часы'}
+                                                                        placement={"right"}>
+                                                    {hours}
+                                                </Tooltip>
+
+                                                if (data.can_edit || props.user?.rules_template_account.can_check_cro) {
+                                                    cellComp = <Form.Item style={{minWidth: 30, margin: 'auto'}}
+                                                                          initialValue={hours}
+                                                                          name={data.pk}
+                                                    >
+                                                        <Input style={{padding: 2, textAlign: 'center'}}
+                                                               maxLength={2}
+                                                               size="small"/>
+                                                    </Form.Item>
+
+                                                }
+
+                                                return <TableCell
+                                                    className={className}
+                                                    align="center">
+                                                    <Space direction={"vertical"}>
+                                                        {cellComp}
+                                                        <Tooltip title={'Часы перко'}
+                                                                 placement={"right"}>{data.hours_perco ? Math.round(data.hours_perco) : null}</Tooltip>
+                                                    </Space>
+                                                </TableCell>
+                                            })}
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </SimpleBar>
                     </TableContainer>
                 </Paper>
             </Form>
@@ -192,34 +201,36 @@ const Tabel = (props) => {
                       initialSizes={initSplitter}
                       minWidths={[200, 700]}>
                 <Paper className={'paper'}>
-                    <MenuList disableListWrap>
-                        <MenuItem sx={{marginBottom: '10px'}}>
-                            <ConfigProvider locale={locale}>
-                                <DatePicker
-                                    onChange={(e) => {
-                                        setMonth(moment(e))
-                                        setDayInMonth(moment(e).daysInMonth())
-                                    }}
-                                    style={{width: '100%'}}
-                                    defaultValue={month}
-                                    format={'MM-YYYY'}
-                                    picker="month"/>
-                            </ConfigProvider>
-                        </MenuItem>
-                        {!props.tabels ? null :
-                            props.tabels.map(tabel => {
-                                return <MenuItem
-                                    className={tabel.checked_cro ? 'checked' : 'test'}
-                                    selected={tabel === selectTabel}
-                                    onClick={() => {
-                                        setSelectTabel(tabel)
-                                        props.tryGetCellsByTabel(tabel.id)
-                                    }}>
-                                    <Typography noWrap>{tabel.department_name}</Typography>
-                                </MenuItem>
-                            })
-                        }
-                    </MenuList>
+                    <SimpleBar style={{maxHeight: '100%'}}>
+                        <MenuList disableListWrap>
+                            <MenuItem sx={{marginBottom: '10px'}}>
+                                <ConfigProvider locale={locale}>
+                                    <DatePicker
+                                        onChange={(e) => {
+                                            setMonth(moment(e))
+                                            setDayInMonth(moment(e).daysInMonth())
+                                        }}
+                                        style={{width: '100%'}}
+                                        defaultValue={month}
+                                        format={'MM-YYYY'}
+                                        picker="month"/>
+                                </ConfigProvider>
+                            </MenuItem>
+                            {!props.tabels ? null :
+                                props.tabels.map(tabel => {
+                                    return <MenuItem
+                                        className={tabel.checked_cro ? 'checked' : 'test'}
+                                        selected={tabel === selectTabel}
+                                        onClick={() => {
+                                            setSelectTabel(tabel)
+                                            props.tryGetCellsByTabel(tabel.id)
+                                        }}>
+                                        <Typography noWrap>{tabel.department_name}</Typography>
+                                    </MenuItem>
+                                })
+                            }
+                        </MenuList>
+                    </SimpleBar>
                 </Paper>
                 {generateTabel()}
             </Splitter>

@@ -19,12 +19,22 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix auth actions">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="cleanup project, fix eslinter">
+      <change afterPath="$PROJECT_DIR$/src/pages/LoginPage/ChangePassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RowTasks/RowTasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/urls.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/authActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/tabelActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/tabelActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +99,7 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -176,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638519348604</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="cleanup project, fix eslinter">
+      <created>1638520390979</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638520390979</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,13 +216,14 @@
     <MESSAGE value="add splitter" />
     <MESSAGE value="fix Tabel" />
     <MESSAGE value="fix auth actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix auth actions" />
+    <MESSAGE value="cleanup project, fix eslinter" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup project, fix eslinter" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637914565826">
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637914565826" />
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638534557571" />
     <state x="715" y="318" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1637914834212">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
@@ -218,30 +236,30 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="740" y="257" key="FileChooserDialogImpl/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638158903738" />
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1638520306057">
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1638534715105">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520306057" />
-    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1638520306057">
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638534715105" />
+    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1638534715105">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520306057" />
-    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1638520306057">
+    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638534715105" />
+    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1638534715105">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520306057" />
-    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1638520306057">
+    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638534715105" />
+    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1638534715105">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520306057" />
-    <state x="461" y="161" key="SettingsEditor" timestamp="1638520264276">
+    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638534715105" />
+    <state x="461" y="161" key="SettingsEditor" timestamp="1638526510413">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520264276" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1638519355639">
+    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638526510413" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1638520395390">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638519355639" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638520395390" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

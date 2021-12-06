@@ -42,6 +42,30 @@ const authLogout = (state, action) => {
     })
 }
 
+const changePasswordStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+        user: null,
+    })
+}
+
+const changePasswordSuccess = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: false,
+        user: action.user,
+    })
+}
+
+const changePasswordFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+        token: null
+    })
+}
+
 const getGreenhousesStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -141,6 +165,12 @@ const reducer = (state = initialState, action) => {
             return authFail(state, action);
         case actionTypes.AUTH_LOGOUT:
             return authLogout(state, action);
+        case actionTypes.CHANGE_PASSWORD_START:
+            return changePasswordStart(state, action);
+        case actionTypes.CHANGE_PASSWORD_SUCCESS:
+            return changePasswordSuccess(state, action);
+        case actionTypes.CHANGE_PASSWORD_FAIL:
+            return changePasswordFail(state, action);
         case actionTypes.GET_GREENHOUSES_START:
             return getGreenhousesStart(state, action);
         case actionTypes.GET_GREENHOUSES_SUCCESS:

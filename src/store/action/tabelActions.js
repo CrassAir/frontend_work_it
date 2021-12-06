@@ -16,7 +16,6 @@ const getTabelsSuccess = (tabels) => {
 }
 
 const getTabelsFail = (error) => {
-    console.log(error)
     return {
         type: actionTypes.GET_TABEL_FAIL,
         error: error
@@ -37,7 +36,6 @@ const getCellsSuccess = (cells) => {
 }
 
 const getCellsFail = (error) => {
-    console.log(error)
     return {
         type: actionTypes.GET_CELLS_FAIL,
         error: error
@@ -51,7 +49,6 @@ const trySendCellsDataStart = () => {
 }
 
 const trySendCellsDataSuccess = (cells) => {
-    console.log(cells)
     return {
         type: actionTypes.TRY_SEND_CELLS_SUCCESS,
         cells: cells
