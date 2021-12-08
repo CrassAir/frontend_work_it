@@ -27,6 +27,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import {cleanup} from "@testing-library/react";
 import SimpleBar from "simplebar-react";
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import {getApiUrl} from "../../api/urls";
+import {tryPrintTabel} from "../../api/api";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -110,12 +115,23 @@ const Tabel = (props) => {
         if (!props.cells?.length > 0) return null
         if (!selectTabel) return null
         if (props.loading) return null
+        const button = () => {
+            if (props.user?.rules_template_account.can_check_cro || props.user?.is_admin || props.user?.is_superuser) {
+                return <Space direction={"horizontal"} className={'send_btn'}>
+                    <Button variant={'contained'} startIcon={<PrintIcon/>} size={'small'}
+                            onClick={() => tryPrintTabel(selectTabel.id)}>Печать</Button>
+                    <Button variant={'contained'} startIcon={<SaveIcon/>} color={'success'} size={'small'}
+                            type={'submit'}>Сохранить</Button>
+                </Space>
+            }
+            return <Button className={'send_btn'} variant={'contained'} startIcon={<SaveIcon/>} color={'success'}
+                           size={'small'}
+                           type={'submit'}>Сохранить</Button>
+        }
         return (
             <Form
                 onFinish={values => {
                     removeEmpty(values)
-                    console.log(values)
-                    // props.tabels
                     props.trySendCellsData(values, props.user?.rules_template_account.can_check_cro)
                     if (props.user?.rules_template_account.can_check_cro) {
                         props.tabels.forEach(tabel => {
@@ -132,9 +148,7 @@ const Tabel = (props) => {
                         {selectTabel.department_name}
                         {selectTabel.checked_cro ? <CheckCircleIcon color={'success'}/> : null}
                     </Space>
-                    <Button className={'send_btn'} variant={'contained'} color={'success'}
-                            type={'submit'}>Сохранить</Button>
-                    <Button className={'send_btn'} variant={'contained'} onClick={() => window.print()}>Печать</Button>
+                    {button()}
                     <TableContainer component={Box}>
                         <SimpleBar style={{maxHeight: '100%'}}>
                             <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
@@ -148,11 +162,15 @@ const Tabel = (props) => {
                                                 className={setCellClassName(index + 1)}
                                                 align="center">{index + 1}</TableCell>
                                         ))}
+                                        <TableCell align="center">Сумма часов</TableCell>
+                                        <TableCell align="center">Сумма перко</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {props.cells.map((row) => (
-                                        <TableRow>
+                                    {props.cells.map((row) => {
+                                        let sum_hours = 0
+                                        let sum_perco = 0
+                                        return <TableRow>
                                             <TableCell className={'fixed'} component={'th'}
                                                        scope="row">{row.full_name}</TableCell>
                                             <TableCell align="center">{row.employee_code}</TableCell>
@@ -162,7 +180,11 @@ const Tabel = (props) => {
                                                 if (!data) return false
                                                 let hours = data.hours_control ? data.hours_control : data.hours_manual
                                                 let className = setCellClassName(index + 1)
+                                                // Подсвечивает ячейку если часы перко отличны от часов факт
                                                 if (data.hours_perco && data.hours_perco < data.hours_manual && !data.hours_control) className = 'warning'
+                                                // Просчет суммы часов
+                                                sum_hours += !isNaN(parseInt(hours, 10)) ? parseInt(hours, 10) : 0
+                                                sum_perco += data.hours_perco ? data.hours_perco : 0
                                                 let cellComp = <Tooltip title={'Фактические часы'}
                                                                         placement={"right"}>
                                                     {hours}
@@ -190,8 +212,10 @@ const Tabel = (props) => {
                                                     </Space>
                                                 </TableCell>
                                             })}
+                                            <TableCell align="center">{sum_hours}</TableCell>
+                                            <TableCell align="center">{Math.round(sum_perco)}</TableCell>
                                         </TableRow>
-                                    ))}
+                                    })}
                                 </TableBody>
                             </Table>
                         </SimpleBar>

@@ -94,9 +94,7 @@ export const trySendCellsData = (cells, cro) => {
     return dispatch => {
         dispatch(trySendCellsDataStart())
         let url = getApiUrl() + "tabel-cell/set_hour_to_cell/"
-        console.log(cro)
         if (cro) url = getApiUrl() + "tabel-cell/set_control_hours/"
-        console.log(url)
         api.post(url, cells).then(res => {
             let cells = convertCells(res.data)
             dispatch(trySendCellsDataSuccess(cells))
