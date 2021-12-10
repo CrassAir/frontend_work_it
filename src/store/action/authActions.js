@@ -139,6 +139,8 @@ export const changePassword = (username, password) => {
         dispatch(changePasswordStart())
         api.post(getApiUrl() + `account/${username}/change_password/`, {password: password})
             .then(res => {
+                const account = JSON.stringify(res.data);
+                localStorage.setItem('user', account)
                 dispatch(changePasswordSuccess(res.data))
             }).catch(err => dispatch(changePasswordFail(err)))
     }
@@ -149,7 +151,6 @@ export const getAccount = (username) => {
         dispatch(getAccountStart())
         api.get(getApiUrl() + `account/${username}/`)
             .then(res => {
-                console.log(res.data)
                 const account = JSON.stringify(res.data);
                 localStorage.setItem('user', account)
                 dispatch(getAccountSuccess(account))

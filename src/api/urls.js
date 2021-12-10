@@ -1,6 +1,6 @@
 // const localAddresses = ["localhost", "127.0.0.1"];
 // const productionPorts = ["", "80", "443"];
-const hostname = '192.168.252.198'
+const hostname = '192.168.252.191'
 const port = "9009";
 
 
@@ -22,11 +22,8 @@ export function getRestAuthUrl() {
     return `${getHostname()}/rest-auth/`;
 }
 
-export function getWsChatUrl() {
-    return `ws://${hostname}:${port}/liveData`;
-}
-
 export function getWsLiveDataUrl() {
-    const {hostname} = window.location;
-    return `wss://${hostname}/liveData`;
+    // const {hostname} = window.location;
+    // return `wss://${hostname}/liveData`;
+    return `ws://${hostname}:${port}/liveData`;
 }

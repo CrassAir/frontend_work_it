@@ -25,7 +25,7 @@ const LoginPage = (props) => {
             >
                 <Form.Item
                     name="username"
-                    getValueProps={(e) => e}
+                    getValueProps={(e) => {}}
                     required={true}
                     // rules={[{ required: true, message: 'Please input your username!' }]}
                 >
@@ -39,7 +39,7 @@ const LoginPage = (props) => {
                 </Form.Item>
                 <Form.Item
                     name="password"
-                    getValueProps={(e) => e}
+                    getValueProps={(e) => {}}
                     required={true}
                     // rules={[{ required: true, message: 'Please input your username!' }]}
                 >

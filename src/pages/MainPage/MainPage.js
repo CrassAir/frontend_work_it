@@ -7,7 +7,7 @@ import LinearProgress from "@mui/material/LinearProgress"
 import {authCheckState, getAccount, logout} from "../../store/action/authActions"
 import {useLocation} from "react-router"
 import {cleanup} from "@testing-library/react"
-import {getWsChatUrl} from "../../api/urls";
+import {getWsLiveDataUrl} from "../../api/urls";
 
 
 const MainPage = (props) => {
@@ -21,7 +21,7 @@ const MainPage = (props) => {
     let location = useLocation()
 
     const connect = () => {
-        let ws = new WebSocket(getWsChatUrl())
+        let ws = new WebSocket(getWsLiveDataUrl())
         let timeout = 500
         let connectInterval
 
@@ -79,7 +79,10 @@ const MainPage = (props) => {
         }
         props.getGreenhouses()
         connect()
-        return () => cleanup()
+        return () => {
+            webSocket?.close()
+            cleanup()
+        }
     }, [])
 
 

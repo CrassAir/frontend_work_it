@@ -29,7 +29,6 @@ import {cleanup} from "@testing-library/react";
 import SimpleBar from "simplebar-react";
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
-import {getApiUrl} from "../../api/urls";
 import {tryPrintTabel} from "../../api/api";
 
 
