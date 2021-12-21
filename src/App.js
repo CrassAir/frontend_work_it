@@ -12,6 +12,7 @@ import RowTasks from "./components/RowTasks/RowTasks";
 import Tabel from "./components/Tabel/Tabel";
 import ChangePassword from "./pages/LoginPage/ChangePassword";
 import {SnackbarProvider} from "notistack";
+import Catalog from "./components/Catalog/Catalog";
 
 
 const App = (props) => {
@@ -42,6 +43,7 @@ const App = (props) => {
                     <Route exact path="change_password" element={<Navigate to={'/'}/>}/>
                     <Route path="/" element={<MainPage/>}>
                         <Route path="calendar" element={<CalendarTasks/>}/>
+                        <Route path="catalog" element={<Catalog/>}/>
                         <Route path="row" element={<RowTasks/>}/>
                         <Route path="tabel" element={<Tabel/>}/>
                     </Route>

@@ -180,7 +180,7 @@ const Tabel = (props) => {
                                                 let hours = data.hours_control ? data.hours_control : data.hours_manual
                                                 let className = setCellClassName(index + 1)
                                                 // Подсвечивает ячейку если часы перко отличны от часов факт
-                                                if (data.hours_perco && data.hours_perco < data.hours_manual && !data.hours_control) className = 'warning'
+                                                if (data.hours_perco && data.hours_perco < Math.round(data.hours_manual) && !data.hours_control) className = 'warning'
                                                 // Просчет суммы часов
                                                 sum_hours += !isNaN(parseInt(hours, 10)) ? parseInt(hours, 10) : 0
                                                 sum_perco += data.hours_perco ? data.hours_perco : 0

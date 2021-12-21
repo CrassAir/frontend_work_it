@@ -19,7 +19,7 @@ export const authInterceptor = (config, token) => {
 }
 
 export const tryPrintTabel = (tabel_id) => {
-    api.get(`${getApiUrl()}tabel/${tabel_id}/get_excel`, {responseType: 'blob'})
+    api.get(`${getApiUrl()}tabel/${tabel_id}/get_excel/`, {responseType: 'blob'})
         .then(res => {
             const url = window.URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement('a');

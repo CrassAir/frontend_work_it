@@ -19,13 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add print btn">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix bugs">
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Crops.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/urls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/authActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/styles.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +144,9 @@
       <workItem from="1638172593038" duration="1164000" />
       <workItem from="1638173789778" duration="67256000" />
       <workItem from="1638382093710" duration="8338000" />
-      <workItem from="1638858850296" duration="15575000" />
+      <workItem from="1638858850296" duration="17981000" />
+      <workItem from="1639458828607" duration="5685000" />
+      <workItem from="1639978427203" duration="18452000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -227,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638946048236</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix bugs">
+      <created>1639120659422</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1639120659422</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,7 +276,8 @@
     <MESSAGE value="fix authCheckState" />
     <MESSAGE value="one call rating dialog" />
     <MESSAGE value="add print btn" />
-    <option name="LAST_COMMIT_MESSAGE" value="add print btn" />
+    <MESSAGE value="fix bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bugs" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -276,30 +296,34 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="740" y="257" key="FileChooserDialogImpl/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638158903738" />
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1639120381383">
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1640078063611">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120381383" />
-    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1639120381383">
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640078063611" />
+    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1639385311540" />
+    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1640078063611">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120381383" />
-    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1639120381383">
+    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640078063611" />
+    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1032@0.0.1920.1032" timestamp="1639385311540" />
+    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1640078063611">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120381383" />
-    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1639120381383">
+    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640078063611" />
+    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1032@0.0.1920.1032" timestamp="1639385311540" />
+    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1640078063611">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120381383" />
-    <state x="461" y="161" key="SettingsEditor" timestamp="1638526510413">
+    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640078063611" />
+    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1032@0.0.1920.1032" timestamp="1639385311540" />
+    <state x="461" y="161" key="SettingsEditor" timestamp="1640067661430">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638526510413" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1638946059753">
+    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640067661430" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1639120663045">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1638946059753" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120663045" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

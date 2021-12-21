@@ -11,7 +11,7 @@ import {getWsLiveDataUrl} from "../../api/urls";
 
 
 const MainPage = (props) => {
-    const listAdminUrl = ['/calendar', '/row', '/tabel']
+    const listAdminUrl = ['/calendar', '/catalog', '/row', '/tabel']
     const listUrl = ['/tabel']
 
     const [tabVal, setTabVal] = useState(0)
@@ -98,8 +98,9 @@ const MainPage = (props) => {
                     <Toolbar>
                         <Tabs value={tabVal} sx={{flexGrow: 1}} onChange={onSelectTab}>
                             <Tab label="Планировщик задач" index={0}/>
-                            <Tab label="Ряды" index={1}/>
-                            <Tab label="Табель" index={2}/>
+                            <Tab label="Справочник" index={1}/>
+                            <Tab label="Ряды" index={2}/>
+                            <Tab label="Табель" index={3}/>
                         </Tabs>
                         <Button color="inherit" onClick={() => {
                             props.logout()
