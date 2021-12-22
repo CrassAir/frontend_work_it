@@ -17,7 +17,7 @@ import {connect} from "react-redux";
 import {
     deleteOperationCategory,
     getOperationsCategory
-} from "../../../store/action/catalogAction/operationCategoryActions";
+} from "../../../store/action/catalogActions/operationCategoryActions";
 import OperationCategoryForm from "./form";
 
 
@@ -65,7 +65,7 @@ const OperationCategoryBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setEditData(-1)}>Назад</Button>
-                <OperationCategoryForm index={editData} closeForm={closeForm} />
+                <OperationCategoryForm index={editData} closeForm={closeForm}/>
             </>
         )
     }
@@ -75,7 +75,7 @@ const OperationCategoryBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setNewData(false)}>Назад</Button>
-                <OperationCategoryForm closeForm={closeForm} />
+                <OperationCategoryForm closeForm={closeForm}/>
             </>
         )
     }
@@ -89,17 +89,15 @@ const OperationCategoryBody = (props) => {
                     <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
                         <TableHead>
                             <TableRow>
-                                <TableCell className={'fixed'}>Наименование</TableCell>
-                                <TableCell className={'fixed'}>Действие</TableCell>
+                                <TableCell>Наименование</TableCell>
+                                <TableCell align={'right'}>Действие</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {props.operationsCategory.map((val, index) => (
                                 <TableRow key={index}>
-                                    <TableCell className={'fixed'}
-                                               scope="row">{val.name}</TableCell>
-                                    <TableCell className={'fixed'}
-                                               scope="row">{actionsBtn(index)}</TableCell>
+                                    <TableCell scope="row">{val.name}</TableCell>
+                                    <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

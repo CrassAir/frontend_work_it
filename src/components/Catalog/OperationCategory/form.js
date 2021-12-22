@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import {
     addOperationCategory,
     editOperationCategory
-} from "../../../store/action/catalogAction/operationCategoryActions";
+} from "../../../store/action/catalogActions/operationCategoryActions";
 import {connect} from "react-redux";
 import React from "react";
 

@@ -1,17 +1,20 @@
 import * as actionTypes from "./action/actionTypes"
 import {updateObject} from "./utils";
-import * as catalogActionTypes from "./action/catalogAction/actionTypes";
+import * as catalogActionTypes from "./action/catalogActions/actionTypes";
 
 const initialState = {
     token: null,
     error: null,
     loading: false,
     user: null,
-    greenhouse: null,
+    greenhouses: null,
+    crops: null,
+    hybrids: null,
     tabels: null,
     cells: null,
     operationsCategory: null,
     operationsFrequency: null,
+    technologicalPeriods: null,
 }
 
 const authStart = (state, action) => {
@@ -156,6 +159,54 @@ const trySendCellsFail = (state, action) => {
     })
 }
 
+//<editor-fold desc="Catalog">
+
+//Crops
+const getCropsStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getCropsSuccess = (state, action) => {
+    return updateObject(state, {
+        crops: action.crops,
+        loading: false,
+    })
+}
+
+const getCropsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//Hybrids
+const getHybridsStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getHybridsSuccess = (state, action) => {
+    return updateObject(state, {
+        hybrids: action.hybrids,
+        loading: false,
+    })
+}
+
+const getHybridsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//<editor-fold defaultstate="collapsed" desc="OperationsCategory">
+
 const getOperationsCategoryStart = (state, action) => {
     return updateObject(state, {
         operationsCategory: null,
@@ -249,6 +300,10 @@ const deleteOperationCategoryFail = (state, action) => {
         loading: false,
     })
 }
+
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="OperationsFrequency">
 
 const getOperationsFrequencyStart = (state, action) => {
     return updateObject(state, {
@@ -344,6 +399,107 @@ const deleteOperationFrequencyFail = (state, action) => {
     })
 }
 
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="TechnologicalPeriod">
+
+const getTechnologicalPeriodsStart = (state, action) => {
+    return updateObject(state, {
+        technologicalPeriods: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getTechnologicalPeriodsSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        technologicalPeriods: action.technologicalPeriods
+    })
+}
+
+const getTechnologicalPeriodsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addTechnologicalPeriodStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addTechnologicalPeriodSuccess = (state, action) => {
+    return updateObject(state, {
+        technologicalPeriods: [...state.technologicalPeriods, action.technologicalPeriod],
+        loading: false,
+    })
+}
+
+const addTechnologicalPeriodFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editTechnologicalPeriodStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editTechnologicalPeriodSuccess = (state, action) => {
+    let newData = []
+    state.technologicalPeriods.forEach((val) => {
+        if (val.id === action.technologicalPeriod.id) newData.push(action.technologicalPeriod)
+        else newData.push(val)
+    })
+    return updateObject(state, {
+        technologicalPeriods: [...newData],
+        loading: false,
+    })
+}
+
+const editTechnologicalPeriodFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteTechnologicalPeriodStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteTechnologicalPeriodSuccess = (state, action) => {
+    let newData = []
+    state.technologicalPeriods.forEach((val) => {
+        if (val.id !== action.technologicalPeriodId) newData.push(val)
+    })
+    return updateObject(state, {
+        technologicalPeriods: [...newData],
+        loading: false,
+    })
+}
+
+const deleteTechnologicalPeriodFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold>
+
+//</editor-fold >
 
 const reducer = (state = initialState, action) => {
     console.log(action.type)
@@ -386,6 +542,27 @@ const reducer = (state = initialState, action) => {
             return trySendCellsSuccess(state, action);
         case actionTypes.TRY_SEND_CELLS_FAIL:
             return trySendCellsFail(state, action);
+
+// <editor-fold desc="Catalog">
+
+        //Crops
+        case catalogActionTypes.GET_CROPS_START:
+            return getCropsStart(state, action);
+        case catalogActionTypes.GET_CROPS_SUCCESS:
+            return getCropsSuccess(state, action);
+        case catalogActionTypes.GET_CROPS_FAIL:
+            return getCropsFail(state, action);
+
+        //Hybrids
+        case catalogActionTypes.GET_HYBRIDS_START:
+            return getHybridsStart(state, action);
+        case catalogActionTypes.GET_HYBRIDS_SUCCESS:
+            return getHybridsSuccess(state, action);
+        case catalogActionTypes.GET_HYBRIDS_FAIL:
+            return getHybridsFail(state, action);
+
+        //<editor-fold defaultstate="collapsed" desc="OperationsCategory">
+
         case catalogActionTypes.GET_OPERATIONS_CATEGORY_START:
             return getOperationsCategoryStart(state, action);
         case catalogActionTypes.GET_OPERATIONS_CATEGORY_SUCCESS:
@@ -410,6 +587,11 @@ const reducer = (state = initialState, action) => {
             return deleteOperationCategorySuccess(state, action);
         case catalogActionTypes.DELETE_OPERATION_CATEGORY_FAIL:
             return deleteOperationCategoryFail(state, action);
+
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="OperationsFrequency">
+
         case catalogActionTypes.GET_OPERATIONS_FREQUENCY_START:
             return getOperationsFrequencyStart(state, action);
         case catalogActionTypes.GET_OPERATIONS_FREQUENCY_SUCCESS:
@@ -435,7 +617,38 @@ const reducer = (state = initialState, action) => {
         case catalogActionTypes.DELETE_OPERATION_FREQUENCY_FAIL:
             return deleteOperationFrequencyFail(state, action);
 
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="TechnologicalPeriod">
+
+        case catalogActionTypes.GET_TECHNOLOGICAL_PERIODS_START:
+            return getTechnologicalPeriodsStart(state, action);
+        case catalogActionTypes.GET_TECHNOLOGICAL_PERIODS_SUCCESS:
+            return getTechnologicalPeriodsSuccess(state, action);
+        case catalogActionTypes.GET_TECHNOLOGICAL_PERIODS_FAIL:
+            return getTechnologicalPeriodsFail(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_PERIOD_START:
+            return addTechnologicalPeriodStart(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_PERIOD_SUCCESS:
+            return addTechnologicalPeriodSuccess(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_PERIOD_FAIL:
+            return addTechnologicalPeriodFail(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_PERIOD_START:
+            return editTechnologicalPeriodStart(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_PERIOD_SUCCESS:
+            return editTechnologicalPeriodSuccess(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_PERIOD_FAIL:
+            return editTechnologicalPeriodFail(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_PERIOD_START:
+            return deleteTechnologicalPeriodStart(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_PERIOD_SUCCESS:
+            return deleteTechnologicalPeriodSuccess(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_PERIOD_FAIL:
+            return deleteTechnologicalPeriodFail(state, action);
+
+        //</editor-fold>
+
+//</editor-fold>
         default:
             return state;
     }

@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import Box from "@mui/material/Box";
-import SimpleBar from "simplebar-react";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -15,21 +14,24 @@ import TableBody from "@mui/material/TableBody";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {
-    deleteOperationFrequency,
-    getOperationsFrequency
-} from "../../../store/action/catalogActions/operationFrequencyActions";
-import OperationFrequencyForm from "./form";
+    deleteTechnologicalPeriod,
+    getTechnologicalPeriods
+} from "../../../store/action/catalogActions/technologicalPeriodsActions";
+import TechnologicalPeriodForm from "./form";
+import moment from "moment";
 
+export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
 
-const OperationFrequencyBody = (props) => {
+const TechnologicalPeriodBody = (props) => {
     const [editData, setEditData] = useState(-1)
     const [newData, setNewData] = useState(false)
 
+
     useEffect(() => {
-        props.getOperationsFrequency()
+        props.getTechnologicalPeriods()
     }, [])
 
-    if (!props.operationsFrequency) return null
+    if (!props.technologicalPeriods) return null
 
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
@@ -43,7 +45,7 @@ const OperationFrequencyBody = (props) => {
                     onConfirm={() => {
                         // data.splice(index, 1);
                         // setData([...data])
-                        props.deleteOperationFrequency(props.operationsFrequency[index].id)
+                        props.deleteTechnologicalPeriod(props.technologicalPeriods[index].id)
                     }}
                     okText="Да"
                     cancelText="Нет"
@@ -65,7 +67,7 @@ const OperationFrequencyBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setEditData(-1)}>Назад</Button>
-                <OperationFrequencyForm index={editData} closeForm={closeForm}/>
+                <TechnologicalPeriodForm index={editData} closeForm={closeForm}/>
             </>
         )
     }
@@ -75,48 +77,56 @@ const OperationFrequencyBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setNewData(false)}>Назад</Button>
-                <OperationFrequencyForm closeForm={closeForm}/>
+                <TechnologicalPeriodForm closeForm={closeForm}/>
             </>
         )
     }
 
+    console.log(props.technologicalPeriods)
     return (
         <>
             <Button className={'add_btn'} variant={'text'} startIcon={<AddIcon/>}
                     size={'small'} onClick={() => setNewData(true)}>Добавить</Button>
             <TableContainer component={Box}>
-                <SimpleBar style={{maxHeight: '100%'}}>
-                    <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Наименование</TableCell>
-                                <TableCell>Шаг отступа</TableCell>
-                                <TableCell align={'right'}>Действие</TableCell>
+                <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Наименование</TableCell>
+                            <TableCell>Тип периода</TableCell>
+                            <TableCell>Теплица</TableCell>
+                            <TableCell>Гибрид</TableCell>
+                            <TableCell>Начало периода</TableCell>
+                            <TableCell>Культура</TableCell>
+                            <TableCell align={'right'}>Действие</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.technologicalPeriods.map((val, index) => (
+                            <TableRow key={index}>
+                                <TableCell scope="row">{val.name}</TableCell>
+                                <TableCell scope="row">{choices[val.type]}</TableCell>
+                                <TableCell scope="row">{val.greenhouse?.name}</TableCell>
+                                <TableCell scope="row">{val.hybrid?.name}</TableCell>
+                                <TableCell
+                                    scope="row">{moment(val.date_time_start).format('DD-MM-YYYY')}</TableCell>
+                                <TableCell scope="row">{val.crop?.name}</TableCell>
+                                <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {props.operationsFrequency.map((val, index) => (
-                                <TableRow key={index}>
-                                    <TableCell scope="row">{val.name}</TableCell>
-                                    <TableCell scope="row">{val.step}</TableCell>
-                                    <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </SimpleBar>
+                        ))}
+                    </TableBody>
+                </Table>
             </TableContainer>
         </>
     )
 }
 
 const mapStateToProps = (state) => ({
-    operationsFrequency: state.operationsFrequency
+    technologicalPeriods: state.technologicalPeriods
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getOperationsFrequency: () => dispatch(getOperationsFrequency()),
-    deleteOperationFrequency: (id) => dispatch(deleteOperationFrequency(id)),
+    getTechnologicalPeriods: () => dispatch(getTechnologicalPeriods()),
+    deleteTechnologicalPeriod: (id) => dispatch(deleteTechnologicalPeriod(id)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OperationFrequencyBody)
+export default connect(mapStateToProps, mapDispatchToProps)(TechnologicalPeriodBody)

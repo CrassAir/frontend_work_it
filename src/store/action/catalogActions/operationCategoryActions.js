@@ -82,7 +82,7 @@ const deleteOperationCategoryFail = (error) => {
     }
 }
 
-export const getOperationsCategory = (id) => {
+export const getOperationsCategory = () => {
     return dispatch => {
         dispatch(getOperationsCategoryStart());
         api.get(getApiUrl() + 'operation-category/').then(res => {

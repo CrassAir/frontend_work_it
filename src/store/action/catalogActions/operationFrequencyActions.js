@@ -82,7 +82,7 @@ const deleteOperationFrequencyFail = (error) => {
     }
 }
 
-export const getOperationsFrequency = (id) => {
+export const getOperationsFrequency = () => {
     return dispatch => {
         dispatch(getOperationsFrequencyStart());
         api.get(getApiUrl() + 'operation-frequency/').then(res => {

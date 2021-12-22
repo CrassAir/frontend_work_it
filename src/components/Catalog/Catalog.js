@@ -5,6 +5,7 @@ import {MenuItem, MenuList, Paper} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import OperationCategoryBody from "./OperationCategory/body";
 import OperationFrequencyBody from "./OperationFrequency/body";
+import TechnologicalPeriodBody from "./TechnologicalPeriods/body";
 
 
 const Catalog = (props) => {
@@ -14,9 +15,9 @@ const Catalog = (props) => {
     const menuItem = [
         {title: 'Категория операций', body: <OperationCategoryBody/>},
         {title: 'Частоты выполнения операции', body: <OperationFrequencyBody/>},
+        {title: 'Технологические периоды', body: <TechnologicalPeriodBody/>},
         {title: 'Нормы выполнения операции', body: <OperationCategoryBody/>},
         {title: 'Технологические операции', body: <OperationCategoryBody/>},
-        {title: 'Технологические периоды', body: <OperationCategoryBody/>},
     ]
 
     const generateMenuItem = () => {

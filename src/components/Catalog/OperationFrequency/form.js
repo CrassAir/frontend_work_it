@@ -7,7 +7,7 @@ import React from "react";
 import {
     addOperationFrequency,
     editOperationFrequency
-} from "../../../store/action/catalogAction/operationFrequencyAction";
+} from "../../../store/action/catalogActions/operationFrequencyActions";
 
 const OperationFrequencyForm = (props) => {
     let data

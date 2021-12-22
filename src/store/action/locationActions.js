@@ -26,8 +26,7 @@ export const getGreenhouses = () => {
     return dispatch => {
         dispatch(getGreenhousesStart());
         api.get(getApiUrl() + "greenhouses/").then(res => {
-                let greenhouses = res.data
-                dispatch(getGreenhousesSuccess(greenhouses));
+                dispatch(getGreenhousesSuccess(res.data));
             }
         ).catch(err => {
             dispatch(getGreenhousesFail(err));
