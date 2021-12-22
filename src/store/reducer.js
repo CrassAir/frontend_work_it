@@ -1,5 +1,6 @@
 import * as actionTypes from "./action/actionTypes"
 import {updateObject} from "./utils";
+import * as catalogActionTypes from "./action/catalogAction/actionTypes";
 
 const initialState = {
     token: null,
@@ -9,6 +10,8 @@ const initialState = {
     greenhouse: null,
     tabels: null,
     cells: null,
+    operationsCategory: null,
+    operationsFrequency: null,
 }
 
 const authStart = (state, action) => {
@@ -153,6 +156,194 @@ const trySendCellsFail = (state, action) => {
     })
 }
 
+const getOperationsCategoryStart = (state, action) => {
+    return updateObject(state, {
+        operationsCategory: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getOperationsCategorySuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        operationsCategory: action.operationsCategory
+    })
+}
+
+const getOperationsCategoryFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addOperationCategoryStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addOperationCategorySuccess = (state, action) => {
+    return updateObject(state, {
+        operationsCategory: [...state.operationsCategory, action.operationCategory],
+        loading: false,
+    })
+}
+
+const addOperationCategoryFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editOperationCategoryStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editOperationCategorySuccess = (state, action) => {
+    let newData = []
+    state.operationsCategory.forEach((val) => {
+        if (val.id === action.operationCategory.id) newData.push(action.operationCategory)
+        else newData.push(val)
+    })
+    return updateObject(state, {
+        operationsCategory: [...newData],
+        loading: false,
+    })
+}
+
+const editOperationCategoryFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteOperationCategoryStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteOperationCategorySuccess = (state, action) => {
+    let newData = []
+    state.operationsCategory.forEach((val) => {
+        if (val.id !== action.operationCategoryId) newData.push(val)
+    })
+    return updateObject(state, {
+        operationsCategory: [...newData],
+        loading: false,
+    })
+}
+
+const deleteOperationCategoryFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const getOperationsFrequencyStart = (state, action) => {
+    return updateObject(state, {
+        operationsFrequency: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getOperationsFrequencySuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        operationsFrequency: action.operationsFrequency
+    })
+}
+
+const getOperationsFrequencyFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addOperationFrequencyStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addOperationFrequencySuccess = (state, action) => {
+    return updateObject(state, {
+        operationsFrequency: [...state.operationsFrequency, action.operationFrequency],
+        loading: false,
+    })
+}
+
+const addOperationFrequencyFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editOperationFrequencyStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editOperationFrequencySuccess = (state, action) => {
+    let newData = []
+    state.operationsFrequency.forEach((val) => {
+        if (val.id === action.operationFrequency.id) newData.push(action.operationFrequency)
+        else newData.push(val)
+    })
+    return updateObject(state, {
+        operationsFrequency: [...newData],
+        loading: false,
+    })
+}
+
+const editOperationFrequencyFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteOperationFrequencyStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteOperationFrequencySuccess = (state, action) => {
+    let newData = []
+    state.operationsFrequency.forEach((val) => {
+        if (val.id !== action.operationFrequencyId) newData.push(val)
+    })
+    return updateObject(state, {
+        operationsFrequency: [...newData],
+        loading: false,
+    })
+}
+
+const deleteOperationFrequencyFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 
 const reducer = (state = initialState, action) => {
     console.log(action.type)
@@ -195,6 +386,56 @@ const reducer = (state = initialState, action) => {
             return trySendCellsSuccess(state, action);
         case actionTypes.TRY_SEND_CELLS_FAIL:
             return trySendCellsFail(state, action);
+        case catalogActionTypes.GET_OPERATIONS_CATEGORY_START:
+            return getOperationsCategoryStart(state, action);
+        case catalogActionTypes.GET_OPERATIONS_CATEGORY_SUCCESS:
+            return getOperationsCategorySuccess(state, action);
+        case catalogActionTypes.GET_OPERATIONS_CATEGORY_FAIL:
+            return getOperationsCategoryFail(state, action);
+        case catalogActionTypes.ADD_OPERATION_CATEGORY_START:
+            return addOperationCategoryStart(state, action);
+        case catalogActionTypes.ADD_OPERATION_CATEGORY_SUCCESS:
+            return addOperationCategorySuccess(state, action);
+        case catalogActionTypes.ADD_OPERATION_CATEGORY_FAIL:
+            return addOperationCategoryFail(state, action);
+        case catalogActionTypes.EDIT_OPERATION_CATEGORY_START:
+            return editOperationCategoryStart(state, action);
+        case catalogActionTypes.EDIT_OPERATION_CATEGORY_SUCCESS:
+            return editOperationCategorySuccess(state, action);
+        case catalogActionTypes.EDIT_OPERATION_CATEGORY_FAIL:
+            return editOperationCategoryFail(state, action);
+        case catalogActionTypes.DELETE_OPERATION_CATEGORY_START:
+            return deleteOperationCategoryStart(state, action);
+        case catalogActionTypes.DELETE_OPERATION_CATEGORY_SUCCESS:
+            return deleteOperationCategorySuccess(state, action);
+        case catalogActionTypes.DELETE_OPERATION_CATEGORY_FAIL:
+            return deleteOperationCategoryFail(state, action);
+        case catalogActionTypes.GET_OPERATIONS_FREQUENCY_START:
+            return getOperationsFrequencyStart(state, action);
+        case catalogActionTypes.GET_OPERATIONS_FREQUENCY_SUCCESS:
+            return getOperationsFrequencySuccess(state, action);
+        case catalogActionTypes.GET_OPERATIONS_FREQUENCY_FAIL:
+            return getOperationsFrequencyFail(state, action);
+        case catalogActionTypes.ADD_OPERATION_FREQUENCY_START:
+            return addOperationFrequencyStart(state, action);
+        case catalogActionTypes.ADD_OPERATION_FREQUENCY_SUCCESS:
+            return addOperationFrequencySuccess(state, action);
+        case catalogActionTypes.ADD_OPERATION_FREQUENCY_FAIL:
+            return addOperationFrequencyFail(state, action);
+        case catalogActionTypes.EDIT_OPERATION_FREQUENCY_START:
+            return editOperationFrequencyStart(state, action);
+        case catalogActionTypes.EDIT_OPERATION_FREQUENCY_SUCCESS:
+            return editOperationFrequencySuccess(state, action);
+        case catalogActionTypes.EDIT_OPERATION_FREQUENCY_FAIL:
+            return editOperationFrequencyFail(state, action);
+        case catalogActionTypes.DELETE_OPERATION_FREQUENCY_START:
+            return deleteOperationFrequencyStart(state, action);
+        case catalogActionTypes.DELETE_OPERATION_FREQUENCY_SUCCESS:
+            return deleteOperationFrequencySuccess(state, action);
+        case catalogActionTypes.DELETE_OPERATION_FREQUENCY_FAIL:
+            return deleteOperationFrequencyFail(state, action);
+
+
         default:
             return state;
     }

@@ -3,44 +3,27 @@ import {connect} from 'react-redux'
 import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import {MenuItem, MenuList, Paper} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import CropsBody from "./Crops";
-import OperationCategoryBody from "./OperationCategory";
+import OperationCategoryBody from "./OperationCategory/body";
+import OperationFrequencyBody from "./OperationFrequency/body";
 
 
 const Catalog = (props) => {
     const [selectedCatalog, setSelectedCatalog] = useState(0)
     const [initSplitter] = useState([20, 80])
 
-    const operationFrequencyBody = () => {
-        console.log('operationFrequencyBody')
-    }
-
-    const operationalStandardsBody = () => {
-        console.log('operationalStandardsBody')
-    }
-
-    const technologicalOperationsBody = () => {
-        console.log('technologicalOperationsBody')
-    }
-
-    const technologicalPeriodsBody = () => {
-        console.log('technologicalPeriodsBody')
-    }
-
-
     const menuItem = [
-        {title: 'Культуры', body: <CropsBody/>},
-        {title: 'Категория операций', body:  <OperationCategoryBody/>},
-        {title: 'Частоты выполнения операции', body: operationFrequencyBody},
-        {title: 'Нормы выполнения операции', body: operationalStandardsBody},
-        {title: 'Технологические операции', body: technologicalOperationsBody},
-        {title: 'Технологические периоды', body: technologicalPeriodsBody},
+        {title: 'Категория операций', body: <OperationCategoryBody/>},
+        {title: 'Частоты выполнения операции', body: <OperationFrequencyBody/>},
+        {title: 'Нормы выполнения операции', body: <OperationCategoryBody/>},
+        {title: 'Технологические операции', body: <OperationCategoryBody/>},
+        {title: 'Технологические периоды', body: <OperationCategoryBody/>},
     ]
 
     const generateMenuItem = () => {
         return menuItem.map((item, index) => (
             <MenuItem
                 selected={selectedCatalog === index}
+                key={index}
                 onClick={() => {
                     setSelectedCatalog(index)
                 }}>
@@ -64,6 +47,7 @@ const Catalog = (props) => {
                 <Paper className={'center_paper'}>
                     {menuItem[selectedCatalog].body}
                 </Paper>
+
             </Splitter>
         </div>
     )

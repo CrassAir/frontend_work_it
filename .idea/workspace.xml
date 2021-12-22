@@ -19,23 +19,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix bugs">
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/Crops.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory.js" afterDir="false" />
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add Catalog.js">
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/action/catalogAction/actionTypes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/action/catalogAction/operationCategoryActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/action/catalogAction/operationFrequencyAction.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/urls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarTasks/CalendarTasks.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/styles.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Crops.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/body.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/OperationCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/body.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +82,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="17.1.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Catalog/OperationFrequency" />
     <property name="list.type.of.created.stylesheet" value="Less" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
@@ -103,6 +98,18 @@
     <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\frontend_work_it\src\components\Catalog\OperationFrequency" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\frontend_work_it\src\store" />
+      <recent name="C:\Projects\frontend_work_it\src\store\action" />
+      <recent name="C:\Projects\frontend_work_it\src\store\action\catalogAction" />
+      <recent name="C:\Projects\frontend_work_it\src\components\Catalog\OperationCategory" />
+      <recent name="C:\Projects\frontend_work_it\src\components\Catalog\body" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="js.build_tools.npm">
@@ -146,7 +153,7 @@
       <workItem from="1638382093710" duration="8338000" />
       <workItem from="1638858850296" duration="17981000" />
       <workItem from="1639458828607" duration="5685000" />
-      <workItem from="1639978427203" duration="18452000" />
+      <workItem from="1639978427203" duration="29927000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -246,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639120659422</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="add Catalog.js">
+      <created>1640087242296</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1640087242296</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,7 +291,8 @@
     <MESSAGE value="one call rating dialog" />
     <MESSAGE value="add print btn" />
     <MESSAGE value="fix bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bugs" />
+    <MESSAGE value="add Catalog.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Catalog.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -288,6 +303,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="715" y="318" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1637914834212" />
+    <state x="690" y="263" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1640154740125">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="690" y="263" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640154740125" />
     <state x="669" y="54" key="#rollup-plugin-off-main-thread/Dockerfile" timestamp="1637909409661">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
@@ -320,10 +339,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640067661430" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1639120663045">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1640087247307">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1639120663045" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640087247307" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

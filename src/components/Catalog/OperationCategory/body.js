@@ -1,4 +1,4 @@
-import {Form, Popconfirm, Space, Tooltip} from "antd";
+import {Popconfirm, Space, Tooltip} from "antd";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,52 +12,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {TextField} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
+import {
+    deleteOperationCategory,
+    getOperationsCategory
+} from "../../../store/action/catalogAction/operationCategoryActions";
+import OperationCategoryForm from "./form";
 
 
-export const corpsForm = (value) => {
-    return (
-        <Form
-            onFinish={(values) => {
-                console.log(values)
-            }}
-        >
-            <Form.Item
-                name="title"
-                getValueProps={(e) => {
-                }}
-                required={true}
-                initialValue={value}
-            >
-                <TextField
-                    required
-                    label="Культура"
-                    variant="standard"
-                    defaultValue={value}
-                    // fullWidth
-                />
-            </Form.Item>
-            <Form.Item>
-                <Box sx={{mb: 2}}>
-                    <Button
-                        variant="contained"
-                        color={'success'}
-                        type={'submit'}
-                        sx={{mt: 1, mr: 1}}
-                    >
-                        {value ? 'Изменить' : 'Создать'}
-                    </Button>
-                </Box>
-            </Form.Item>
-        </Form>
-    )
-}
-
-const CropsBody = (props) => {
+const OperationCategoryBody = (props) => {
     const [editData, setEditData] = useState(-1)
     const [newData, setNewData] = useState(false)
-    const [data, setData] = useState([1, 2, 3, 4])
+
+    useEffect(() => {
+        props.getOperationsCategory()
+    }, [])
+
+    if (!props.operationsCategory) return null
 
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
@@ -69,8 +41,9 @@ const CropsBody = (props) => {
                 <Popconfirm
                     title="Вы уверены что хотите удалить культуру?"
                     onConfirm={() => {
-                        data.splice(index, 1);
-                        setData([...data])
+                        // data.splice(index, 1);
+                        // setData([...data])
+                        props.deleteOperationCategory(props.operationsCategory[index].id)
                     }}
                     okText="Да"
                     cancelText="Нет"
@@ -82,12 +55,17 @@ const CropsBody = (props) => {
         </Space>
     }
 
+    const closeForm = () => {
+        setEditData(-1)
+        setNewData(false)
+    }
+
     if (editData >= 0) {
         return (
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setEditData(-1)}>Назад</Button>
-                {corpsForm(data[editData])}
+                <OperationCategoryForm index={editData} closeForm={closeForm} />
             </>
         )
     }
@@ -97,7 +75,7 @@ const CropsBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setNewData(false)}>Назад</Button>
-                {corpsForm()}
+                <OperationCategoryForm closeForm={closeForm} />
             </>
         )
     }
@@ -111,16 +89,16 @@ const CropsBody = (props) => {
                     <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
                         <TableHead>
                             <TableRow>
-                                <TableCell className={'fixed'}>Культура</TableCell>
-                                <TableCell className={'fixed'}>Действия</TableCell>
+                                <TableCell className={'fixed'}>Наименование</TableCell>
+                                <TableCell className={'fixed'}>Действие</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map((val, index) => (
-                                <TableRow>
-                                    <TableCell className={'fixed'} component={'th'}
-                                               scope="row">{val}</TableCell>
-                                    <TableCell className={'fixed'} component={'th'}
+                            {props.operationsCategory.map((val, index) => (
+                                <TableRow key={index}>
+                                    <TableCell className={'fixed'}
+                                               scope="row">{val.name}</TableCell>
+                                    <TableCell className={'fixed'}
                                                scope="row">{actionsBtn(index)}</TableCell>
                                 </TableRow>
                             ))}
@@ -132,4 +110,13 @@ const CropsBody = (props) => {
     )
 }
 
-export default CropsBody
+const mapStateToProps = (state) => ({
+    operationsCategory: state.operationsCategory,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    getOperationsCategory: () => dispatch(getOperationsCategory()),
+    deleteOperationCategory: (id) => dispatch(deleteOperationCategory(id)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(OperationCategoryBody)
