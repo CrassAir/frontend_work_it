@@ -84,7 +84,7 @@ const OperationCategoryBody = (props) => {
         <>
             <Button className={'add_btn'} variant={'text'} startIcon={<AddIcon/>}
                     size={'small'} onClick={() => setNewData(true)}>Добавить</Button>
-            <TableContainer component={Box}>
+            <TableContainer component={Box} className={'tabel_container'}>
                 <SimpleBar style={{maxHeight: '100%'}}>
                     <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
                         <TableHead>

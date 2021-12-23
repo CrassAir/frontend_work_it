@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {ConfigProvider, DatePicker, Form, Input, Space, Tooltip} from "antd";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {getTabels, tryGetCellsByTabel, trySendCellsData} from "../../store/action/tabelActions";
+import {getTabels, tryGetCellsByTabel, tryOpenCellsInTabel, trySendCellsData} from "../../store/action/tabelActions";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
@@ -29,6 +29,7 @@ import {cleanup} from "@testing-library/react";
 import SimpleBar from "simplebar-react";
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import {tryPrintTabel} from "../../api/api";
 
 
@@ -117,6 +118,8 @@ const Tabel = (props) => {
         const button = () => {
             if (props.user?.rules_template_account.can_check_cro || props.user?.is_admin || props.user?.is_superuser) {
                 return <Space direction={"horizontal"} className={'send_btn'}>
+                    <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
+                            onClick={() => props.tryOpenCellsInTabel(selectTabel.id)}>Открыть табель</Button>
                     <Button variant={'contained'} startIcon={<PrintIcon/>} size={'small'}
                             onClick={() => tryPrintTabel(selectTabel.id)}>Печать</Button>
                     <Button variant={'contained'} startIcon={<SaveIcon/>} color={'success'} size={'small'}
@@ -144,7 +147,7 @@ const Tabel = (props) => {
             >
                 <Paper className={'tabel_container'}>
                     <Space direction={"horizontal"}>
-                        {selectTabel.department_name}
+                        <Typography className={'tabel_title'}>{selectTabel.department_name}</Typography>
                         {selectTabel.checked_cro ? <CheckCircleIcon color={'success'}/> : null}
                     </Space>
                     {button()}
@@ -153,23 +156,24 @@ const Tabel = (props) => {
                             <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className={'fixed'}>Сотрудник</TableCell>
-                                        <TableCell align="center">Табельный номер</TableCell>
-                                        <TableCell align="center">Должность</TableCell>
+                                        <TableCell key={'tc1'} className={'fixed'}>Сотрудник</TableCell>
+                                        <TableCell key={'tc2'} align="center">Табельный номер</TableCell>
+                                        <TableCell key={'tc3'} align="center">Должность</TableCell>
                                         {Array.from({length: dayInMonth}, (_, index) => (
                                             <TableCell
+                                                key={'th_' + index}
                                                 className={setCellClassName(index + 1)}
                                                 align="center">{index + 1}</TableCell>
                                         ))}
-                                        <TableCell align="center">Сумма часов</TableCell>
-                                        <TableCell align="center">Сумма перко</TableCell>
+                                        <TableCell key={'tc4'} align="center">Сумма часов</TableCell>
+                                        <TableCell key={'tc5'} align="center">Сумма перко</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {props.cells.map((row) => {
+                                    {props.cells.map((row, index) => {
                                         let sum_hours = 0
                                         let sum_perco = 0
-                                        return <TableRow>
+                                        return <TableRow key={'tb_' + index}>
                                             <TableCell className={'fixed'} component={'th'}
                                                        scope="row">{row.full_name}</TableCell>
                                             <TableCell align="center">{row.employee_code}</TableCell>
@@ -203,6 +207,7 @@ const Tabel = (props) => {
 
                                                 return <TableCell
                                                     className={className}
+                                                    key={'trtc_' + index}
                                                     align="center">
                                                     <Space direction={"vertical"}>
                                                         {cellComp}
@@ -211,8 +216,8 @@ const Tabel = (props) => {
                                                     </Space>
                                                 </TableCell>
                                             })}
-                                            <TableCell align="center">{sum_hours}</TableCell>
-                                            <TableCell align="center">{Math.round(sum_perco)}</TableCell>
+                                            <TableCell key='sumh' align="center">{sum_hours}</TableCell>
+                                            <TableCell key='sump' align="center">{Math.round(sum_perco)}</TableCell>
                                         </TableRow>
                                     })}
                                 </TableBody>
@@ -234,7 +239,7 @@ const Tabel = (props) => {
                 <Paper className={'paper'}>
                     <SimpleBar style={{maxHeight: '100%'}}>
                         <MenuList disableListWrap>
-                            <MenuItem sx={{marginBottom: '10px'}}>
+                            <MenuItem sx={{marginBottom: '10px'}} key='date'>
                                 <ConfigProvider locale={locale}>
                                     <DatePicker
                                         onChange={(e) => {
@@ -252,6 +257,7 @@ const Tabel = (props) => {
                                     return <MenuItem
                                         className={tabel.checked_cro ? 'checked' : 'test'}
                                         selected={tabel === selectTabel}
+                                        key={tabel.id}
                                         onClick={() => {
                                             setSelectTabel(tabel)
                                             props.tryGetCellsByTabel(tabel.id)
@@ -281,7 +287,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getTabels: (dateTime) => dispatch(getTabels(dateTime)),
     trySendCellsData: (cells, cro) => dispatch(trySendCellsData(cells, cro)),
-    tryGetCellsByTabel: (tabel_id) => dispatch(tryGetCellsByTabel(tabel_id))
+    tryGetCellsByTabel: (tabel_id) => dispatch(tryGetCellsByTabel(tabel_id)),
+    tryOpenCellsInTabel: (tabel_id) => dispatch(tryOpenCellsInTabel(tabel_id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tabel)

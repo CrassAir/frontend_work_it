@@ -138,6 +138,27 @@ const getCellsFail = (state, action) => {
     })
 }
 
+const openCellsStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const openCellsSuccess = (state, action) => {
+    return updateObject(state, {
+        cells: action.cells,
+        loading: false,
+    })
+}
+
+const openCellsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 const trySendCellsStart = (state, action) => {
     return updateObject(state, {
         cells: null,
@@ -657,6 +678,12 @@ const reducer = (state = initialState, action) => {
             return getCellsSuccess(state, action);
         case actionTypes.GET_CELLS_FAIL:
             return getCellsFail(state, action);
+        case actionTypes.OPEN_CELLS_START:
+            return openCellsStart(state, action);
+        case actionTypes.OPEN_CELLS_SUCCESS:
+            return openCellsSuccess(state, action);
+        case actionTypes.OPEN_CELLS_FAIL:
+            return openCellsFail(state, action);
         case actionTypes.TRY_SEND_CELLS_START:
             return trySendCellsStart(state, action);
         case actionTypes.TRY_SEND_CELLS_SUCCESS:

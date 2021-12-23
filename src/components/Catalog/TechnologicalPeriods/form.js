@@ -4,10 +4,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {choices} from "./body";
 import MenuItem from "@mui/material/MenuItem";
 import {getGreenhouses} from "../../../store/action/locationActions";
-import {getCrops, getHybrids} from "../../../store/action/catalogActions/catalogActions";
+import {getCrops, getHybrids, getVegetationPhases} from "../../../store/action/catalogActions/catalogActions";
 import {
     addTechnologicalPeriod,
     editTechnologicalPeriod
@@ -17,6 +16,7 @@ import moment from "moment";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
+import {choices, phaseChoice} from "../Catalog";
 
 
 const TechnologicalPeriodForm = (props) => {
@@ -27,16 +27,18 @@ const TechnologicalPeriodForm = (props) => {
         if (!props.greenhouses) props.getGreenhouses()
         if (!props.crops) props.getCrops()
         if (!props.hybrids) props.getHybrids()
+        if (!props.vegetationPhases) props.getVegetationPhases()
     }, [])
 
     const [selectType, setSelectType] = useState(data?.type)
     const [selectGreenhouse, setSelectGreenhouse] = useState(data?.greenhouse?.id)
-    const [selectCrops, setSelectCrops] = useState(data?.crop?.id)
-    const [selectHybrids, setSelectHybrids] = useState(data?.hybrid?.id)
+    const [selectCrop, setSelectCrop] = useState(data?.crop?.id)
+    const [selectHybrid, setSelectHybrid] = useState(data?.hybrid?.id)
+    const [selectVegetationPhase, setSelectVegetationPhase] = useState(data?.phase?.id)
 
     // const [visibleModal, setVisibleModal] = useState(false)
 
-    if (!props.greenhouses || !props.crops || !props.hybrids) return null
+    if (!props.greenhouses || !props.crops || !props.hybrids || !props.vegetationPhases) return null
 
     // const actionBtn = (value) => {
     //     return <Space direction={"horizontal"} className={'send_btn'}>
@@ -143,19 +145,19 @@ const TechnologicalPeriodForm = (props) => {
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="greenhouse"
+                    name="phase"
                     getValueProps={(e) => {
                     }}
                     required
-                    initialValue={selectGreenhouse}
+                    initialValue={selectVegetationPhase}
                 >
-                    <TextField label="Теплица"
-                               value={selectGreenhouse ?? ''}
+                    <TextField label="Фаза вегетации"
+                               value={selectVegetationPhase ?? ''}
                                variant="standard" fullWidth select required
-                               onChange={(e) => setSelectGreenhouse(e.target.value)}
+                               onChange={(e) => setSelectVegetationPhase(e.target.value)}
                     >
-                        {props.greenhouses.map(value => <MenuItem value={value.id}
-                                                                  key={value.id}>{value.name}</MenuItem>)}
+                        {props.vegetationPhases.map(value => <MenuItem value={value.id}
+                                                                  key={value.id}>{phaseChoice[value.name]}</MenuItem>)}
                     </TextField>
                 </Form.Item>
                 <Form.Item
@@ -163,12 +165,12 @@ const TechnologicalPeriodForm = (props) => {
                     getValueProps={(e) => {
                     }}
                     required
-                    initialValue={selectCrops}
+                    initialValue={selectCrop}
                 >
                     <TextField label="Культура"
-                               value={selectCrops ?? ''}
+                               value={selectCrop ?? ''}
                                variant="standard" fullWidth select required
-                               onChange={(e) => setSelectCrops(e.target.value)}
+                               onChange={(e) => setSelectCrop(e.target.value)}
                     >
                         {props.crops.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)}
                     </TextField>
@@ -178,12 +180,12 @@ const TechnologicalPeriodForm = (props) => {
                     getValueProps={(e) => {
                     }}
                     required
-                    initialValue={selectHybrids}
+                    initialValue={selectHybrid}
                 >
                     <TextField label="Гибрид"
-                               value={selectHybrids ?? ''}
+                               value={selectHybrid ?? ''}
                                variant="standard" fullWidth select required
-                               onChange={(e) => setSelectHybrids(e.target.value)}
+                               onChange={(e) => setSelectHybrid(e.target.value)}
                     >
                         {props.hybrids.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)}
                     </TextField>
@@ -210,12 +212,14 @@ const mapStateToProps = (state) => ({
     greenhouses: state.greenhouses,
     crops: state.crops,
     hybrids: state.hybrids,
+    vegetationPhases: state.vegetationPhases,
 })
 
 const mapDispatchToProps = (dispatch) => ({
     getGreenhouses: () => dispatch(getGreenhouses()),
     getCrops: () => dispatch(getCrops()),
     getHybrids: () => dispatch(getHybrids()),
+    getVegetationPhases: () => dispatch(getVegetationPhases()),
     addTechnologicalPeriod: (values) => dispatch(addTechnologicalPeriod(values)),
     editTechnologicalPeriod: (id, values) => dispatch(editTechnologicalPeriod(id, values)),
 })

@@ -62,6 +62,26 @@ const trySendCellsDataFail = (error) => {
     }
 }
 
+const openCellsStart = () => {
+    return {
+        type: actionTypes.OPEN_CELLS_START
+    }
+}
+
+const openCellsSuccess = (cells) => {
+    return {
+        type: actionTypes.OPEN_CELLS_SUCCESS,
+        cells: cells
+    }
+}
+
+const openCellsFail = (error) => {
+    return {
+        type: actionTypes.OPEN_CELLS_FAIL,
+        error: error
+    }
+}
+
 export const getTabels = (date_time) => {
     return dispatch => {
         dispatch(getTabelsStart());
@@ -86,6 +106,20 @@ export const tryGetCellsByTabel = (tabel_id) => {
             }
         ).catch(err => {
             dispatch(getCellsFail(err));
+        })
+    }
+}
+
+export const tryOpenCellsInTabel = (tabel_id) => {
+    return dispatch => {
+        dispatch(openCellsStart())
+        let url = getApiUrl() + `tabel/${tabel_id}/open_cells_in_tabel/`
+        api.post(url).then(res => {
+                let cells = convertCells(res.data)
+                dispatch(openCellsSuccess(cells))
+            }
+        ).catch(err => {
+            dispatch(openCellsFail(err));
         })
     }
 }

@@ -6,7 +6,15 @@ import Typography from "@mui/material/Typography";
 import OperationCategoryBody from "./OperationCategory/body";
 import OperationFrequencyBody from "./OperationFrequency/body";
 import TechnologicalPeriodBody from "./TechnologicalPeriods/body";
+import OperationalStandardBody from "./OperationalStandards/body";
 
+export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
+export const phaseChoice = {
+    "fruiting": 'Плодоношение',
+    "vegetation": 'Вегитация',
+    "seedling": 'Рассада',
+    "liquidation": 'Ликвидация'
+}
 
 const Catalog = (props) => {
     const [selectedCatalog, setSelectedCatalog] = useState(0)
@@ -16,7 +24,7 @@ const Catalog = (props) => {
         {title: 'Категория операций', body: <OperationCategoryBody/>},
         {title: 'Частоты выполнения операции', body: <OperationFrequencyBody/>},
         {title: 'Технологические периоды', body: <TechnologicalPeriodBody/>},
-        {title: 'Нормы выполнения операции', body: <OperationCategoryBody/>},
+        {title: 'Нормы выполнения операции', body: <OperationalStandardBody/>},
         {title: 'Технологические операции', body: <OperationCategoryBody/>},
     ]
 

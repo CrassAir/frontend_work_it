@@ -19,14 +19,9 @@ import {
 } from "../../../store/action/catalogActions/technologicalPeriodsActions";
 import TechnologicalPeriodForm from "./form";
 import moment from "moment";
+import SimpleBar from "simplebar-react";
+import {choices, phaseChoice} from "../Catalog";
 
-export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
-export const phaseChoice = {
-    "fruiting": 'Плодоношение',
-    "vegetation": 'Вегитация',
-    "seedling": 'Рассада',
-    "liquidation": 'Ликвидация'
-}
 
 const TechnologicalPeriodBody = (props) => {
     const [editData, setEditData] = useState(-1)
@@ -90,41 +85,43 @@ const TechnologicalPeriodBody = (props) => {
 
     console.log(props.technologicalPeriods)
     return (
-        <>
+        <Box>
             <Button className={'add_btn'} variant={'text'} startIcon={<AddIcon/>}
                     size={'small'} onClick={() => setNewData(true)}>Добавить</Button>
-            <TableContainer component={Box}>
-                <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Наименование</TableCell>
-                            <TableCell>Тип периода</TableCell>
-                            <TableCell>Теплица</TableCell>
-                            <TableCell>Фаза вегетации</TableCell>
-                            <TableCell>Гибрид</TableCell>
-                            <TableCell>Начало периода</TableCell>
-                            <TableCell>Культура</TableCell>
-                            <TableCell align={'right'}>Действие</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.technologicalPeriods.map((val, index) => (
-                            <TableRow key={index}>
-                                <TableCell scope="row">{val.name}</TableCell>
-                                <TableCell scope="row">{choices[val.type]}</TableCell>
-                                <TableCell scope="row">{val.greenhouse?.name}</TableCell>
-                                <TableCell scope="row">{val.phase ? phaseChoice[val.phase.name] : ''}</TableCell>
-                                <TableCell scope="row">{val.hybrid?.name}</TableCell>
-                                <TableCell
-                                    scope="row">{moment(val.date_time_start).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell scope="row">{val.crop?.name}</TableCell>
-                                <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
+            <TableContainer component={Box} className={'tabel_container'}>
+                <SimpleBar style={{maxHeight: '100%'}}>
+                    <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Наименование</TableCell>
+                                <TableCell>Тип периода</TableCell>
+                                <TableCell>Теплица</TableCell>
+                                <TableCell>Фаза вегетации</TableCell>
+                                <TableCell>Гибрид</TableCell>
+                                <TableCell>Начало периода</TableCell>
+                                <TableCell>Культура</TableCell>
+                                <TableCell align={'right'}>Действие</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {props.technologicalPeriods.map((val, index) => (
+                                <TableRow key={index}>
+                                    <TableCell scope="row">{val.name}</TableCell>
+                                    <TableCell scope="row">{choices[val.type]}</TableCell>
+                                    <TableCell scope="row">{val.greenhouse?.name}</TableCell>
+                                    <TableCell scope="row">{val.phase ? phaseChoice[val.phase.name] : ''}</TableCell>
+                                    <TableCell scope="row">{val.hybrid?.name}</TableCell>
+                                    <TableCell
+                                        scope="row">{moment(val.date_time_start).format('DD-MM-YYYY')}</TableCell>
+                                    <TableCell scope="row">{val.crop?.name}</TableCell>
+                                    <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </SimpleBar>
             </TableContainer>
-        </>
+        </Box>
     )
 }
 

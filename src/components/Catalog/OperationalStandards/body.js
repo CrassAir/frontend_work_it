@@ -13,25 +13,24 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {
-    deleteTechnologicalPeriod,
-    getTechnologicalPeriods
-} from "../../../store/action/catalogActions/technologicalPeriodsActions";
 import TechnologicalPeriodForm from "./form";
-import moment from "moment";
+import SimpleBar from "simplebar-react";
+import {phaseChoice} from "../Catalog";
+import {
+    deleteOperationalStandard,
+    getOperationalStandards
+} from "../../../store/action/catalogActions/operationalStandardsActions";
 
-export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
-
-const TechnologicalPeriodBody = (props) => {
+const OperationalStandardBody = (props) => {
     const [editData, setEditData] = useState(-1)
     const [newData, setNewData] = useState(false)
 
 
     useEffect(() => {
-        props.getTechnologicalPeriods()
+        props.getOperationalStandards()
     }, [])
 
-    if (!props.technologicalPeriods) return null
+    if (!props.operationalStandards) return null
 
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
@@ -43,9 +42,7 @@ const TechnologicalPeriodBody = (props) => {
                 <Popconfirm
                     title="Вы уверены что хотите удалить культуру?"
                     onConfirm={() => {
-                        // data.splice(index, 1);
-                        // setData([...data])
-                        props.deleteTechnologicalPeriod(props.technologicalPeriods[index].id)
+                        props.deleteOperationalStandard(props.operationalStandards[index].id)
                     }}
                     okText="Да"
                     cancelText="Нет"
@@ -82,51 +79,50 @@ const TechnologicalPeriodBody = (props) => {
         )
     }
 
-    console.log(props.technologicalPeriods)
+    console.log(props.operationalStandards)
     return (
-        <>
+        <Box>
             <Button className={'add_btn'} variant={'text'} startIcon={<AddIcon/>}
                     size={'small'} onClick={() => setNewData(true)}>Добавить</Button>
-            <TableContainer component={Box}>
-                <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Наименование</TableCell>
-                            <TableCell>Тип периода</TableCell>
-                            <TableCell>Теплица</TableCell>
-                            <TableCell>Гибрид</TableCell>
-                            <TableCell>Начало периода</TableCell>
-                            <TableCell>Культура</TableCell>
-                            <TableCell align={'right'}>Действие</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.technologicalPeriods.map((val, index) => (
-                            <TableRow key={index}>
-                                <TableCell scope="row">{val.name}</TableCell>
-                                <TableCell scope="row">{choices[val.type]}</TableCell>
-                                <TableCell scope="row">{val.greenhouse?.name}</TableCell>
-                                <TableCell scope="row">{val.hybrid?.name}</TableCell>
-                                <TableCell
-                                    scope="row">{moment(val.date_time_start).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell scope="row">{val.crop?.name}</TableCell>
-                                <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
+            <TableContainer component={Box} className={'tabel_container'}>
+                <SimpleBar style={{maxHeight: '100%'}}>
+                    <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Наименование</TableCell>
+                                <TableCell>Культура</TableCell>
+                                <TableCell>Фаза вегетации</TableCell>
+                                <TableCell>Частота выполнения операции</TableCell>
+                                <TableCell>Технологический период</TableCell>
+                                <TableCell align={'right'}>Действие</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {props.operationalStandards.map((val, index) => (
+                                <TableRow key={index}>
+                                    <TableCell scope="row">{val.name}</TableCell>
+                                    <TableCell scope="row">{val.crop?.name}</TableCell>
+                                    <TableCell scope="row">{val.phase ? phaseChoice[val.phase.name] : ''}</TableCell>
+                                    <TableCell scope="row">{val.frequency?.name}</TableCell>
+                                    <TableCell scope="row">{val.period?.name}</TableCell>
+                                    <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </SimpleBar>
             </TableContainer>
-        </>
+        </Box>
     )
 }
 
 const mapStateToProps = (state) => ({
-    technologicalPeriods: state.technologicalPeriods
+    operationalStandards: state.operationalStandards
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getTechnologicalPeriods: () => dispatch(getTechnologicalPeriods()),
-    deleteTechnologicalPeriod: (id) => dispatch(deleteTechnologicalPeriod(id)),
+    getOperationalStandards: () => dispatch(getOperationalStandards()),
+    deleteOperationalStandard: (id) => dispatch(deleteOperationalStandard(id)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TechnologicalPeriodBody)
+export default connect(mapStateToProps, mapDispatchToProps)(OperationalStandardBody)

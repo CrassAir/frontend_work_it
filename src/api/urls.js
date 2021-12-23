@@ -1,13 +1,18 @@
-// const localAddresses = ["localhost", "127.0.0.1"];
-// const productionPorts = ["", "80", "443"];
-const hostname = '192.168.252.198'
-const port = "9009";
+const actualUrl = {
+    'test': {hostname: '192.168.252.198', port: '9009', protocol: 'http:', ws: 'ws'},
+    'main': {
+        hostname: window.location.hostname,
+        port: window.location.port,
+        protocol: window.location.protocol,
+        ws: 'wss'
+    },
+}
 
+const server = 'test'
 
 export function getHostname() {
-    // const { protocol, hostname, port } = window.location;
-    const {protocol} = window.location;
-    return protocol + '//' + hostname + (port ? ':' + port : '');
+    const {hostname, port, protocol} = actualUrl[server]
+    return `${protocol}//${hostname}${port ? ':' + port : ''}`
 }
 
 export function getApiUrl() {
@@ -23,7 +28,6 @@ export function getRestAuthUrl() {
 }
 
 export function getWsLiveDataUrl() {
-    // const {hostname} = window.location;
-    // return `wss://${hostname}/liveData`;
-    return `ws://${hostname}:${port}/liveData`;
+    const {hostname, port, ws} = actualUrl[server]
+    return `${ws}://${hostname}${port ? ':' + port : ''}/liveData`;
 }
