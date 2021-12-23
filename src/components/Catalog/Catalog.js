@@ -6,12 +6,13 @@ import Typography from "@mui/material/Typography";
 import OperationCategoryBody from "./OperationCategory/body";
 import OperationFrequencyBody from "./OperationFrequency/body";
 import TechnologicalPeriodBody from "./TechnologicalPeriods/body";
+import TechnologicalOperationsBody from "./TechnologicalOperations/body";
 import OperationalStandardBody from "./OperationalStandards/body";
 
 export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
 export const phaseChoice = {
     "fruiting": 'Плодоношение',
-    "vegetation": 'Вегитация',
+    "vegetation": 'Вегетация',
     "seedling": 'Рассада',
     "liquidation": 'Ликвидация'
 }
@@ -25,7 +26,7 @@ const Catalog = (props) => {
         {title: 'Частоты выполнения операции', body: <OperationFrequencyBody/>},
         {title: 'Технологические периоды', body: <TechnologicalPeriodBody/>},
         {title: 'Нормы выполнения операции', body: <OperationalStandardBody/>},
-        {title: 'Технологические операции', body: <OperationCategoryBody/>},
+        {title: 'Технологические операции', body: <TechnologicalOperationsBody/>},
     ]
 
     const generateMenuItem = () => {

@@ -16,6 +16,7 @@ const initialState = {
     operationsFrequency: null,
     technologicalPeriods: null,
     operationalStandards: null,
+    technologicalOperations: null,
 }
 
 const authStart = (state, action) => {
@@ -641,6 +642,104 @@ const deleteOperationalStandardFail = (state, action) => {
 
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="TechnologicalOperation">
+
+const getTechnologicalOperationsStart = (state, action) => {
+    return updateObject(state, {
+        technologicalOperations: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getTechnologicalOperationsSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        technologicalOperations: action.technologicalOperations
+    })
+}
+
+const getTechnologicalOperationsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addTechnologicalOperationStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addTechnologicalOperationSuccess = (state, action) => {
+    return updateObject(state, {
+        technologicalOperations: [...state.technologicalOperations, action.technologicalOperation],
+        loading: false,
+    })
+}
+
+const addTechnologicalOperationFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editTechnologicalOperationStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editTechnologicalOperationSuccess = (state, action) => {
+    let newData = []
+    state.technologicalOperations.forEach((val) => {
+        if (val.id === action.technologicalOperation.id) newData.push(action.technologicalOperation)
+        else newData.push(val)
+    })
+    return updateObject(state, {
+        technologicalOperations: [...newData],
+        loading: false,
+    })
+}
+
+const editTechnologicalOperationFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteTechnologicalOperationStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteTechnologicalOperationSuccess = (state, action) => {
+    let newData = []
+    state.technologicalOperations.forEach((val) => {
+        if (val.id !== action.technologicalOperationId) newData.push(val)
+    })
+    return updateObject(state, {
+        technologicalOperations: [...newData],
+        loading: false,
+    })
+}
+
+const deleteTechnologicalOperationFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold>
+
 //</editor-fold >
 
 const reducer = (state = initialState, action) => {
@@ -830,6 +929,35 @@ const reducer = (state = initialState, action) => {
             return deleteOperationalStandardSuccess(state, action);
         case catalogActionTypes.DELETE_OPERATION_STANDARD_FAIL:
             return deleteOperationalStandardFail(state, action);
+
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="TechnologicalOperation">
+
+        case catalogActionTypes.GET_TECHNOLOGICAL_OPERATIONS_START:
+            return getTechnologicalOperationsStart(state, action);
+        case catalogActionTypes.GET_TECHNOLOGICAL_OPERATIONS_SUCCESS:
+            return getTechnologicalOperationsSuccess(state, action);
+        case catalogActionTypes.GET_TECHNOLOGICAL_OPERATIONS_FAIL:
+            return getTechnologicalOperationsFail(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_OPERATION_START:
+            return addTechnologicalOperationStart(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_OPERATION_SUCCESS:
+            return addTechnologicalOperationSuccess(state, action);
+        case catalogActionTypes.ADD_TECHNOLOGICAL_OPERATION_FAIL:
+            return addTechnologicalOperationFail(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_OPERATION_START:
+            return editTechnologicalOperationStart(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_OPERATION_SUCCESS:
+            return editTechnologicalOperationSuccess(state, action);
+        case catalogActionTypes.EDIT_TECHNOLOGICAL_OPERATION_FAIL:
+            return editTechnologicalOperationFail(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_OPERATION_START:
+            return deleteTechnologicalOperationStart(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_OPERATION_SUCCESS:
+            return deleteTechnologicalOperationSuccess(state, action);
+        case catalogActionTypes.DELETE_TECHNOLOGICAL_OPERATION_FAIL:
+            return deleteTechnologicalOperationFail(state, action);
 
         //</editor-fold>
 

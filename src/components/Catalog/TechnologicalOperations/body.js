@@ -13,25 +13,23 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import TechnologicalPeriodForm from "./form";
 import SimpleBar from "simplebar-react";
-import {phaseChoice} from "../Catalog";
+import TechnologicalOperationsForm from "./form";
 import {
-    deleteOperationalStandard,
-    getOperationalStandards
-} from "../../../store/action/catalogActions/operationalStandardsActions";
-import OperationalStandardForm from "./form";
+    deleteTechnologicalOperation,
+    getTechnologicalOperations
+} from "../../../store/action/catalogActions/technologicalOperationsActions";
 
-const OperationalStandardBody = (props) => {
+const TechnologicalOperationsBody = (props) => {
     const [editData, setEditData] = useState(-1)
     const [newData, setNewData] = useState(false)
 
 
     useEffect(() => {
-        props.getOperationalStandards()
+        props.getTechnologicalOperations()
     }, [])
 
-    if (!props.operationalStandards) return null
+    if (!props.technologicalOperations) return null
 
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
@@ -43,7 +41,7 @@ const OperationalStandardBody = (props) => {
                 <Popconfirm
                     title="Вы уверены что хотите удалить культуру?"
                     onConfirm={() => {
-                        props.deleteOperationalStandard(props.operationalStandards[index].id)
+                        props.deleteTechnologicalOperation(props.technologicalOperations[index].id)
                     }}
                     okText="Да"
                     cancelText="Нет"
@@ -65,7 +63,7 @@ const OperationalStandardBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setEditData(-1)}>Назад</Button>
-                <OperationalStandardForm index={editData} closeForm={closeForm}/>
+                <TechnologicalOperationsForm index={editData} closeForm={closeForm}/>
             </>
         )
     }
@@ -75,12 +73,12 @@ const OperationalStandardBody = (props) => {
             <>
                 <Button className={'add_btn'} variant={'text'}
                         size={'small'} onClick={() => setNewData(false)}>Назад</Button>
-                <OperationalStandardForm closeForm={closeForm}/>
+                <TechnologicalOperationsForm closeForm={closeForm}/>
             </>
         )
     }
 
-    console.log(props.operationalStandards)
+    console.log(props.technologicalOperations)
     return (
         <Box>
             <Button className={'add_btn'} variant={'text'} startIcon={<AddIcon/>}
@@ -92,20 +90,18 @@ const OperationalStandardBody = (props) => {
                             <TableRow>
                                 <TableCell>Наименование</TableCell>
                                 <TableCell>Культура</TableCell>
-                                <TableCell>Фаза вегетации</TableCell>
-                                <TableCell>Частота выполнения операции</TableCell>
-                                <TableCell>Технологический период</TableCell>
+                                <TableCell>Категория операции</TableCell>
+                                <TableCell>Норма выполнения операции</TableCell>
                                 <TableCell align={'right'}>Действие</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.operationalStandards.map((val, index) => (
+                            {props.technologicalOperations.map((val, index) => (
                                 <TableRow key={index}>
                                     <TableCell scope="row">{val.name}</TableCell>
                                     <TableCell scope="row">{val.crop?.name}</TableCell>
-                                    <TableCell scope="row">{val.phase ? phaseChoice[val.phase.name] : ''}</TableCell>
-                                    <TableCell scope="row">{val.frequency?.name}</TableCell>
-                                    <TableCell scope="row">{val.period?.name}</TableCell>
+                                    <TableCell scope="row">{val.category?.name}</TableCell>
+                                    <TableCell scope="row">{val.standards?.name}</TableCell>
                                     <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
                                 </TableRow>
                             ))}
@@ -118,12 +114,12 @@ const OperationalStandardBody = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    operationalStandards: state.operationalStandards
+    technologicalOperations: state.technologicalOperations
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getOperationalStandards: () => dispatch(getOperationalStandards()),
-    deleteOperationalStandard: (id) => dispatch(deleteOperationalStandard(id)),
+    getTechnologicalOperations: () => dispatch(getTechnologicalOperations()),
+    deleteTechnologicalOperation: (id) => dispatch(deleteTechnologicalOperation(id)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OperationalStandardBody)
+export default connect(mapStateToProps, mapDispatchToProps)(TechnologicalOperationsBody)

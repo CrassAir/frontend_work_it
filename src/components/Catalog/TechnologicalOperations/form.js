@@ -5,34 +5,33 @@ import Button from "@mui/material/Button";
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
 import MenuItem from "@mui/material/MenuItem";
-import {getCrops, getVegetationPhases} from "../../../store/action/catalogActions/catalogActions";
+import {getCrops} from "../../../store/action/catalogActions/catalogActions";
 import locale from "antd/lib/locale/ru_RU";
-import {phaseChoice} from "../Catalog";
-import {getTechnologicalPeriods} from "../../../store/action/catalogActions/technologicalPeriodsActions";
-import {getOperationsFrequency} from "../../../store/action/catalogActions/operationFrequencyActions";
 import {
-    addOperationalStandard,
-    editOperationalStandard
+    getOperationalStandards
 } from "../../../store/action/catalogActions/operationalStandardsActions";
+import {getOperationsCategory} from "../../../store/action/catalogActions/operationCategoryActions";
+import {
+    addTechnologicalOperation,
+    editTechnologicalOperation
+} from "../../../store/action/catalogActions/technologicalOperationsActions";
 
 
-const OperationalStandardForm = (props) => {
+const TechnologicalOperationsForm = (props) => {
     let data
-    if (props.index >= 0) data = props.operationalStandards[props.index]
+    if (props.index >= 0) data = props.technologicalOperations[props.index]
 
     useEffect(() => {
         if (!props.crops) props.getCrops()
-        if (!props.vegetationPhases) props.getVegetationPhases()
-        if (!props.technologicalPeriods) props.getTechnologicalPeriods()
-        if (!props.operationsFrequency) props.getOperationsFrequency()
+        if (!props.operationalStandards) props.getOperationalStandards()
+        if (!props.operationsCategory) props.getOperationsCategory()
     }, [])
 
     const [selectCrop, setSelectCrop] = useState(data?.crop?.id)
-    const [selectVegetationPhase, setSelectVegetationPhase] = useState(data?.phase?.id)
-    const [selectPeriod, setSelectPeriod] = useState(data?.period?.id)
-    const [selectFrequency, setSelectFrequency] = useState(data?.frequency?.id)
+    const [selectСategory, setSelectCategory] = useState(data?.category?.id)
+    const [selectStandard, setSelectStandard] = useState(data?.standards?.id)
 
-    if (!props.crops || !props.vegetationPhases || !props.technologicalPeriods || !props.operationsFrequency) return null
+    if (!props.crops || !props.operationalStandards || !props.operationsCategory) return null
 
     return (
         <ConfigProvider locale={locale}>
@@ -41,9 +40,9 @@ const OperationalStandardForm = (props) => {
                 onFinish={(values) => {
                     console.log(values)
                     if (!data) {
-                        props.addOperationalStandard(values)
+                        props.addTechnologicalOperation(values)
                     } else {
-                        props.editOperationalStandard(data.id, values)
+                        props.editTechnologicalOperation(data.id, values)
                     }
                     props.closeForm()
                 }}
@@ -62,22 +61,6 @@ const OperationalStandardForm = (props) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="phase_id"
-                    getValueProps={(e) => {
-                    }}
-                    required
-                    initialValue={selectVegetationPhase}
-                >
-                    <TextField label="Фаза вегетации"
-                               value={selectVegetationPhase ?? ''}
-                               variant="standard" fullWidth select required
-                               onChange={(e) => setSelectVegetationPhase(e.target.value)}
-                    >
-                        {props.vegetationPhases.map(value => <MenuItem value={value.id}
-                                                                       key={value.id}>{phaseChoice[value.name]}</MenuItem>)}
-                    </TextField>
-                </Form.Item>
-                <Form.Item
                     name="crop_id"
                     getValueProps={(e) => {
                     }}
@@ -93,34 +76,34 @@ const OperationalStandardForm = (props) => {
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="frequency_id"
+                    name="category"
                     getValueProps={(e) => {
                     }}
                     required
-                    initialValue={selectFrequency}
+                    initialValue={selectСategory}
                 >
                     <TextField label="Частота выполнения операции"
-                               value={selectFrequency ?? ''}
+                               value={selectСategory ?? ''}
                                variant="standard" fullWidth select required
-                               onChange={(e) => setSelectFrequency(e.target.value)}
+                               onChange={(e) => setSelectCategory(e.target.value)}
                     >
-                        {props.operationsFrequency.map(value => <MenuItem value={value.id}
+                        {props.operationsCategory.map(value => <MenuItem value={value.id}
                                                                           key={value.id}>{value.name}</MenuItem>)}
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="period_id"
+                    name="standards"
                     getValueProps={(e) => {
                     }}
                     required
-                    initialValue={selectPeriod}
+                    initialValue={selectStandard}
                 >
                     <TextField label="Технологический период"
-                               value={selectPeriod ?? ''}
+                               value={selectStandard ?? ''}
                                variant="standard" fullWidth select required
-                               onChange={(e) => setSelectPeriod(e.target.value)}
+                               onChange={(e) => setSelectStandard(e.target.value)}
                     >
-                        {props.technologicalPeriods.map(value => <MenuItem value={value.id}
+                        {props.operationalStandards.map(value => <MenuItem value={value.id}
                                                                            key={value.id}>{value.name}</MenuItem>)}
                     </TextField>
                 </Form.Item>
@@ -142,20 +125,18 @@ const OperationalStandardForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
+    technologicalOperations: state.technologicalOperations,
     operationalStandards: state.operationalStandards,
-    technologicalPeriods: state.technologicalPeriods,
-    operationsFrequency: state.operationsFrequency,
+    operationsCategory: state.operationsCategory,
     crops: state.crops,
-    vegetationPhases: state.vegetationPhases,
 })
 
 const mapDispatchToProps = (dispatch) => ({
     getCrops: () => dispatch(getCrops()),
-    getVegetationPhases: () => dispatch(getVegetationPhases()),
-    getTechnologicalPeriods: () => dispatch(getTechnologicalPeriods()),
-    getOperationsFrequency: () => dispatch(getOperationsFrequency()),
-    addOperationalStandard: (values) => dispatch(addOperationalStandard(values)),
-    editOperationalStandard: (id, values) => dispatch(editOperationalStandard(id, values)),
+    getOperationalStandards: () => dispatch(getOperationalStandards()),
+    getOperationsCategory: () => dispatch(getOperationsCategory()),
+    addTechnologicalOperation: (values) => dispatch(addTechnologicalOperation(values)),
+    editTechnologicalOperation: (id, values) => dispatch(editTechnologicalOperation(id, values)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OperationalStandardForm)
+export default connect(mapStateToProps, mapDispatchToProps)(TechnologicalOperationsForm)

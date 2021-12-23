@@ -8,7 +8,7 @@ const actualUrl = {
     },
 }
 
-const server = 'test'
+const server = window.location.port === '3000' ? 'test' : 'main'
 
 export function getHostname() {
     const {hostname, port, protocol} = actualUrl[server]
