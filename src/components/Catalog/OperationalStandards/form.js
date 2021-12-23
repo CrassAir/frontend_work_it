@@ -143,22 +143,6 @@ const TechnologicalPeriodForm = (props) => {
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="greenhouse"
-                    getValueProps={(e) => {
-                    }}
-                    required
-                    initialValue={selectGreenhouse}
-                >
-                    <TextField label="Теплица"
-                               value={selectGreenhouse ?? ''}
-                               variant="standard" fullWidth select required
-                               onChange={(e) => setSelectGreenhouse(e.target.value)}
-                    >
-                        {props.greenhouses.map(value => <MenuItem value={value.id}
-                                                                  key={value.id}>{value.name}</MenuItem>)}
-                    </TextField>
-                </Form.Item>
-                <Form.Item
                     name="crop"
                     getValueProps={(e) => {
                     }}

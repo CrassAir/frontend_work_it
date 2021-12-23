@@ -15,6 +15,7 @@ const initialState = {
     operationsCategory: null,
     operationsFrequency: null,
     technologicalPeriods: null,
+    operationalStandards: null,
 }
 
 const authStart = (state, action) => {
@@ -199,6 +200,28 @@ const getHybridsSuccess = (state, action) => {
 }
 
 const getHybridsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//VegetationPhases
+const getVegetationPhasesStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getVegetationPhasesSuccess = (state, action) => {
+    return updateObject(state, {
+        vegetationPhases: action.vegetationPhases,
+        loading: false,
+    })
+}
+
+const getVegetationPhasesFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false,
@@ -499,6 +522,104 @@ const deleteTechnologicalPeriodFail = (state, action) => {
 
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="OperationalStandard">
+
+const getOperationalStandardsStart = (state, action) => {
+    return updateObject(state, {
+        operationalStandards: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getOperationalStandardsSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        operationalStandards: action.operationalStandards
+    })
+}
+
+const getOperationalStandardsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addOperationalStandardStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addOperationalStandardSuccess = (state, action) => {
+    return updateObject(state, {
+        operationalStandards: [...state.operationalStandards, action.operationalStandard],
+        loading: false,
+    })
+}
+
+const addOperationalStandardFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editOperationalStandardStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editOperationalStandardSuccess = (state, action) => {
+    let newData = []
+    state.operationalStandards.forEach((val) => {
+        if (val.id === action.operationalStandard.id) newData.push(action.operationalStandard)
+        else newData.push(val)
+    })
+    return updateObject(state, {
+        operationalStandards: [...newData],
+        loading: false,
+    })
+}
+
+const editOperationalStandardFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteOperationalStandardStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteOperationalStandardSuccess = (state, action) => {
+    let newData = []
+    state.operationalStandards.forEach((val) => {
+        if (val.id !== action.operationalStandardId) newData.push(val)
+    })
+    return updateObject(state, {
+        operationalStandards: [...newData],
+        loading: false,
+    })
+}
+
+const deleteOperationalStandardFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold>
+
 //</editor-fold >
 
 const reducer = (state = initialState, action) => {
@@ -560,6 +681,14 @@ const reducer = (state = initialState, action) => {
             return getHybridsSuccess(state, action);
         case catalogActionTypes.GET_HYBRIDS_FAIL:
             return getHybridsFail(state, action);
+
+        //VegetationPhases
+        case catalogActionTypes.GET_VEGETATION_PHASES_START:
+            return getVegetationPhasesStart(state, action);
+        case catalogActionTypes.GET_VEGETATION_PHASES_SUCCESS:
+            return getVegetationPhasesSuccess(state, action);
+        case catalogActionTypes.GET_VEGETATION_PHASES_FAIL:
+            return getVegetationPhasesFail(state, action);
 
         //<editor-fold defaultstate="collapsed" desc="OperationsCategory">
 
@@ -645,6 +774,35 @@ const reducer = (state = initialState, action) => {
             return deleteTechnologicalPeriodSuccess(state, action);
         case catalogActionTypes.DELETE_TECHNOLOGICAL_PERIOD_FAIL:
             return deleteTechnologicalPeriodFail(state, action);
+
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="OperationalStandard">
+
+        case catalogActionTypes.GET_OPERATION_STANDARDS_START:
+            return getOperationalStandardsStart(state, action);
+        case catalogActionTypes.GET_OPERATION_STANDARDS_SUCCESS:
+            return getOperationalStandardsSuccess(state, action);
+        case catalogActionTypes.GET_OPERATION_STANDARDS_FAIL:
+            return getOperationalStandardsFail(state, action);
+        case catalogActionTypes.ADD_OPERATION_STANDARD_START:
+            return addOperationalStandardStart(state, action);
+        case catalogActionTypes.ADD_OPERATION_STANDARD_SUCCESS:
+            return addOperationalStandardSuccess(state, action);
+        case catalogActionTypes.ADD_OPERATION_STANDARD_FAIL:
+            return addOperationalStandardFail(state, action);
+        case catalogActionTypes.EDIT_OPERATION_STANDARD_START:
+            return editOperationalStandardStart(state, action);
+        case catalogActionTypes.EDIT_OPERATION_STANDARD_SUCCESS:
+            return editOperationalStandardSuccess(state, action);
+        case catalogActionTypes.EDIT_OPERATION_STANDARD_FAIL:
+            return editOperationalStandardFail(state, action);
+        case catalogActionTypes.DELETE_OPERATION_STANDARD_START:
+            return deleteOperationalStandardStart(state, action);
+        case catalogActionTypes.DELETE_OPERATION_STANDARD_SUCCESS:
+            return deleteOperationalStandardSuccess(state, action);
+        case catalogActionTypes.DELETE_OPERATION_STANDARD_FAIL:
+            return deleteOperationalStandardFail(state, action);
 
         //</editor-fold>
 

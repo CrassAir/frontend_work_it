@@ -42,6 +42,26 @@ const getHybridsFail = (error) => {
     }
 }
 
+const getVegetationPhasesStart = () => {
+    return {
+        type: actionTypes.GET_VEGETATION_PHASES_START
+    }
+}
+
+const getVegetationPhasesSuccess = (vegetationPhases) => {
+    return {
+        type: actionTypes.GET_VEGETATION_PHASES_SUCCESS,
+        vegetationPhases: vegetationPhases
+    }
+}
+
+const getVegetationPhasesFail = (error) => {
+    return {
+        type: actionTypes.GET_VEGETATION_PHASES_FAIL,
+        error: error
+    }
+}
+
 export const getCrops = () => {
     return dispatch => {
         dispatch(getCropsStart());
@@ -62,6 +82,18 @@ export const getHybrids = () => {
             }
         ).catch(err => {
             dispatch(getHybridsFail(err))
+        })
+    }
+}
+
+export const getVegetationPhases = () => {
+    return dispatch => {
+        dispatch(getVegetationPhasesStart());
+        api.get(getApiUrl() + 'vegetationphase/').then(res => {
+                dispatch(getVegetationPhasesSuccess(res.data))
+            }
+        ).catch(err => {
+            dispatch(getVegetationPhasesFail(err))
         })
     }
 }

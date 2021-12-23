@@ -21,12 +21,6 @@ import TechnologicalPeriodForm from "./form";
 import moment from "moment";
 
 export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
-export const phaseChoice = {
-    "fruiting": 'Плодоношение',
-    "vegetation": 'Вегитация',
-    "seedling": 'Рассада',
-    "liquidation": 'Ликвидация'
-}
 
 const TechnologicalPeriodBody = (props) => {
     const [editData, setEditData] = useState(-1)
@@ -100,7 +94,6 @@ const TechnologicalPeriodBody = (props) => {
                             <TableCell>Наименование</TableCell>
                             <TableCell>Тип периода</TableCell>
                             <TableCell>Теплица</TableCell>
-                            <TableCell>Фаза вегетации</TableCell>
                             <TableCell>Гибрид</TableCell>
                             <TableCell>Начало периода</TableCell>
                             <TableCell>Культура</TableCell>
@@ -113,7 +106,6 @@ const TechnologicalPeriodBody = (props) => {
                                 <TableCell scope="row">{val.name}</TableCell>
                                 <TableCell scope="row">{choices[val.type]}</TableCell>
                                 <TableCell scope="row">{val.greenhouse?.name}</TableCell>
-                                <TableCell scope="row">{val.phase ? phaseChoice[val.phase.name] : ''}</TableCell>
                                 <TableCell scope="row">{val.hybrid?.name}</TableCell>
                                 <TableCell
                                     scope="row">{moment(val.date_time_start).format('DD-MM-YYYY')}</TableCell>

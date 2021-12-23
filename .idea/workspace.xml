@@ -19,23 +19,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add opertions">
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/body.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/action/catalogActions/catalogActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/action/catalogActions/technologicalPeriodsActions.js" afterDir="false" />
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="many fix">
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationalStandards/body.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Catalog/OperationalStandards/form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/action/catalogActions/operationalStandardsActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/body.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationCategory/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/body.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/OperationFrequency/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/catalogAction/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/catalogActions/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/catalogAction/operationCategoryActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/catalogActions/operationCategoryActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/catalogAction/operationFrequencyAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/catalogActions/operationFrequencyActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/locationActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/locationActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/body.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/body.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/TechnologicalPeriods/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/catalogActions/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/catalogActions/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/catalogActions/catalogActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/catalogActions/catalogActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -160,7 +152,7 @@
       <workItem from="1638382093710" duration="8338000" />
       <workItem from="1638858850296" duration="17981000" />
       <workItem from="1639458828607" duration="5685000" />
-      <workItem from="1639978427203" duration="45746000" />
+      <workItem from="1639978427203" duration="51226000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -274,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640156942835</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="many fix">
+      <created>1640177914292</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1640177914292</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,7 +306,8 @@
     <MESSAGE value="fix bugs" />
     <MESSAGE value="add Catalog.js" />
     <MESSAGE value="add opertions" />
-    <option name="LAST_COMMIT_MESSAGE" value="add opertions" />
+    <MESSAGE value="many fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="many fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -354,10 +354,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640067661430" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1640156946207">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1640177917542">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640156946207" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1640177917542" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
