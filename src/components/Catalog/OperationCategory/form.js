@@ -14,6 +14,7 @@ const OperationCategoryForm = (props) => {
     if (props.index >= 0) data =  props.operationsCategory[props.index]
     return (
         <Form
+            className={'catalog_form'}
             onFinish={(values) => {
                 if (!data) {
                     props.addOperationCategory(values)
@@ -32,10 +33,10 @@ const OperationCategoryForm = (props) => {
             >
                 <TextField
                     required
-                    label="Категория операции"
+                    label="Наименование"
                     variant="standard"
                     defaultValue={data?.name}
-                    // fullWidth
+                    fullWidth
                 />
             </Form.Item>
             <Form.Item>

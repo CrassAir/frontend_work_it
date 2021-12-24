@@ -1,4 +1,4 @@
-import {ConfigProvider, DatePicker, Form, Modal, Space, Tooltip} from "antd";
+import {ConfigProvider, DatePicker, Form} from "antd";
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,9 +13,6 @@ import {
 } from "../../../store/action/catalogActions/technologicalPeriodsActions";
 import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import {choices, phaseChoice} from "../Catalog";
 
 
@@ -35,44 +32,6 @@ const TechnologicalPeriodForm = (props) => {
     const [selectCrop, setSelectCrop] = useState(data?.crop?.id)
     const [selectHybrid, setSelectHybrid] = useState(data?.hybrid?.id)
     const [selectVegetationPhase, setSelectVegetationPhase] = useState(data?.phase?.id)
-
-    // const [visibleModal, setVisibleModal] = useState(false)
-
-    if (!props.greenhouses || !props.crops || !props.hybrids || !props.vegetationPhases) return null
-
-    // const actionBtn = (value) => {
-    //     return <Space direction={"horizontal"} className={'send_btn'}>
-    //         <Tooltip title={'Редактировать'} placement={"bottom"}>
-    //             <IconButton className={'add_btn'} variant={'contained'} size={'small'}
-    //                         onClick={() => setVisibleModal(value)}><EditIcon/></IconButton>
-    //         </Tooltip>
-    //         <Tooltip title={'Создать'} placement={"bottom"}>
-    //             <IconButton className={'add_btn'} variant={'contained'} size={'small'} color={'success'}
-    //                         onClick={() => setVisibleModal(value)}><AddIcon/></IconButton>
-    //         </Tooltip>
-    //     </Space>
-    // }
-
-    // const formModal = () => {
-    //     const component = {
-    //         name: 'greenhouse', form: ''
-    //     }
-    //     const closeModal = () => {
-    //         setVisibleModal(false)
-    //     }
-    //     return (
-    //         <Modal
-    //             // title="Basic Modal"
-    //             visible={visibleModal}
-    //             onCancel={closeModal}
-    //             maskClosable closable footer={null}
-    //         >
-    //             <p>Some contents...</p>
-    //             <p>Some contents...</p>
-    //             <p>Some contents...</p>
-    //         </Modal>
-    //     )
-    // }
 
     return (
         <ConfigProvider locale={locale}>
@@ -129,7 +88,7 @@ const TechnologicalPeriodForm = (props) => {
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="greenhouse"
+                    name="greenhouse_id"
                     getValueProps={(e) => {
                     }}
                     required
@@ -140,12 +99,14 @@ const TechnologicalPeriodForm = (props) => {
                                variant="standard" fullWidth select required
                                onChange={(e) => setSelectGreenhouse(e.target.value)}
                     >
-                        {props.greenhouses.map(value => <MenuItem value={value.id}
-                                                                  key={value.id}>{value.name}</MenuItem>)}
+                        {props.greenhouses ?
+                            props.greenhouses.map(value => <MenuItem value={value.id}
+                                                                     key={value.id}>{value.name}</MenuItem>)
+                            : <MenuItem value=''/>}
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="phase"
+                    name="phase_id"
                     getValueProps={(e) => {
                     }}
                     required
@@ -156,12 +117,14 @@ const TechnologicalPeriodForm = (props) => {
                                variant="standard" fullWidth select required
                                onChange={(e) => setSelectVegetationPhase(e.target.value)}
                     >
-                        {props.vegetationPhases.map(value => <MenuItem value={value.id}
-                                                                  key={value.id}>{phaseChoice[value.name]}</MenuItem>)}
+                        {props.vegetationPhases ?
+                            props.vegetationPhases.map(value => <MenuItem value={value.id}
+                                                                          key={value.id}>{phaseChoice[value.name]}</MenuItem>)
+                            : <MenuItem value=''/>}
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="crop"
+                    name="crop_id"
                     getValueProps={(e) => {
                     }}
                     required
@@ -172,11 +135,13 @@ const TechnologicalPeriodForm = (props) => {
                                variant="standard" fullWidth select required
                                onChange={(e) => setSelectCrop(e.target.value)}
                     >
-                        {props.crops.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)}
+                        {props.crops ?
+                            props.crops.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)
+                            : <MenuItem value=''/>}
                     </TextField>
                 </Form.Item>
                 <Form.Item
-                    name="hybrid"
+                    name="hybrid_id"
                     getValueProps={(e) => {
                     }}
                     required
@@ -187,7 +152,10 @@ const TechnologicalPeriodForm = (props) => {
                                variant="standard" fullWidth select required
                                onChange={(e) => setSelectHybrid(e.target.value)}
                     >
-                        {props.hybrids.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)}
+                        {props.hybrids ?
+                            props.hybrids.map(value => <MenuItem value={value.id}
+                                                                 key={value.id}>{value.name}</MenuItem>)
+                            : <MenuItem value=''/>}
                     </TextField>
                 </Form.Item>
                 <Form.Item>

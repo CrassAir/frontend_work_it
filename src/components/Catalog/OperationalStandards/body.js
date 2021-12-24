@@ -13,7 +13,6 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import TechnologicalPeriodForm from "./form";
 import SimpleBar from "simplebar-react";
 import {phaseChoice} from "../Catalog";
 import {
@@ -31,7 +30,6 @@ const OperationalStandardBody = (props) => {
         props.getOperationalStandards()
     }, [])
 
-    if (!props.operationalStandards) return null
 
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
@@ -79,6 +77,8 @@ const OperationalStandardBody = (props) => {
             </>
         )
     }
+
+     if (!props.operationalStandards) return null
 
     console.log(props.operationalStandards)
     return (

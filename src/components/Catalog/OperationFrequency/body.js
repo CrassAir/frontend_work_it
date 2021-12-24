@@ -29,8 +29,6 @@ const OperationFrequencyBody = (props) => {
         props.getOperationsFrequency()
     }, [])
 
-    if (!props.operationsFrequency) return null
-
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
             <Tooltip title={'Редактировать'} placement={"bottom"}>
@@ -79,6 +77,8 @@ const OperationFrequencyBody = (props) => {
             </>
         )
     }
+
+    if (!props.operationsFrequency) return null
 
     return (
         <>

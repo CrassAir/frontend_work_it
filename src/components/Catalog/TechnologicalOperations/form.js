@@ -1,4 +1,4 @@
-import {ConfigProvider, Form} from "antd";
+import {ConfigProvider, Form, Modal, Space, Tooltip} from "antd";
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -11,10 +11,14 @@ import {
     getOperationalStandards
 } from "../../../store/action/catalogActions/operationalStandardsActions";
 import {getOperationsCategory} from "../../../store/action/catalogActions/operationCategoryActions";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
 import {
     addTechnologicalOperation,
     editTechnologicalOperation
 } from "../../../store/action/catalogActions/technologicalOperationsActions";
+import OperationalStandardForm from "../OperationalStandards/form";
+import OperationCategoryForm from "../OperationCategory/form";
 
 
 const TechnologicalOperationsForm = (props) => {
@@ -31,7 +35,41 @@ const TechnologicalOperationsForm = (props) => {
     const [selectСategory, setSelectCategory] = useState(data?.category?.id)
     const [selectStandard, setSelectStandard] = useState(data?.standards?.id)
 
-    if (!props.crops || !props.operationalStandards || !props.operationsCategory) return null
+    const [visibleModal, setVisibleModal] = useState(false)
+
+    const actionBtn = (value) => {
+        return <Tooltip title={'Создать'} placement={"bottom"}>
+            <IconButton className={'add_btn'} variant={'contained'} size={'small'} color={'success'}
+                        onClick={() => setVisibleModal(value)}><AddIcon/></IconButton>
+        </Tooltip>
+    }
+
+    const formModal = () => {
+        const closeModal = () => {
+            setVisibleModal(false)
+        }
+        const component = {
+            'standards': {
+                title: 'Норма выполнения операции',
+                form: <OperationalStandardForm closeForm={closeModal}/>
+            },
+            'category': {
+                title: 'Категория операции',
+                form: <OperationCategoryForm closeForm={closeModal}/>
+            }
+        }
+        if (!visibleModal) return null
+        return (
+            <Modal
+                title={component[visibleModal].title}
+                visible={visibleModal}
+                onCancel={closeModal}
+                maskClosable closable footer={null}
+            >
+                {component[visibleModal].form}
+            </Modal>
+        )
+    }
 
     return (
         <ConfigProvider locale={locale}>
@@ -52,8 +90,10 @@ const TechnologicalOperationsForm = (props) => {
                     getValueProps={(e) => {
                     }}
                     initialValue={data?.name}
+                    required
                 >
                     <TextField
+                        required
                         label="Наименование"
                         variant="standard"
                         defaultValue={data?.name}
@@ -72,41 +112,53 @@ const TechnologicalOperationsForm = (props) => {
                                variant="standard" fullWidth select required
                                onChange={(e) => setSelectCrop(e.target.value)}
                     >
-                        {props.crops.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)}
+                        {props.crops ?
+                            props.crops.map(value => <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>)
+                            : <MenuItem value=''/>}
                     </TextField>
                 </Form.Item>
-                <Form.Item
-                    name="category"
-                    getValueProps={(e) => {
-                    }}
-                    required
-                    initialValue={selectСategory}
-                >
-                    <TextField label="Частота выполнения операции"
-                               value={selectСategory ?? ''}
-                               variant="standard" fullWidth select required
-                               onChange={(e) => setSelectCategory(e.target.value)}
+                <Space>
+                    <Form.Item
+                        name="category_id"
+                        getValueProps={(e) => {
+                        }}
+                        required
+                        initialValue={selectСategory}
                     >
-                        {props.operationsCategory.map(value => <MenuItem value={value.id}
-                                                                          key={value.id}>{value.name}</MenuItem>)}
-                    </TextField>
-                </Form.Item>
-                <Form.Item
-                    name="standards"
-                    getValueProps={(e) => {
-                    }}
-                    required
-                    initialValue={selectStandard}
-                >
-                    <TextField label="Технологический период"
-                               value={selectStandard ?? ''}
-                               variant="standard" fullWidth select required
-                               onChange={(e) => setSelectStandard(e.target.value)}
+                        <TextField label="Категория операции"
+                                   value={selectСategory ?? ''}
+                                   variant="standard" sx={{width: 260}} select required
+                                   onChange={(e) => setSelectCategory(e.target.value)}
+                        >
+                            {props.operationsCategory ?
+                                props.operationsCategory.map(value => <MenuItem value={value.id}
+                                                                                key={value.id}>{value.name}</MenuItem>)
+                                : <MenuItem value=''/>}
+                        </TextField>
+                    </Form.Item>
+                    {actionBtn('category')}
+                </Space>
+                <Space>
+                    <Form.Item
+                        name="standards_id"
+                        getValueProps={(e) => {
+                        }}
+                        required
+                        initialValue={selectStandard}
                     >
-                        {props.operationalStandards.map(value => <MenuItem value={value.id}
-                                                                           key={value.id}>{value.name}</MenuItem>)}
-                    </TextField>
-                </Form.Item>
+                        <TextField label="Норма выполнения операции"
+                                   value={selectStandard ?? ''}
+                                   variant="standard" sx={{width: 260}} select required
+                                   onChange={(e) => setSelectStandard(e.target.value)}
+                        >
+                            {props.operationalStandards ?
+                                props.operationalStandards.map(value => <MenuItem value={value.id}
+                                                                                  key={value.id}>{value.name}</MenuItem>)
+                                : <MenuItem value=''/>}
+                        </TextField>
+                    </Form.Item>
+                    {actionBtn('standards')}
+                </Space>
                 <Form.Item>
                     <Box sx={{mb: 2}}>
                         <Button
@@ -120,6 +172,7 @@ const TechnologicalOperationsForm = (props) => {
                     </Box>
                 </Form.Item>
             </Form>
+            {formModal()}
         </ConfigProvider>
     )
 }

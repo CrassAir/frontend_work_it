@@ -32,8 +32,6 @@ const TechnologicalPeriodBody = (props) => {
         props.getTechnologicalPeriods()
     }, [])
 
-    if (!props.technologicalPeriods) return null
-
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
             <Tooltip title={'Редактировать'} placement={"bottom"}>
@@ -82,6 +80,8 @@ const TechnologicalPeriodBody = (props) => {
             </>
         )
     }
+
+    if (!props.technologicalPeriods) return null
 
     console.log(props.technologicalPeriods)
     return (

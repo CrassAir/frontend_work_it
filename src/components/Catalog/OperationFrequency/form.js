@@ -14,6 +14,7 @@ const OperationFrequencyForm = (props) => {
     if (props.index >= 0) data =  props.operationsFrequency[props.index]
     return (
         <Form
+            className={'catalog_form'}
             onFinish={(values) => {
                 if (!data) {
                     props.addOperationFrequency(values)
@@ -35,7 +36,7 @@ const OperationFrequencyForm = (props) => {
                     label="Категория операции"
                     variant="standard"
                     defaultValue={data?.name}
-                    // fullWidth
+                    fullWidth
                 />
             </Form.Item>
              <Form.Item
@@ -50,7 +51,7 @@ const OperationFrequencyForm = (props) => {
                     label="Шаг отступа"
                     variant="standard"
                     defaultValue={data?.step}
-                    // fullWidth
+                    fullWidth
                 />
             </Form.Item>
             <Form.Item>

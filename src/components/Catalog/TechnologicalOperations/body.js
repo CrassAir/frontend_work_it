@@ -29,8 +29,6 @@ const TechnologicalOperationsBody = (props) => {
         props.getTechnologicalOperations()
     }, [])
 
-    if (!props.technologicalOperations) return null
-
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
             <Tooltip title={'Редактировать'} placement={"bottom"}>
@@ -77,6 +75,8 @@ const TechnologicalOperationsBody = (props) => {
             </>
         )
     }
+
+     if (!props.technologicalOperations) return null
 
     console.log(props.technologicalOperations)
     return (

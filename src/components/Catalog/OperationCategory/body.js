@@ -29,8 +29,6 @@ const OperationCategoryBody = (props) => {
         props.getOperationsCategory()
     }, [])
 
-    if (!props.operationsCategory) return null
-
     const actionsBtn = (index) => {
         return <Space direction={"horizontal"} className={'send_btn'}>
             <Tooltip title={'Редактировать'} placement={"bottom"}>
@@ -79,6 +77,8 @@ const OperationCategoryBody = (props) => {
             </>
         )
     }
+
+    if (!props.operationsCategory) return null
 
     return (
         <>
