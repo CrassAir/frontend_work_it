@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {ConfigProvider, DatePicker, Form, Input, Space, Tooltip} from "antd";
+import {ConfigProvider, DatePicker, Form, Input, Modal, Popconfirm, Space, Tooltip} from "antd";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {getTabels, tryGetCellsByTabel, tryOpenCellsInTabel, trySendCellsData} from "../../store/action/tabelActions";
+import {
+    getTabels,
+    tryAddUserInTabel, tryDeleteUserInTabel,
+    tryGetCellsByTabel,
+    tryOpenCellsInTabel,
+    trySendCellsData
+} from "../../store/action/tabelActions";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
@@ -29,8 +35,13 @@ import {cleanup} from "@testing-library/react";
 import SimpleBar from "simplebar-react";
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
+import RemoveIcon from '@mui/icons-material/Remove';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import {tryPrintTabel} from "../../api/api";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import {tryGetUsers} from "../../store/action/accountActions";
+import IconButton from "@mui/material/IconButton";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -44,10 +55,13 @@ const Tabel = (props) => {
     const [month, setMonth] = useState(now)
     const [selectTabel, setSelectTabel] = useState([])
     const [initSplitter] = useState([20, 80])
-    const [visibleDialog, setVisibleDialog] = useState(false)
+    const [visibleReviewDialog, setVisibleReviewDialog] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const [selectUser, setSelectUser] = useState(null)
 
     useEffect(() => {
-        if (!localStorage.getItem('is_rating')) setTimeout(() => setVisibleDialog(true), 15000)
+        if (!localStorage.getItem('is_rating')) setTimeout(() => setVisibleReviewDialog(true), 15000)
         return () => cleanup()
     }, [])
 
@@ -69,6 +83,10 @@ const Tabel = (props) => {
         props.getTabels(month.toISOString())
     }, [month])
 
+    useEffect(() => {
+        if (!props.users) props.tryGetUsers()
+    }, [modalVisible])
+
     const removeEmpty = (obj) => {
         Object.keys(obj).forEach((k) => (!obj[k] && obj[k] !== undefined) && delete obj[k]);
         return obj;
@@ -82,19 +100,16 @@ const Tabel = (props) => {
     const reviewDialog = () => {
         return (
             <Dialog
-                open={visibleDialog}
+                open={visibleReviewDialog}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => setVisibleDialog(false)}
+                onClose={() => setVisibleReviewDialog(false)}
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{'Спасибо что пользуетесь нашем табелем'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <Space direction={"vertical"}>
                             {'Пожалйуста оцените качество табеля'}
-                            {/*<Rating name="customized-10" defaultValue={2} value={rating} max={10} onChange={e => setRating(parseInt(e.target.value))} />*/}
-                        </Space>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -102,7 +117,7 @@ const Tabel = (props) => {
                             href={'https://docs.google.com/forms/d/e/1FAIpQLSehfH6T0KHkiI9Zf822kjgdcbjd9H_yOHl3MIkTmXdip0uGMA/viewform'}
                             target={'_blank'}
                             onClick={() => {
-                                setVisibleDialog(false)
+                                setVisibleReviewDialog(false)
                                 localStorage.setItem('is_rating', true)
                             }}>Оценить</Button>
                 </DialogActions>
@@ -110,25 +125,60 @@ const Tabel = (props) => {
         )
     }
 
+    const modal = () => {
+        if (!props.users) return null
+        const cancel = () => {
+            setModalVisible(false)
+            setSelectUser(null)
+        }
+        return (
+            <Modal
+                visible={modalVisible}
+                title={'Добавить сотрудника в табель'}
+                onCancel={cancel}
+                footer={null}
+            >
+                <Space className={'center_modal'} direction={"vertical"}>
+                    <Autocomplete
+                        id="free-solo-users"
+                        freeSolo
+                        options={props.users}
+                        getOptionLabel={(option) => option.full_name}
+                        onChange={(_, opt) => setSelectUser(opt)}
+                        renderInput={(params) => <TextField {...params} label="Сотрудник"/>}
+                    />
+                    <Button
+                        variant={'contained'} color={'success'}
+                        onClick={() => {
+                            props.tryAddUserInTabel(selectTabel.id, selectUser.pk)
+                            cancel()
+                        }}>
+                        Добавить
+                    </Button>
+                </Space>
+            </Modal>
+        )
+    }
 
     const generateTabel = () => {
         if (!props.cells?.length > 0) return null
         if (!selectTabel) return null
         if (props.loading) return null
         const button = () => {
+            let openTabelBtn = null
             if (props.user?.rules_template_account.can_check_cro || props.user?.is_admin || props.user?.is_superuser) {
-                return <Space direction={"horizontal"} className={'send_btn'}>
-                    <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
-                            onClick={() => props.tryOpenCellsInTabel(selectTabel.id)}>Открыть табель</Button>
-                    <Button variant={'contained'} startIcon={<PrintIcon/>} size={'small'}
-                            onClick={() => tryPrintTabel(selectTabel.id)}>Печать</Button>
-                    <Button variant={'contained'} startIcon={<SaveIcon/>} color={'success'} size={'small'}
-                            type={'submit'}>Сохранить</Button>
-                </Space>
+                openTabelBtn = <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
+                                       onClick={() => props.tryOpenCellsInTabel(selectTabel.id)}>Открыть табель</Button>
             }
-            return <Button className={'send_btn'} variant={'contained'} startIcon={<SaveIcon/>} color={'success'}
-                           size={'small'}
-                           type={'submit'}>Сохранить</Button>
+            return <Space direction={"horizontal"} className={'send_btn'}>
+                {openTabelBtn}
+                <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
+                        onClick={() => setModalVisible(true)}>Добавить сотрудника</Button>
+                <Button variant={'contained'} startIcon={<SaveIcon/>} color={'success'}
+                        size={'small'} type={'submit'}>Сохранить</Button>
+                <Button variant={'contained'} startIcon={<PrintIcon/>} size={'small'}
+                        onClick={() => tryPrintTabel(selectTabel.id)}>Печать</Button>
+            </Space>
         }
         return (
             <Form
@@ -173,9 +223,28 @@ const Tabel = (props) => {
                                     {props.cells.map((row, index) => {
                                         let sum_hours = 0
                                         let sum_perco = 0
+                                        let fullName = <div style={{minWidth: 200}}>{row.full_name}</div>
+                                        if (props.user?.is_admin || props.user?.is_superuser) {
+                                            fullName = <div style={{minWidth: 200}}>
+                                                {row.full_name}
+                                                <Tooltip title={'Удалить сотрудника'} placement={"right"}>
+                                                    <Popconfirm
+                                                        title={'Вы уверены что хотите удалить сотрудника?'}
+                                                        onConfirm={() => {
+                                                            props.tryDeleteUserInTabel(selectTabel.id, row.username)
+                                                        }}
+                                                        okText='Да' cancelText='Нет'
+                                                    >
+                                                        <IconButton className={'remove_btn'} variant={'text'}
+                                                                    size={'small'} color={"error"}>
+                                                            <RemoveIcon/></IconButton>
+                                                    </Popconfirm>
+                                                </Tooltip>
+                                            </div>
+                                        }
                                         return <TableRow key={'tb_' + index}>
                                             <TableCell className={'fixed'} component={'th'}
-                                                       scope="row">{row.full_name}</TableCell>
+                                                       scope="row">{fullName}</TableCell>
                                             <TableCell align="center">{row.employee_code}</TableCell>
                                             <TableCell align="center">{row.post}</TableCell>
                                             {Array.from({length: dayInMonth}, (_, index) => {
@@ -272,6 +341,7 @@ const Tabel = (props) => {
                 {generateTabel()}
             </Splitter>
             {reviewDialog()}
+            {modal()}
         </div>
     )
 }
@@ -282,6 +352,7 @@ const mapStateToProps = (state) => ({
     cells: state.cells,
     loading: state.loading,
     user: state.user,
+    users: state.users,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -289,6 +360,9 @@ const mapDispatchToProps = (dispatch) => ({
     trySendCellsData: (cells, cro) => dispatch(trySendCellsData(cells, cro)),
     tryGetCellsByTabel: (tabel_id) => dispatch(tryGetCellsByTabel(tabel_id)),
     tryOpenCellsInTabel: (tabel_id) => dispatch(tryOpenCellsInTabel(tabel_id)),
+    tryAddUserInTabel: (tabel_id, account_id) => dispatch(tryAddUserInTabel(tabel_id, account_id)),
+    tryDeleteUserInTabel: (tabel_id, account_id) => dispatch(tryDeleteUserInTabel(tabel_id, account_id)),
+    tryGetUsers: () => dispatch(tryGetUsers()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tabel)

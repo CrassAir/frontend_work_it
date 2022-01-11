@@ -1,4 +1,4 @@
-import {ConfigProvider, Form, Modal, Space, Tooltip} from "antd";
+import {ConfigProvider, Form, Modal, Space, Tooltip, Upload} from "antd";
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -19,6 +19,8 @@ import {
 } from "../../../store/action/catalogActions/technologicalOperationsActions";
 import OperationalStandardForm from "../OperationalStandards/form";
 import OperationCategoryForm from "../OperationCategory/form";
+import {InboxOutlined} from "@material-ui/icons";
+import {uploadPriceFile} from "../../../api/api";
 
 
 const TechnologicalOperationsForm = (props) => {
@@ -69,6 +71,18 @@ const TechnologicalOperationsForm = (props) => {
                 {component[visibleModal].form}
             </Modal>
         )
+    }
+
+    const normFile = (e) => {
+        console.log('Upload event:', e)
+        if (!e.file) return null
+        uploadPriceFile(e.file)
+
+        if (Array.isArray(e)) {
+            return e
+        }
+
+        return e && e.fileList;
     }
 
     return (
@@ -159,6 +173,30 @@ const TechnologicalOperationsForm = (props) => {
                     </Form.Item>
                     {actionBtn('standards')}
                 </Space>
+                <Form.Item
+                    name="goal"
+                    getValueProps={(e) => {
+                    }}
+                    required
+                    initialValue={selectStandard}
+                >
+                    <TextField label="Норма выполнения операции"
+                               type={'number'}
+                               variant="standard"
+                               fullWidth
+                    />
+                </Form.Item>
+                <Form.Item label="Dragger">
+                    <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                        <Upload.Dragger name="files" customRequest={() => true}>
+                            <p className="ant-upload-drag-icon">
+                                <InboxOutlined/>
+                            </p>
+                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                        </Upload.Dragger>
+                    </Form.Item>
+                </Form.Item>
                 <Form.Item>
                     <Box sx={{mb: 2}}>
                         <Button

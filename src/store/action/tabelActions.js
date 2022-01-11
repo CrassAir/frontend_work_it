@@ -82,6 +82,47 @@ const openCellsFail = (error) => {
     }
 }
 
+const addUserInTabelStart = () => {
+    return {
+        type: actionTypes.ADD_USER_IN_TABEL_START
+    }
+}
+
+const addUserInTabelSuccess = (cells) => {
+    return {
+        type: actionTypes.ADD_USER_IN_TABEL_SUCCESS,
+        cells: cells
+    }
+}
+
+const addUserInTabelFail = (error) => {
+    return {
+        type: actionTypes.ADD_USER_IN_TABEL_FAIL,
+        error: error
+    }
+}
+
+const deleteUserInTabelStart = () => {
+    return {
+        type: actionTypes.DELETE_USER_IN_TABEL_START
+    }
+}
+
+const deleteUserInTabelSuccess = (cells) => {
+    return {
+        type: actionTypes.DELETE_USER_IN_TABEL_SUCCESS,
+        cells: cells
+    }
+}
+
+const deleteUserInTabelFail = (error) => {
+    return {
+        type: actionTypes.DELETE_USER_IN_TABEL_FAIL,
+        error: error
+    }
+}
+
+
 export const getTabels = (date_time) => {
     return dispatch => {
         dispatch(getTabelsStart());
@@ -120,6 +161,34 @@ export const tryOpenCellsInTabel = (tabel_id) => {
             }
         ).catch(err => {
             dispatch(openCellsFail(err));
+        })
+    }
+}
+
+export const tryDeleteUserInTabel = (tabel_id, account_id) => {
+    return dispatch => {
+        dispatch(deleteUserInTabelStart())
+        let url = getApiUrl() + `tabel/${tabel_id}/delete_user_from_tabel/`
+        api.post(url, {account_id: account_id}).then(res => {
+                let cells = convertCells(res.data)
+                dispatch(deleteUserInTabelSuccess(cells))
+            }
+        ).catch(err => {
+            dispatch(deleteUserInTabelFail(err));
+        })
+    }
+}
+
+export const tryAddUserInTabel = (tabel_id, account_id) => {
+    return dispatch => {
+        dispatch(addUserInTabelStart())
+        let url = getApiUrl() + `tabel/${tabel_id}/add_user_in_tabel/`
+        api.post(url, {account_id: account_id}).then(res => {
+                let cells = convertCells(res.data)
+                dispatch(addUserInTabelSuccess(cells))
+            }
+        ).catch(err => {
+            dispatch(addUserInTabelFail(err));
         })
     }
 }

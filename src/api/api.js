@@ -31,3 +31,14 @@ export const tryPrintTabel = (tabel_id) => {
 }
 
 export default api;
+
+export const uploadPriceFile = (price) => {
+    const header = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    }
+    api.post(getApiUrl() + 'technological-operations/upload_file/', price.file, header).then(res => {
+        console.log(res.data)
+    }).catch(err => console.log(err))
+}

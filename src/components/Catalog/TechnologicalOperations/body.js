@@ -92,6 +92,7 @@ const TechnologicalOperationsBody = (props) => {
                                 <TableCell>Культура</TableCell>
                                 <TableCell>Категория операции</TableCell>
                                 <TableCell>Норма выполнения операции</TableCell>
+                                <TableCell>Цель</TableCell>
                                 <TableCell align={'right'}>Действие</TableCell>
                             </TableRow>
                         </TableHead>
@@ -102,6 +103,7 @@ const TechnologicalOperationsBody = (props) => {
                                     <TableCell scope="row">{val.crop?.name}</TableCell>
                                     <TableCell scope="row">{val.category?.name}</TableCell>
                                     <TableCell scope="row">{val.standards?.name}</TableCell>
+                                    <TableCell scope="row">{val.goal}</TableCell>
                                     <TableCell align={'right'} scope="row">{actionsBtn(index)}</TableCell>
                                 </TableRow>
                             ))}

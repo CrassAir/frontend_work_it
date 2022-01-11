@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {AppBar, Toolbar, Button, Tabs, Tab} from '@mui/material'
 import {Outlet, useNavigate} from "react-router-dom"
-import {getGreenhouses} from "../../store/action/locationActions"
 import LinearProgress from "@mui/material/LinearProgress"
 import {authCheckState, getAccount, logout} from "../../store/action/authActions"
 import {useLocation} from "react-router"
@@ -77,7 +76,6 @@ const MainPage = (props) => {
         } else {
             navigate(aList[0])
         }
-        props.getGreenhouses()
         connect()
         return () => {
             webSocket?.close()
@@ -136,7 +134,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getGreenhouses: () => dispatch(getGreenhouses()),
     logout: () => dispatch(logout()),
     authCheckState: () => dispatch(authCheckState()),
     getAccount: (username) => dispatch(getAccount(username))

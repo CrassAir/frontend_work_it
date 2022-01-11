@@ -1,5 +1,5 @@
 import * as actionTypes from "./action/actionTypes"
-import {updateObject} from "./utils";
+import {deleteListById, updateListById, updateObject} from "./utils";
 import * as catalogActionTypes from "./action/catalogActions/actionTypes";
 
 const initialState = {
@@ -7,17 +7,21 @@ const initialState = {
     error: null,
     loading: false,
     user: null,
+    users: null,
     greenhouses: null,
     crops: null,
     hybrids: null,
     tabels: null,
     cells: null,
+    upendCells: null,
     operationsCategory: null,
     operationsFrequency: null,
     technologicalPeriods: null,
     operationalStandards: null,
     technologicalOperations: null,
 }
+
+//<editor-fold defaultstate="collapsed" desc="Account">
 
 const authStart = (state, action) => {
     return updateObject(state, {
@@ -74,6 +78,32 @@ const changePasswordFail = (state, action) => {
     })
 }
 
+const getUsersStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getUsersSuccess = (state, action) => {
+    return updateObject(state, {
+        users: action.users,
+        error: null,
+        loading: false,
+    })
+}
+
+const getUsersFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold >
+
+//<editor-fold defaultstate="collapsed" desc="Greenhouse">
+
 const getGreenhousesStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -94,6 +124,10 @@ const getGreenhousesFail = (state, action) => {
         loading: false,
     })
 }
+
+//</editor-fold >
+
+//<editor-fold defaultstate="collapsed" desc="Tabel">
 
 const getTabelStart = (state, action) => {
     return updateObject(state, {
@@ -182,9 +216,51 @@ const trySendCellsFail = (state, action) => {
     })
 }
 
-//<editor-fold desc="Catalog">
+const addUserInTabelStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
 
-//Crops
+const addUserInTabelSuccess = (state, action) => {
+    return updateObject(state, {
+        cells: action.cells,
+        loading: false,
+    })
+}
+
+const addUserInTabelFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteUserInTabelStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteUserInTabelSuccess = (state, action) => {
+    return updateObject(state, {
+        cells: action.cells,
+        loading: false,
+    })
+}
+
+const deleteUserInTabelFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold >
+
+//<editor-fold defaultstate="collapsed" desc="Crops">
 const getCropsStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -205,8 +281,9 @@ const getCropsFail = (state, action) => {
         loading: false,
     })
 }
+//</editor-fold >
 
-//Hybrids
+//<editor-fold defaultstate="collapsed" desc="Hybrids">
 const getHybridsStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -227,8 +304,9 @@ const getHybridsFail = (state, action) => {
         loading: false,
     })
 }
+//</editor-fold >
 
-//VegetationPhases
+//<editor-fold defaultstate="collapsed" desc="VegetationPhases">
 const getVegetationPhasesStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -249,6 +327,7 @@ const getVegetationPhasesFail = (state, action) => {
         loading: false,
     })
 }
+//</editor-fold >
 
 //<editor-fold defaultstate="collapsed" desc="OperationsCategory">
 
@@ -303,13 +382,8 @@ const editOperationCategoryStart = (state, action) => {
 }
 
 const editOperationCategorySuccess = (state, action) => {
-    let newData = []
-    state.operationsCategory.forEach((val) => {
-        if (val.id === action.operationCategory.id) newData.push(action.operationCategory)
-        else newData.push(val)
-    })
     return updateObject(state, {
-        operationsCategory: [...newData],
+        operationsCategory: updateListById(state.operationsCategory, action.operationCategory),
         loading: false,
     })
 }
@@ -329,12 +403,8 @@ const deleteOperationCategoryStart = (state, action) => {
 }
 
 const deleteOperationCategorySuccess = (state, action) => {
-    let newData = []
-    state.operationsCategory.forEach((val) => {
-        if (val.id !== action.operationCategoryId) newData.push(val)
-    })
     return updateObject(state, {
-        operationsCategory: [...newData],
+        operationsCategory: deleteListById(state.operationsCategory, action.operationCategoryId),
         loading: false,
     })
 }
@@ -401,13 +471,8 @@ const editOperationFrequencyStart = (state, action) => {
 }
 
 const editOperationFrequencySuccess = (state, action) => {
-    let newData = []
-    state.operationsFrequency.forEach((val) => {
-        if (val.id === action.operationFrequency.id) newData.push(action.operationFrequency)
-        else newData.push(val)
-    })
     return updateObject(state, {
-        operationsFrequency: [...newData],
+        operationsFrequency: updateListById(state.operationsFrequency, action.operationFrequency),
         loading: false,
     })
 }
@@ -427,12 +492,8 @@ const deleteOperationFrequencyStart = (state, action) => {
 }
 
 const deleteOperationFrequencySuccess = (state, action) => {
-    let newData = []
-    state.operationsFrequency.forEach((val) => {
-        if (val.id !== action.operationFrequencyId) newData.push(val)
-    })
     return updateObject(state, {
-        operationsFrequency: [...newData],
+        operationsFrequency: deleteListById(state.operationsFrequency, action.operationFrequencyId),
         loading: false,
     })
 }
@@ -499,13 +560,8 @@ const editTechnologicalPeriodStart = (state, action) => {
 }
 
 const editTechnologicalPeriodSuccess = (state, action) => {
-    let newData = []
-    state.technologicalPeriods.forEach((val) => {
-        if (val.id === action.technologicalPeriod.id) newData.push(action.technologicalPeriod)
-        else newData.push(val)
-    })
     return updateObject(state, {
-        technologicalPeriods: [...newData],
+        technologicalPeriods: updateListById(state.technologicalPeriods, action.technologicalPeriod),
         loading: false,
     })
 }
@@ -525,12 +581,8 @@ const deleteTechnologicalPeriodStart = (state, action) => {
 }
 
 const deleteTechnologicalPeriodSuccess = (state, action) => {
-    let newData = []
-    state.technologicalPeriods.forEach((val) => {
-        if (val.id !== action.technologicalPeriodId) newData.push(val)
-    })
     return updateObject(state, {
-        technologicalPeriods: [...newData],
+        technologicalPeriods: deleteListById(state.technologicalPeriods, action.technologicalPeriodId),
         loading: false,
     })
 }
@@ -597,13 +649,8 @@ const editOperationalStandardStart = (state, action) => {
 }
 
 const editOperationalStandardSuccess = (state, action) => {
-    let newData = []
-    state.operationalStandards.forEach((val) => {
-        if (val.id === action.operationalStandard.id) newData.push(action.operationalStandard)
-        else newData.push(val)
-    })
     return updateObject(state, {
-        operationalStandards: [...newData],
+        operationalStandards: updateListById(state.operationalStandards, action.operationalStandard),
         loading: false,
     })
 }
@@ -623,12 +670,8 @@ const deleteOperationalStandardStart = (state, action) => {
 }
 
 const deleteOperationalStandardSuccess = (state, action) => {
-    let newData = []
-    state.operationalStandards.forEach((val) => {
-        if (val.id !== action.operationalStandardId) newData.push(val)
-    })
     return updateObject(state, {
-        operationalStandards: [...newData],
+        operationalStandards: deleteListById(state.operationalStandards, action.operationalStandardId),
         loading: false,
     })
 }
@@ -695,13 +738,8 @@ const editTechnologicalOperationStart = (state, action) => {
 }
 
 const editTechnologicalOperationSuccess = (state, action) => {
-    let newData = []
-    state.technologicalOperations.forEach((val) => {
-        if (val.id === action.technologicalOperation.id) newData.push(action.technologicalOperation)
-        else newData.push(val)
-    })
     return updateObject(state, {
-        technologicalOperations: [...newData],
+        technologicalOperations: updateListById(state.technologicalOperations, action.technologicalOperation),
         loading: false,
     })
 }
@@ -721,12 +759,8 @@ const deleteTechnologicalOperationStart = (state, action) => {
 }
 
 const deleteTechnologicalOperationSuccess = (state, action) => {
-    let newData = []
-    state.technologicalOperations.forEach((val) => {
-        if (val.id !== action.technologicalOperationId) newData.push(val)
-    })
     return updateObject(state, {
-        technologicalOperations: [...newData],
+        technologicalOperations: deleteListById(state.technologicalOperations, action.technologicalOperationId),
         loading: false,
     })
 }
@@ -739,8 +773,6 @@ const deleteTechnologicalOperationFail = (state, action) => {
 }
 
 //</editor-fold>
-
-//</editor-fold >
 
 const reducer = (state = initialState, action) => {
     console.log(action.type)
@@ -759,12 +791,23 @@ const reducer = (state = initialState, action) => {
             return changePasswordSuccess(state, action);
         case actionTypes.CHANGE_PASSWORD_FAIL:
             return changePasswordFail(state, action);
+
+        case actionTypes.GET_USERS_START:
+            return getUsersStart(state, action);
+        case actionTypes.GET_USERS_SUCCESS:
+            return getUsersSuccess(state, action);
+        case actionTypes.GET_USERS_FAIL:
+            return getUsersFail(state, action);
+
         case actionTypes.GET_GREENHOUSES_START:
             return getGreenhousesStart(state, action);
         case actionTypes.GET_GREENHOUSES_SUCCESS:
             return getGreenhousesSuccess(state, action);
         case actionTypes.GET_GREENHOUSES_FAIL:
             return getGreenhousesFail(state, action);
+
+        //<editor-fold defaultstate="collapsed" desc="Tabel">
+
         case actionTypes.GET_TABEL_START:
             return getTabelStart(state, action);
         case actionTypes.GET_TABEL_SUCCESS:
@@ -789,10 +832,23 @@ const reducer = (state = initialState, action) => {
             return trySendCellsSuccess(state, action);
         case actionTypes.TRY_SEND_CELLS_FAIL:
             return trySendCellsFail(state, action);
+        case actionTypes.ADD_USER_IN_TABEL_START:
+            return addUserInTabelStart(state, action);
+        case actionTypes.ADD_USER_IN_TABEL_SUCCESS:
+            return addUserInTabelSuccess(state, action);
+        case actionTypes.ADD_USER_IN_TABEL_FAIL:
+            return addUserInTabelFail(state, action);
+        case actionTypes.DELETE_USER_IN_TABEL_START:
+            return deleteUserInTabelStart(state, action);
+        case actionTypes.DELETE_USER_IN_TABEL_SUCCESS:
+            return deleteUserInTabelSuccess(state, action);
+        case actionTypes.DELETE_USER_IN_TABEL_FAIL:
+            return deleteUserInTabelFail(state, action);
 
-// <editor-fold desc="Catalog">
+        //</editor-fold>
 
-        //Crops
+        //<editor-fold defaultstate="collapsed" desc="Crops">
+
         case catalogActionTypes.GET_CROPS_START:
             return getCropsStart(state, action);
         case catalogActionTypes.GET_CROPS_SUCCESS:
@@ -800,7 +856,10 @@ const reducer = (state = initialState, action) => {
         case catalogActionTypes.GET_CROPS_FAIL:
             return getCropsFail(state, action);
 
-        //Hybrids
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Hybrids">
+
         case catalogActionTypes.GET_HYBRIDS_START:
             return getHybridsStart(state, action);
         case catalogActionTypes.GET_HYBRIDS_SUCCESS:
@@ -808,13 +867,18 @@ const reducer = (state = initialState, action) => {
         case catalogActionTypes.GET_HYBRIDS_FAIL:
             return getHybridsFail(state, action);
 
-        //VegetationPhases
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="VegetationPhases">
+
         case catalogActionTypes.GET_VEGETATION_PHASES_START:
             return getVegetationPhasesStart(state, action);
         case catalogActionTypes.GET_VEGETATION_PHASES_SUCCESS:
             return getVegetationPhasesSuccess(state, action);
         case catalogActionTypes.GET_VEGETATION_PHASES_FAIL:
             return getVegetationPhasesFail(state, action);
+
+        //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="OperationsCategory">
 
@@ -961,7 +1025,6 @@ const reducer = (state = initialState, action) => {
 
         //</editor-fold>
 
-//</editor-fold>
         default:
             return state;
     }
