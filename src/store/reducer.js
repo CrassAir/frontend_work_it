@@ -19,6 +19,7 @@ const initialState = {
     technologicalPeriods: null,
     operationalStandards: null,
     technologicalOperations: null,
+    products: null,
 }
 
 //<editor-fold defaultstate="collapsed" desc="Account">
@@ -774,6 +775,95 @@ const deleteTechnologicalOperationFail = (state, action) => {
 
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="Product">
+
+const getProductsStart = (state, action) => {
+    return updateObject(state, {
+        products: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getProductsSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        products: action.products
+    })
+}
+
+const getProductsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const addProductStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addProductSuccess = (state, action) => {
+    return updateObject(state, {
+        products: [...state.products, action.product],
+        loading: false,
+    })
+}
+
+const addProductFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editProductStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const editProductSuccess = (state, action) => {
+    return updateObject(state, {
+        products: updateListById(state.products, action.product),
+        loading: false,
+    })
+}
+
+const editProductFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteProductStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteProductSuccess = (state, action) => {
+    return updateObject(state, {
+        products: deleteListById(state.products, action.productId),
+        loading: false,
+    })
+}
+
+const deleteProductFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold>
+
 const reducer = (state = initialState, action) => {
     console.log(action.type)
     switch (action.type) {
@@ -1022,6 +1112,35 @@ const reducer = (state = initialState, action) => {
             return deleteTechnologicalOperationSuccess(state, action);
         case catalogActionTypes.DELETE_TECHNOLOGICAL_OPERATION_FAIL:
             return deleteTechnologicalOperationFail(state, action);
+
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Product">
+
+        case catalogActionTypes.GET_PRODUCTS_START:
+            return getProductsStart(state, action);
+        case catalogActionTypes.GET_PRODUCTS_SUCCESS:
+            return getProductsSuccess(state, action);
+        case catalogActionTypes.GET_PRODUCTS_FAIL:
+            return getProductsFail(state, action);
+        case catalogActionTypes.ADD_PRODUCT_START:
+            return addProductStart(state, action);
+        case catalogActionTypes.ADD_PRODUCT_SUCCESS:
+            return addProductSuccess(state, action);
+        case catalogActionTypes.ADD_PRODUCT_FAIL:
+            return addProductFail(state, action);
+        case catalogActionTypes.EDIT_PRODUCT_START:
+            return editProductStart(state, action);
+        case catalogActionTypes.EDIT_PRODUCT_SUCCESS:
+            return editProductSuccess(state, action);
+        case catalogActionTypes.EDIT_PRODUCT_FAIL:
+            return editProductFail(state, action);
+        case catalogActionTypes.DELETE_PRODUCT_START:
+            return deleteProductStart(state, action);
+        case catalogActionTypes.DELETE_PRODUCT_SUCCESS:
+            return deleteProductSuccess(state, action);
+        case catalogActionTypes.DELETE_PRODUCT_FAIL:
+            return deleteProductFail(state, action);
 
         //</editor-fold>
 

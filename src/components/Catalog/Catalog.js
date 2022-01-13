@@ -8,6 +8,7 @@ import OperationFrequencyBody from "./OperationFrequency/body";
 import TechnologicalPeriodBody from "./TechnologicalPeriods/body";
 import TechnologicalOperationsBody from "./TechnologicalOperations/body";
 import OperationalStandardBody from "./OperationalStandards/body";
+import ProductsBody from "./Products/body";
 
 export const choices = {сultivation: 'Оборот', liquidation: 'Ликвидация', repairs: 'Ремонт', other: 'Другое'}
 export const phaseChoice = {
@@ -27,6 +28,7 @@ const Catalog = (props) => {
         {title: 'Технологические периоды', body: <TechnologicalPeriodBody/>},
         {title: 'Нормы выполнения операции', body: <OperationalStandardBody/>},
         {title: 'Технологические операции', body: <TechnologicalOperationsBody/>},
+        {title: 'Товары ИТС', body: <ProductsBody/>},
     ]
 
     const generateMenuItem = () => {

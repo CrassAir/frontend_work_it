@@ -37,11 +37,16 @@ import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import RemoveIcon from '@mui/icons-material/Remove';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import {tryPrintTabel} from "../../api/api";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import {tryGetUsers} from "../../store/action/accountActions";
 import IconButton from "@mui/material/IconButton";
+
+// import { matchSorter } from 'match-sorter';
+//
+// const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue);
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -172,7 +177,7 @@ const Tabel = (props) => {
             }
             return <Space direction={"horizontal"} className={'send_btn'}>
                 {openTabelBtn}
-                <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
+                <Button variant={'contained'} startIcon={<PersonAddAltIcon/>} size={'small'}
                         onClick={() => setModalVisible(true)}>Добавить сотрудника</Button>
                 <Button variant={'contained'} startIcon={<SaveIcon/>} color={'success'}
                         size={'small'} type={'submit'}>Сохранить</Button>
