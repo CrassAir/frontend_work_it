@@ -20,6 +20,8 @@ const initialState = {
     operationalStandards: null,
     technologicalOperations: null,
     products: null,
+    orders: null,
+    orderProducts: null,
 }
 
 //<editor-fold defaultstate="collapsed" desc="Account">
@@ -864,6 +866,53 @@ const deleteProductFail = (state, action) => {
 
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="Order">
+
+const getOrdersStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getOrdersSuccess = (state, action) => {
+    return updateObject(state, {
+        orders: action.orders,
+        loading: false,
+    })
+}
+
+const getOrdersFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const getOrderProductsStart = (state, action) => {
+    return updateObject(state, {
+        orderProducts: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const getOrderProductsSuccess = (state, action) => {
+    return updateObject(state, {
+        orderProducts: action.orderProducts,
+        loading: false,
+    })
+}
+
+const getOrderProductsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold >
+
 const reducer = (state = initialState, action) => {
     console.log(action.type)
     switch (action.type) {
@@ -895,6 +944,24 @@ const reducer = (state = initialState, action) => {
             return getGreenhousesSuccess(state, action);
         case actionTypes.GET_GREENHOUSES_FAIL:
             return getGreenhousesFail(state, action);
+
+        //<editor-fold defaultstate="collapsed" desc="Order">
+
+        case actionTypes.GET_ORDERS_START:
+            return getOrdersStart(state, action);
+        case actionTypes.GET_ORDERS_SUCCESS:
+            return getOrdersSuccess(state, action);
+        case actionTypes.GET_ORDERS_FAIL:
+            return getOrdersFail(state, action);
+
+        case actionTypes.GET_ORDER_PRODUCTS_START:
+            return getOrderProductsStart(state, action);
+        case actionTypes.GET_ORDER_PRODUCTS_SUCCESS:
+            return getOrderProductsSuccess(state, action);
+        case actionTypes.GET_ORDER_PRODUCTS_FAIL:
+            return getOrderProductsFail(state, action);
+
+        //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Tabel">
 

@@ -13,7 +13,9 @@ import {addProduct, editProduct} from "../../../store/action/catalogActions/prod
 const ProductsForm = (props) => {
     let data
     if (props.index >= 0) data = props.products[props.index]
+    if (props.name) data = props
 
+    console.log(data)
     const [selectUnit, setSelectUnit] = useState(data?.unit)
 
     const unit = ['Шт', 'Кг', 'г', 'л', 'м', 'м3', 'м2']

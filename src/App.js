@@ -13,6 +13,7 @@ import Tabel from "./components/Tabel/Tabel";
 import ChangePassword from "./pages/LoginPage/ChangePassword";
 import {SnackbarProvider} from "notistack";
 import Catalog from "./components/Catalog/Catalog";
+import Order from "./components/Order/Order";
 
 
 const App = (props) => {
@@ -46,6 +47,7 @@ const App = (props) => {
                         <Route path="catalog" element={<Catalog/>}/>
                         <Route path="row" element={<RowTasks/>}/>
                         <Route path="tabel" element={<Tabel/>}/>
+                        <Route path="order" element={<Order/>}/>
                     </Route>
                 </Routes>
             )
