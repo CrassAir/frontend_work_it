@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import ProductsForm from "../Catalog/Products/form";
 import {addOrder} from "../../store/action/ordersActions";
@@ -21,22 +21,34 @@ import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
 
 const OrderForm = (props) => {
-    let data
-    if (props.copy >= 0) data = props.orderProducts
-
     const [newOrderProd, setNewOrderProd] = useState([])
     const [createProduct, setCreateProduct] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState(null);
 
-    useEffect(() => {
-        data?.forEach((val, index) => {
-            val.catalog_id = val.catalog?.id
-            newOrderProd.push({
-                key: index,
-                value: val.catalog
-            })
+    let data
+    if (props.copy >= 0) data = props.orderProducts.map((val, index) => {
+        let newVal = {
+            catalog_id: val.catalog?.id,
+            count: val.count,
+            comment: val.comment,
+            deadline: moment(val.deadline)
+        }
+        newOrderProd.push({
+            key: index,
+            value: val?.catalog
         })
-    }, [])
+        return newVal
+    })
+
+    // useEffect(() => {
+    //     data?.forEach((val, index) => {
+    //         val.catalog_id = val.catalog?.id
+    //         newOrderProd.push({
+    //             key: index,
+    //             value: val.catalog
+    //         })
+    //     })
+    // }, [])
 
 
     const closeModal = () => {
@@ -63,7 +75,7 @@ const OrderForm = (props) => {
 
                 <Form className={'order_form'}
                       onFinish={(values) => {
-                          if (!data) {
+                          if (props.copy || !data) {
                               props.addOrder(values)
                           } else {
                               // props.editProduct(data.id, values)
@@ -79,7 +91,7 @@ const OrderForm = (props) => {
                                             <TableHead>
                                                 <TableRow>
                                                     <TableCell/>
-                                                    <TableCell>Позиция</TableCell>
+                                                    <TableCell>№</TableCell>
                                                     <TableCell>Наименование и харакстеристики</TableCell>
                                                     <TableCell>Производитель</TableCell>
                                                     <TableCell>Количество</TableCell>
@@ -105,7 +117,7 @@ const OrderForm = (props) => {
                                                                     placeholder="Товар"
                                                                     onSearch={(e) => setSearchValue(e)}
                                                                     notFoundContent={<Typography
-                                                                        sx={{cursor: 'pointer'}}
+                                                                        sx={{cursor: 'pointer', color: 'black'}}
                                                                         variant={'caption'}
                                                                         onClick={() => setCreateProduct(searchValue)}>
                                                                         Добавить в справочник "{searchValue}"

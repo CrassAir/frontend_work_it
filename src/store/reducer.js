@@ -898,7 +898,7 @@ const addOrderStart = (state, action) => {
 
 const addOrderSuccess = (state, action) => {
     return updateObject(state, {
-        orders: [...state.orders, action.order],
+        orders: [action.order, ...state.orders],
         loading: false,
     })
 }

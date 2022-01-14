@@ -87,7 +87,7 @@ const Orders = (props) => {
                         <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Позиция</TableCell>
+                                    <TableCell>№</TableCell>
                                     <TableCell>Наименование</TableCell>
                                     <TableCell>Производитель</TableCell>
                                     <TableCell>Харакстеристики</TableCell>
@@ -134,7 +134,7 @@ const Orders = (props) => {
                                     <TextField
                                         label="Заказы"
                                         // variant="standard"
-                                        onChange={(e) => setSearchValue(e.target.value)}
+                                        onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
                                         size={'small'}
                                         InputProps={{
                                             endAdornment: (
@@ -164,17 +164,24 @@ const Orders = (props) => {
                             </MenuItem>
                             {!props.orders ? null :
                                 props.orders.map(order => {
-                                    if (searchValue) if (!order.products.some(val => val.name.includes(searchValue))) return null
+                                    if (searchValue) {
+                                        if (!order.products.some(val => val.name.toLowerCase().includes(searchValue)) &&
+                                            !order.creator_fio.toLowerCase().includes(searchValue)) return null
+                                    }
                                     let ordre_id = `${order.id}`.padStart(6, '0')
-                                    let date_create = moment(order.date_create).format('DD-MM-YYYY')
-                                    let count_product = order.products.length
-                                    order['title'] = `Заказ №${ordre_id} от ${date_create}, позиций: ${count_product}`
+                                    let date_create = moment(order.date_create)
+                                    let deadline = moment(order.products[0].deadline)
+                                    order.products.forEach(val => {
+                                        if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)
+                                    })
+                                    order['title'] = `№${ordre_id}, ${order.creator_fio} от ${date_create.format('DD-MM-YYYY')} к ${deadline.format('DD-MM-YYYY')}`
                                     return <MenuItem
                                         selected={order === selectOrder}
                                         key={order.id}
                                         onClick={() => {
                                             setSelectOrder(order)
                                             setCreated(false)
+                                            setCopy(false)
                                             props.tryGetOrderProducts(order.id)
                                         }}>
                                         <Typography noWrap>{order.title}</Typography>

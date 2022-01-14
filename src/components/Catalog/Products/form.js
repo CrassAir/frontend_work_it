@@ -37,7 +37,7 @@ const ProductsForm = (props) => {
                 className={'catalog_form'}
                 onFinish={(values) => {
                     console.log(values)
-                    if (!data) {
+                    if (!data?.id) {
                         props.addProduct(values)
                     } else {
                         props.editProduct(data.id, values)
