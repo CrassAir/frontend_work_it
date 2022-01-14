@@ -4,13 +4,14 @@ import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import Paper from "@mui/material/Paper";
 import SimpleBar from "simplebar-react";
 import {MenuItem, MenuList} from "@mui/material";
-import {Col, ConfigProvider, DatePicker, Modal, Row, Space} from "antd";
+import {Col, ConfigProvider, DatePicker, Form, Input, Modal, Row, Select, Space} from "antd";
 import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {tryGetOrderProducts, tryGetOrders} from "../../store/action/ordersActions";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from '@mui/icons-material/Remove';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -24,15 +25,14 @@ import TableBody from "@mui/material/TableBody";
 import {getProducts} from "../../store/action/catalogActions/productsActions";
 import Autocomplete, {createFilterOptions} from "@mui/material/Autocomplete";
 import ProductsForm from "../Catalog/Products/form";
+import IconButton from "@mui/material/IconButton";
+import OrderForm from "./OrderForm";
 
 const {RangePicker} = DatePicker;
-const filter = createFilterOptions();
 
 const Orders = (props) => {
     const [selectOrder, setSelectOrder] = useState(null)
     const [created, setCreated] = useState(false)
-    const [newOrderProd, setNewOrderProd] = useState([])
-    const [value, setValue] = React.useState('');
     const [createProduct, setCreateProduct] = React.useState(false);
     const [initSplitter] = useState([30, 70])
 
@@ -59,98 +59,16 @@ const Orders = (props) => {
         </Modal>
     }
 
-    const createTable = () => {
-        if (!props.products) return null
-
-        const filterOptions = (options, params) => {
-            const filtered = filter(options, params);
-            const {inputValue} = params;
-            const isExisting = options.some((option) => inputValue === option.name);
-            if (inputValue !== '' && !isExisting) {
-                filtered.push({
-                    inputValue,
-                    name: `Добавить "${inputValue}"`,
-                    clearName: inputValue,
-                });
-            }
-            return filtered;
-        }
-
-        return <Paper className={'tabel_container'}>
-            <Typography noWrap>Новый заказ</Typography>
-            <TableContainer component={Box}>
-                <SimpleBar style={{maxHeight: '100%'}}>
-                    <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Позиция</TableCell>
-                                <TableCell>Наименование</TableCell>
-                                <TableCell>Производитель</TableCell>
-                                <TableCell>Харакстеристики</TableCell>
-                                <TableCell>Количество</TableCell>
-                                <TableCell>Комментарий</TableCell>
-                                <TableCell>Крайний срок</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {newOrderProd.map((prod, index) => {
-                                if (!prod) return null
-                                return <TableRow key={'tr_' + index}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{prod.name}</TableCell>
-                                    <TableCell>{prod.manufacturer}</TableCell>
-                                    <TableCell>{prod.feature}</TableCell>
-                                    <TableCell>{prod.count} {prod.unit}</TableCell>
-                                    <TableCell>{prod.comment}</TableCell>
-                                    <TableCell>{'deadline'}</TableCell>
-                                </TableRow>
-                            })}
-                        </TableBody>
-                    </Table>
-                    <Row justify="space-between" align="middle">
-                        <Col span={8}>
-                            <Autocomplete
-                                id="free-solo-users"
-                                // freeSolo
-                                options={props.products}
-                                getOptionLabel={(option) => option.name ? option.name : ''}
-                                disableClearable
-                                sx={{paddingTop: 2, paddingBottom: 2, maxWidth: 500}}
-                                onChange={(_, opt) => {
-                                    if (opt.name.startsWith('Добавить')) {
-                                        setCreateProduct(opt.clearName)
-                                        setValue('')
-                                    } else {
-                                        setValue('')
-                                        setNewOrderProd([...newOrderProd, opt])
-                                    }
-                                }}
-                                filterOptions={filterOptions}
-                                inputValue={value}
-                                onInput={(e) => setValue(e.target.value)}
-                                renderInput={(params) => <TextField {...params} label="Добавить товар"/>}
-                            />
-                        </Col>
-                        <Col>
-                            <Button variant={'contained'} color={'success'}
-                                    type={'submit'}>На согласование</Button>
-                        </Col>
-                    </Row>
-                </SimpleBar>
-            </TableContainer>
-        </Paper>
-    }
-
     const generateTabel = () => {
         if (props.loading) return null
-        if (created) return createTable()
+        if (created) return <OrderForm/>
         if (!selectOrder) return null
         if (!props.orderProducts) return null
 
         const button = () => {
             return <Space direction={"horizontal"} className={'send_btn'}>
                 <Button variant={'contained'} startIcon={<AddIcon/>} color={'success'}
-                        size={'small'} type={'submit'}>Создать</Button>
+                        size={'small'} type={'submit'}>Создать копию</Button>
             </Space>
         }
 
