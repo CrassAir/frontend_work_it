@@ -4,14 +4,15 @@ import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import Paper from "@mui/material/Paper";
 import SimpleBar from "simplebar-react";
 import {MenuItem, MenuList} from "@mui/material";
-import {Col, ConfigProvider, DatePicker, Form, Input, Modal, Row, Select, Space} from "antd";
+import {ConfigProvider, DatePicker, Space} from "antd";
 import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {tryGetOrderProducts, tryGetOrders} from "../../store/action/ordersActions";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -23,9 +24,6 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {getProducts} from "../../store/action/catalogActions/productsActions";
-import Autocomplete, {createFilterOptions} from "@mui/material/Autocomplete";
-import ProductsForm from "../Catalog/Products/form";
-import IconButton from "@mui/material/IconButton";
 import OrderForm from "./OrderForm";
 
 const {RangePicker} = DatePicker;
@@ -33,7 +31,8 @@ const {RangePicker} = DatePicker;
 const Orders = (props) => {
     const [selectOrder, setSelectOrder] = useState(null)
     const [created, setCreated] = useState(false)
-    const [createProduct, setCreateProduct] = React.useState(false);
+    const [copy, setCopy] = useState(null)
+    const [searchValue, setSearchValue] = useState(null)
     const [initSplitter] = useState([30, 70])
 
     useEffect(() => {
@@ -46,29 +45,34 @@ const Orders = (props) => {
         delivered: 'Доставлен',
     }
 
-    const closeForm = () => {
-        setCreateProduct(false)
-    }
-
-    const modal = () => {
-        return <Modal
-            visible={!!createProduct}
-            onCancel={closeForm}
-        >
-            <ProductsForm name={createProduct} closeForm={closeForm}/>
-        </Modal>
-    }
-
     const generateTabel = () => {
         if (props.loading) return null
-        if (created) return <OrderForm/>
+        if (created) {
+            const closeForm = () => {
+                setSelectOrder(null)
+                setCreated(false)
+            }
+            return <OrderForm closeForm={closeForm}/>
+        }
+        if (copy) {
+            const closeForm = () => {
+                setCopy(null)
+            }
+            return <OrderForm copy={copy} closeForm={closeForm}/>
+        }
         if (!selectOrder) return null
         if (!props.orderProducts) return null
 
         const button = () => {
             return <Space direction={"horizontal"} className={'send_btn'}>
-                <Button variant={'contained'} startIcon={<AddIcon/>} color={'success'}
-                        size={'small'} type={'submit'}>Создать копию</Button>
+                <Button variant={'contained'} startIcon={<ContentCopyIcon/>}
+                        size={'small'}
+                        onClick={() => {
+                            setCopy(selectOrder.id)
+                            props.getProducts()
+                        }}>Создать копию</Button>
+                <Button variant={'contained'} startIcon={<DeleteIcon/>} color={'error'}
+                        size={'small'}>Отменить</Button>
             </Space>
         }
 
@@ -98,7 +102,7 @@ const Orders = (props) => {
                                     let deadline = prod.deadline ? moment(prod.deadline).format('DD-MM-YYYY') : ''
                                     return <TableRow key={'tr_' + index}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{prod.catalog?.name}</TableCell>
+                                        <TableCell sx={{minWidth: '300px'}}>{prod.catalog?.name}</TableCell>
                                         <TableCell>{prod.catalog?.manufacturer}</TableCell>
                                         <TableCell>{prod.catalog?.feature}</TableCell>
                                         <TableCell>{prod.count} {prod.catalog?.unit}</TableCell>
@@ -121,7 +125,7 @@ const Orders = (props) => {
                       gutterClassName="custom-gutter-horizontal"
                       draggerClassName="custom-dragger-horizontal"
                       initialSizes={initSplitter}
-                      minWidths={[200, 700]}>
+                      minWidths={[400, 500]}>
                 <Paper className={'paper'}>
                     <SimpleBar style={{maxHeight: '100%'}}>
                         <MenuList disableListWrap>
@@ -130,6 +134,7 @@ const Orders = (props) => {
                                     <TextField
                                         label="Заказы"
                                         // variant="standard"
+                                        onChange={(e) => setSearchValue(e.target.value)}
                                         size={'small'}
                                         InputProps={{
                                             endAdornment: (
@@ -159,6 +164,7 @@ const Orders = (props) => {
                             </MenuItem>
                             {!props.orders ? null :
                                 props.orders.map(order => {
+                                    if (searchValue) if (!order.products.some(val => val.name.includes(searchValue))) return null
                                     let ordre_id = `${order.id}`.padStart(6, '0')
                                     let date_create = moment(order.date_create).format('DD-MM-YYYY')
                                     let count_product = order.products.length
@@ -180,7 +186,6 @@ const Orders = (props) => {
                 </Paper>
                 {generateTabel()}
             </Splitter>
-            {modal()}
         </div>
     )
 }

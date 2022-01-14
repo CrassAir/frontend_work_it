@@ -15,7 +15,6 @@ const ProductsForm = (props) => {
     if (props.index >= 0) data = props.products[props.index]
     if (props.name) data = props
 
-    console.log(data)
     const [selectUnit, setSelectUnit] = useState(data?.unit)
 
     const unit = ['Шт', 'Кг', 'г', 'л', 'м', 'м3', 'м2']
@@ -66,10 +65,8 @@ const ProductsForm = (props) => {
                     getValueProps={(e) => {
                     }}
                     initialValue={data?.manufacturer}
-                    required
                 >
                     <TextField
-                        required
                         label="Производитель"
                         variant="standard"
                         defaultValue={data?.manufacturer}
@@ -126,7 +123,7 @@ const ProductsForm = (props) => {
                             type={'submit'}
                             sx={{mt: 1, mr: 1}}
                         >
-                            {data ? 'Изменить' : 'Создать'}
+                            {data?.unit ? 'Изменить' : 'Создать'}
                         </Button>
                     </Box>
                 </Form.Item>

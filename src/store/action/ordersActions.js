@@ -23,6 +23,26 @@ const tryGetOrdersFail = (error) => {
     }
 }
 
+const addOrderStart = () => {
+    return {
+        type: actionTypes.ADD_ORDER_START
+    }
+}
+
+const addOrderSuccess = (order) => {
+    return {
+        type: actionTypes.ADD_ORDER_SUCCESS,
+        order: order
+    }
+}
+
+const addOrderFail = (error) => {
+    return {
+        type: actionTypes.ADD_ORDER_FAIL,
+        error: error
+    }
+}
+
 const tryGetProductsStart = () => {
     return {
         type: actionTypes.GET_ORDER_PRODUCTS_START
@@ -55,6 +75,18 @@ export const tryGetOrders = () => {
     }
 }
 
+export const addOrder = (values) => {
+    return dispatch => {
+        dispatch(addOrderStart());
+        api.post(getApiUrl() + 'remote/order/', values).then(res => {
+                dispatch(addOrderSuccess(res.data));
+            }
+        ).catch(err => {
+            dispatch(addOrderFail(err));
+        });
+    }
+}
+
 export const tryGetOrderProducts = (order_id) => {
     return dispatch => {
         dispatch(tryGetProductsStart());
@@ -66,3 +98,4 @@ export const tryGetOrderProducts = (order_id) => {
         });
     }
 }
+

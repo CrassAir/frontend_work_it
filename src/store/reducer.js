@@ -889,6 +889,27 @@ const getOrdersFail = (state, action) => {
     })
 }
 
+const addOrderStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const addOrderSuccess = (state, action) => {
+    return updateObject(state, {
+        orders: [...state.orders, action.order],
+        loading: false,
+    })
+}
+
+const addOrderFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 const getOrderProductsStart = (state, action) => {
     return updateObject(state, {
         orderProducts: null,
@@ -953,6 +974,13 @@ const reducer = (state = initialState, action) => {
             return getOrdersSuccess(state, action);
         case actionTypes.GET_ORDERS_FAIL:
             return getOrdersFail(state, action);
+
+        case actionTypes.ADD_ORDER_START:
+            return addOrderStart(state, action);
+        case actionTypes.ADD_ORDER_SUCCESS:
+            return addOrderSuccess(state, action);
+        case actionTypes.ADD_ORDER_FAIL:
+            return addOrderFail(state, action);
 
         case actionTypes.GET_ORDER_PRODUCTS_START:
             return getOrderProductsStart(state, action);

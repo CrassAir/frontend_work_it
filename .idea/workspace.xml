@@ -19,11 +19,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add Order.js">
-      <change afterPath="$PROJECT_DIR$/src/components/Order/OrderForm.js" afterDir="false" />
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add OrderForm.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/Order.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Order/OrderForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/OrderForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/ordersActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/ordersActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +158,7 @@
       <workItem from="1640600298749" duration="4525000" />
       <workItem from="1641802630054" duration="11463000" />
       <workItem from="1641873833294" duration="20666000" />
-      <workItem from="1642063294802" duration="22432000" />
+      <workItem from="1642063294802" duration="32984000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -324,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642076684456</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add OrderForm.js">
+      <created>1642144750560</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1642144750560</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,7 +376,8 @@
     <MESSAGE value="add work with users in Tabel.js" />
     <MESSAGE value="add Products in Catalog.js" />
     <MESSAGE value="add Order.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Order.js" />
+    <MESSAGE value="add OrderForm.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="add OrderForm.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -412,11 +424,15 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642052470875" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642076687596">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642144753968">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642076687596" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642144753968" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
+    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1642158021721">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642158021721" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
