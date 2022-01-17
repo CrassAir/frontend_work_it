@@ -43,6 +43,46 @@ const addOrderFail = (error) => {
     }
 }
 
+const editOrderStart = () => {
+    return {
+        type: actionTypes.EDIT_ORDER_START
+    }
+}
+
+const editOrderSuccess = (order) => {
+    return {
+        type: actionTypes.EDIT_ORDER_SUCCESS,
+        order: order
+    }
+}
+
+const editOrderFail = (error) => {
+    return {
+        type: actionTypes.EDIT_ORDER_FAIL,
+        error: error
+    }
+}
+
+const deleteOrderStart = () => {
+    return {
+        type: actionTypes.DELETE_ORDER_START
+    }
+}
+
+const deleteOrderSuccess = (orderId) => {
+    return {
+        type: actionTypes.DELETE_ORDER_SUCCESS,
+        orderId: orderId
+    }
+}
+
+const deleteOrderFail = (error) => {
+    return {
+        type: actionTypes.DELETE_ORDER_FAIL,
+        error: error
+    }
+}
+
 const tryGetProductsStart = () => {
     return {
         type: actionTypes.GET_ORDER_PRODUCTS_START
@@ -59,6 +99,46 @@ const tryGetProductsSuccess = (orderProducts) => {
 const tryGetProductsFail = (error) => {
     return {
         type: actionTypes.GET_ORDER_PRODUCTS_FAIL,
+        error: error
+    }
+}
+
+const editOrderProductStart = () => {
+    return {
+        type: actionTypes.EDIT_ORDER_PRODUCT_START
+    }
+}
+
+const editOrderProductSuccess = (orderProduct) => {
+    return {
+        type: actionTypes.EDIT_ORDER_PRODUCT_SUCCESS,
+        orderProduct: orderProduct
+    }
+}
+
+const editOrderProductFail = (error) => {
+    return {
+        type: actionTypes.EDIT_ORDER_PRODUCT_FAIL,
+        error: error
+    }
+}
+
+const deleteOrderProductStart = () => {
+    return {
+        type: actionTypes.DELETE_ORDER_PRODUCT_START
+    }
+}
+
+const deleteOrderProductSuccess = (orderProductId) => {
+    return {
+        type: actionTypes.DELETE_ORDER_PRODUCT_SUCCESS,
+        orderProductId: orderProductId
+    }
+}
+
+const deleteOrderProductFail = (error) => {
+    return {
+        type: actionTypes.DELETE_ORDER_PRODUCT_FAIL,
         error: error
     }
 }
@@ -87,6 +167,30 @@ export const addOrder = (values) => {
     }
 }
 
+export const editOrder = (order_id, values) => {
+    return dispatch => {
+        dispatch(editOrderStart());
+        api.patch(getApiUrl() + `remote/order/${order_id}/`, values).then(res => {
+                dispatch(editOrderSuccess(res.data));
+            }
+        ).catch(err => {
+            dispatch(editOrderFail(err));
+        });
+    }
+}
+
+export const deleteOrder = (order_id) => {
+    return dispatch => {
+        dispatch(deleteOrderStart());
+        api.delete(getApiUrl() + `remote/order/${order_id}/`).then(res => {
+                dispatch(deleteOrderSuccess(res.data));
+            }
+        ).catch(err => {
+            dispatch(deleteOrderFail(err));
+        });
+    }
+}
+
 export const tryGetOrderProducts = (order_id) => {
     return dispatch => {
         dispatch(tryGetProductsStart());
@@ -95,6 +199,30 @@ export const tryGetOrderProducts = (order_id) => {
             }
         ).catch(err => {
             dispatch(tryGetProductsFail(err));
+        });
+    }
+}
+
+export const editOrderProduct = (prod_id, values) => {
+    return dispatch => {
+        dispatch(editOrderProductStart());
+        api.patch(getApiUrl() + `remote/product/${prod_id}/`, values).then(res => {
+                dispatch(editOrderProductSuccess(res.data));
+            }
+        ).catch(err => {
+            dispatch(editOrderProductFail(err));
+        });
+    }
+}
+
+export const deleteOrderProduct = (id) => {
+    return dispatch => {
+        dispatch(deleteOrderProductStart());
+        api.delete(getApiUrl() + `remote/product/${id}/`).then(res => {
+                dispatch(deleteOrderProductSuccess(id));
+            }
+        ).catch(err => {
+            dispatch(deleteOrderProductFail(err));
         });
     }
 }

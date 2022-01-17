@@ -16,7 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import ProductsForm from "../Catalog/Products/form";
-import {addOrder} from "../../store/action/ordersActions";
+import {addOrder, deleteOrderProduct, editOrder} from "../../store/action/ordersActions";
 import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
 
@@ -26,8 +26,23 @@ const OrderForm = (props) => {
     const [searchValue, setSearchValue] = React.useState(null);
 
     let data
-    if (props.copy >= 0) data = props.orderProducts.map((val, index) => {
+    if (props.copy >= 0) data = props.orderProducts?.map((val, index) => {
         let newVal = {
+            catalog_id: val.catalog?.id,
+            count: val.count,
+            comment: val.comment,
+            deadline: moment(val.deadline)
+        }
+        newOrderProd.push({
+            key: index,
+            value: val?.catalog
+        })
+        return newVal
+    })
+
+    if (props.edit >= 0) data = props.orderProducts?.map((val, index) => {
+        let newVal = {
+            id: val.id,
             catalog_id: val.catalog?.id,
             count: val.count,
             comment: val.comment,
@@ -68,17 +83,18 @@ const OrderForm = (props) => {
 
     return (
         <Paper className={'tabel_container'}>
-            {props.copy ? <Button sx={{float: 'right'}} variant={'text'} size={'small'}
-                                  onClick={() => props.closeForm()}>Назад</Button> : null}
+            {props.copy || props.edit ? <Button sx={{float: 'right'}} variant={'text'} size={'small'}
+                                                onClick={() => props.closeForm()}>Назад</Button> : null}
             <Typography noWrap>Новый заказ</Typography>
             <ConfigProvider locale={locale}>
 
                 <Form className={'order_form'}
                       onFinish={(values) => {
+                          console.log(values)
                           if (props.copy || !data) {
                               props.addOrder(values)
                           } else {
-                              // props.editProduct(data.id, values)
+                              props.editOrder(props.edit, values)
                           }
                           props.closeForm()
                       }} autoComplete="off">
@@ -104,13 +120,24 @@ const OrderForm = (props) => {
                                                 {fields.map(({key, name, ...restField}) => {
                                                     let product = newOrderProd.find(val => val.key === key)?.value
                                                     return <TableRow key={'tr_' + key}>
-                                                        <TableCell><IconButton
-                                                            onClick={() => remove(name)}><RemoveIcon/></IconButton></TableCell>
+                                                        <TableCell>
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    if (data && data[name]?.id) props.deleteOrderProduct(data[name].id)
+                                                                    remove(name)
+                                                                }}>
+                                                                <RemoveIcon/>
+                                                            </IconButton>
+                                                        </TableCell>
                                                         <TableCell>{name + 1}</TableCell>
                                                         <TableCell>
                                                             <Form.Item
                                                                 style={{minWidth: 300, maxWidth: 600}}
                                                                 name={[name, 'catalog_id']}
+                                                                rules={[{
+                                                                    required: true,
+                                                                    message: 'Пожалуйста выберите товар!'
+                                                                }]}
                                                             >
                                                                 <Select
                                                                     showSearch
@@ -135,10 +162,12 @@ const OrderForm = (props) => {
                                                                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                                                     }
                                                                 >
-                                                                    {props.products?.map(val => (<Select.Option
-                                                                        key={val.id} value={val.id}>
-                                                                        {`${val.name} ${val?.feature}`}
-                                                                    </Select.Option>))}
+                                                                    {props.products?.map(val => {
+                                                                        return <Select.Option
+                                                                            key={val.id} value={val.id}>
+                                                                            {`${val.name} ${val?.feature}`}
+                                                                        </Select.Option>
+                                                                    })}
                                                                 </Select>
                                                             </Form.Item>
                                                         </TableCell>
@@ -146,6 +175,10 @@ const OrderForm = (props) => {
                                                         <TableCell>
                                                             <Form.Item
                                                                 name={[name, 'count']}
+                                                                rules={[{
+                                                                    required: true,
+                                                                    message: 'Пожалуйста укажите количество'
+                                                                }]}
                                                             >
                                                                 <Input style={{padding: 2, textAlign: 'center'}}
                                                                        maxLength={10}
@@ -168,6 +201,10 @@ const OrderForm = (props) => {
                                                         <TableCell>
                                                             <Form.Item
                                                                 name={[name, 'deadline']}
+                                                                rules={[{
+                                                                    required: true,
+                                                                    message: 'Пожалуйста укажите срок'
+                                                                }]}
                                                             >
                                                                 <DatePicker
                                                                     disabledDate={(current) => current && current < moment().endOf('day')}
@@ -191,7 +228,7 @@ const OrderForm = (props) => {
                         }}
                     </Form.List>
                     <Form.Item>
-                        <Button variant={'contained'} color={'success'}
+                        <Button style={{float: 'right'}} variant={'contained'} color={'success'}
                                 type={'submit'}>На согласование</Button>
                     </Form.Item>
                 </Form>
@@ -209,6 +246,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     addOrder: (values) => dispatch(addOrder(values)),
+    editOrder: (order_id, values) => dispatch(editOrder(order_id, values)),
+    deleteOrderProduct: (product_id) => dispatch(deleteOrderProduct(product_id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)

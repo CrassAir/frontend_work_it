@@ -910,6 +910,50 @@ const addOrderFail = (state, action) => {
     })
 }
 
+const editOrderStart = (state, action) => {
+    return updateObject(state, {
+        orderProducts: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const editOrderSuccess = (state, action) => {
+    return updateObject(state, {
+        orders: updateListById(state.orders, action.order),
+        loading: false,
+    })
+}
+
+const editOrderFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteOrderStart = (state, action) => {
+    return updateObject(state, {
+        orderProducts: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteOrderSuccess = (state, action) => {
+    return updateObject(state, {
+        orders: deleteListById(state.orders, action.orderId),
+        loading: false,
+    })
+}
+
+const deleteOrderFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 const getOrderProductsStart = (state, action) => {
     return updateObject(state, {
         orderProducts: null,
@@ -926,6 +970,50 @@ const getOrderProductsSuccess = (state, action) => {
 }
 
 const getOrderProductsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const editOrderProductsStart = (state, action) => {
+    return updateObject(state, {
+        // orderProducts: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const editOrderProductsSuccess = (state, action) => {
+    return updateObject(state, {
+        orderProducts: updateListById(state.orderProducts, action.orderProduct),
+        loading: false,
+    })
+}
+
+const editOrderProductsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const deleteOrderProductsStart = (state, action) => {
+    return updateObject(state, {
+        // orderProducts: null,
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteOrderProductsSuccess = (state, action) => {
+    return updateObject(state, {
+        orderProducts: deleteListById(state.orderProducts, action.orderProductId),
+        loading: false,
+    })
+}
+
+const deleteOrderProductsFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false,
@@ -982,12 +1070,40 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_ORDER_FAIL:
             return addOrderFail(state, action);
 
+        case actionTypes.EDIT_ORDER_START:
+            return editOrderStart(state, action);
+        case actionTypes.EDIT_ORDER_SUCCESS:
+            return editOrderSuccess(state, action);
+        case actionTypes.EDIT_ORDER_FAIL:
+            return editOrderFail(state, action);
+
+        case actionTypes.DELETE_ORDER_START:
+            return deleteOrderStart(state, action);
+        case actionTypes.DELETE_ORDER_SUCCESS:
+            return deleteOrderSuccess(state, action);
+        case actionTypes.DELETE_ORDER_FAIL:
+            return deleteOrderFail(state, action);
+
         case actionTypes.GET_ORDER_PRODUCTS_START:
             return getOrderProductsStart(state, action);
         case actionTypes.GET_ORDER_PRODUCTS_SUCCESS:
             return getOrderProductsSuccess(state, action);
         case actionTypes.GET_ORDER_PRODUCTS_FAIL:
             return getOrderProductsFail(state, action);
+
+        case actionTypes.EDIT_ORDER_PRODUCT_START:
+            return editOrderProductsStart(state, action);
+        case actionTypes.EDIT_ORDER_PRODUCT_SUCCESS:
+            return editOrderProductsSuccess(state, action);
+        case actionTypes.EDIT_ORDER_PRODUCT_FAIL:
+            return editOrderProductsFail(state, action);
+
+        case actionTypes.DELETE_ORDER_PRODUCT_START:
+            return deleteOrderProductsStart(state, action);
+        case actionTypes.DELETE_ORDER_PRODUCT_SUCCESS:
+            return deleteOrderProductsSuccess(state, action);
+        case actionTypes.DELETE_ORDER_PRODUCT_FAIL:
+            return deleteOrderProductsFail(state, action);
 
         //</editor-fold>
 
