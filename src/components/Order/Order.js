@@ -172,7 +172,7 @@ const Orders = (props) => {
                             </ListItemIcon>
                             <ListItemText>Создать копию</ListItemText>
                         </MenuItem>
-                        {selectOrder.creator_id === props.user.username ?
+                        {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status !== 'delivered' ?
                             <>
                                 <MenuItem onClick={() => {
                                     setEdit(selectOrder.id)
@@ -198,6 +198,28 @@ const Orders = (props) => {
             )
         }
 
+        const actions = (prod) => {
+            let reason = <Input autoSize={{minRows: 1, maxRows: 6}} size={"small"}
+                                style={{minWidth: 150}}
+                                defaultValue={prod.actions[0].reason}
+                                onChange={e => setReasonInput(e.target.value)}/>
+            if (selectOrder.executor_id === props.user.username && selectOrder.actions[0].status === 'agreed') {
+                return <Select
+                    defaultValue={prod.actions[0].status}
+                    size={"small"}
+                    onSelect={inx => {
+                        if (inx === prod.actions[0].status) return
+                        props.editOrderProduct(prod.id, {action: inx, reason: reasonInput})
+                        setReasonInput(null)
+                    }}
+                >
+                    {Object.keys(product_status).map(key => <Select.Option
+                        key={key} value={key}>{product_status[key]}</Select.Option>)}
+                </Select>
+            }
+            return product_status[prod.actions[0].status]
+        }
+
         return (
             <Paper className={'tabel_container'}>
                 <Space direction={"vertical"}>
@@ -220,32 +242,11 @@ const Orders = (props) => {
                                     <TableCell>Комментарий</TableCell>
                                     <TableCell>Крайний срок</TableCell>
                                     <TableCell>Статус</TableCell>
-                                    <TableCell>Причина</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {props.orderProducts.map((prod, index) => {
                                     let deadline = prod.deadline ? moment(prod.deadline).format('DD-MM-YYYY') : ''
-                                    let actions = product_status[prod.actions[0].status]
-                                    let reason = prod.actions[0].reason
-                                    if (selectOrder.executor_id === props.user.username && selectOrder.actions[0].status === 'agreed') {
-                                        actions = <Select
-                                            defaultValue={prod.actions[0].status}
-                                            size={"small"}
-                                            onSelect={inx => {
-                                                if (inx === prod.actions[0].status) return
-                                                props.editOrderProduct(prod.id, {action: inx, reason: reasonInput})
-                                                setReasonInput(null)
-                                            }}
-                                        >
-                                            {Object.keys(product_status).map(key => <Select.Option
-                                                key={key} value={key}>{product_status[key]}</Select.Option>)}
-                                        </Select>
-                                        reason = <Input autoSize={{minRows: 1, maxRows: 6}} size={"small"}
-                                                        style={{minWidth: 150}}
-                                                        defaultValue={prod.actions[0].reason}
-                                                        onChange={e => setReasonInput(e.target.value)}/>
-                                    }
                                     return <TableRow key={'tr_' + index}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell sx={{minWidth: '200px'}}>{prod.catalog?.name}</TableCell>
@@ -254,8 +255,7 @@ const Orders = (props) => {
                                         <TableCell>{prod.count} {prod.catalog?.unit}</TableCell>
                                         <TableCell>{prod.comment}</TableCell>
                                         <TableCell>{deadline}</TableCell>
-                                        <TableCell>{actions}</TableCell>
-                                        <TableCell>{reason}</TableCell>
+                                        <TableCell>{actions(prod)}</TableCell>
                                     </TableRow>
                                 })}
                             </TableBody>
