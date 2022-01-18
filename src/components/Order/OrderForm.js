@@ -192,9 +192,9 @@ const OrderForm = (props) => {
                                                             <Form.Item
                                                                 name={[name, 'comment']}
                                                             >
-                                                                <Input style={{padding: 2, textAlign: 'center'}}
-                                                                       maxLength={10}
-                                                                       size="small"
+                                                                <Input.TextArea autoSize={{minRows: 1, maxRows: 6}}
+                                                                                size={"small"}
+                                                                                style={{minWidth: 150}}
                                                                 />
                                                             </Form.Item>
                                                         </TableCell>

@@ -4,7 +4,7 @@ import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import Paper from "@mui/material/Paper";
 import SimpleBar from "simplebar-react";
 import {MenuItem, MenuList} from "@mui/material";
-import {Input, Select, Space, Button as AntBtn} from "antd";
+import {Input, Select, Space, Button as AntBtn, Popover, Form} from "antd";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {
@@ -50,9 +50,9 @@ const Orders = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [searchValue, setSearchValue] = useState(null)
-    const [reasonInput, setReasonInput] = useState(null)
+    const [formVis, setFormVis] = useState(null)
     const [switchStatus, setSwitchStatus] = useState('all')
-    const [initSplitter] = useState([30, 70])
+    const [initSplitter] = useState([28, 72])
 
     useEffect(() => {
         props.tryGetOrders()
@@ -105,17 +105,15 @@ const Orders = (props) => {
             let coordBtn
             if (selectOrder.coordinator_id === props.user.username) {
                 if (selectOrder.actions[0].status === 'created') {
-                    coordBtn = <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                        <Button variant={'contained'} startIcon={<CheckIcon/>}
+                    coordBtn = <ButtonGroup variant="contained" size="small">
+                        <Button startIcon={<CheckIcon/>}
                                 color={'success'}
-                                size={'small'}
                                 onClick={() => {
                                     props.editOrder(selectOrder.id, {action: 'agreed'})
                                 }}
                         >Согласовать</Button>
-                        <Button variant={'contained'} startIcon={<ClearIcon/>}
+                        <Button startIcon={<ClearIcon/>}
                                 color={'error'}
-                                size={'small'}
                                 onClick={() => {
                                     props.editOrder(selectOrder.id, {action: 'not_agreed'})
                                 }}
@@ -173,55 +171,100 @@ const Orders = (props) => {
                             <ListItemText>Создать копию</ListItemText>
                         </MenuItem>
                         {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status !== 'delivered' ?
-                            <>
-                                <MenuItem onClick={() => {
-                                    setEdit(selectOrder.id)
-                                    setAnchorEl(null)
-                                }}>
-                                    <ListItemIcon>
-                                        <EditIcon fontSize="small"/>
-                                    </ListItemIcon>
-                                    <ListItemText>Изменить</ListItemText>
-                                </MenuItem>
-                                <MenuItem onClick={() => {
-                                    props.deleteOrder(selectOrder.id)
-                                    setAnchorEl(null)
-                                }}>
-                                    <ListItemIcon>
-                                        <DeleteIcon fontSize="small"/>
-                                    </ListItemIcon>
-                                    <ListItemText>Отменить</ListItemText>
-                                </MenuItem>
-                            </> : null}
+                            <MenuItem onClick={() => {
+                                setEdit(selectOrder.id)
+                                setAnchorEl(null)
+                            }}>
+                                <ListItemIcon>
+                                    <EditIcon fontSize="small"/>
+                                </ListItemIcon>
+                                <ListItemText>Изменить</ListItemText>
+                            </MenuItem> : null}
+                        {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status !== 'delivered' ?
+                            <MenuItem onClick={() => {
+                                props.deleteOrder(selectOrder.id)
+                                setAnchorEl(null)
+                            }}>
+                                <ListItemIcon>
+                                    <DeleteIcon fontSize="small"/>
+                                </ListItemIcon>
+                                <ListItemText>Отменить</ListItemText>
+                            </MenuItem>
+                            : null}
                     </Menu>
                 </Space>
             )
         }
 
         const actions = (prod) => {
-            let reason = <Input autoSize={{minRows: 1, maxRows: 6}} size={"small"}
-                                style={{minWidth: 150}}
-                                defaultValue={prod.actions[0].reason}
-                                onChange={e => setReasonInput(e.target.value)}/>
             if (selectOrder.executor_id === props.user.username && selectOrder.actions[0].status === 'agreed') {
-                return <Select
-                    defaultValue={prod.actions[0].status}
+                let content = <Form
+                    onFinish={values => {
+                        values.action = formVis.selectVal
+                        props.editOrderProduct(prod.id, values)
+                        setFormVis(null)
+                    }}
+                >
+                    <Form.Item
+                        name='reason'
+                        getValueProps={(e) => {
+                        }}
+                        // label='Причина'
+                    >
+                        <TextField
+                            label="Причина"
+                            variant="standard"
+                            fullWidth
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name='count_result'
+                        getValueProps={(e) => {
+                        }}
+                    >
+                        <TextField
+                            label="Отгружено"
+                            variant="standard"
+                            type={'number'}
+                            fullWidth
+                        />
+                    </Form.Item>
+                    <ButtonGroup variant="text" size="small">
+                        <Button startIcon={<CheckIcon/>}
+                                color={'success'}
+                                type={'submit'}
+                        >Отправить</Button>
+                        <Button startIcon={<ClearIcon/>}
+                                onClick={() => setFormVis(null)}
+                        >Назад</Button>
+                    </ButtonGroup>
+                </Form>
+                return <Popover
+                    content={content}
+                    placement={'left'}
+                    trigger="click"
+                    visible={formVis?.prodId === prod.id}
+                ><Select
+                    value={formVis?.prodId === prod.id ? formVis?.selectVal : prod.actions[0].status}
                     size={"small"}
                     onSelect={inx => {
-                        if (inx === prod.actions[0].status) return
-                        props.editOrderProduct(prod.id, {action: inx, reason: reasonInput})
-                        setReasonInput(null)
+                        if (inx === prod.actions[0].status) {
+                            setFormVis(null)
+                            return
+                        }
+                        setFormVis({prodId: prod.id, selectVal: inx})
                     }}
                 >
                     {Object.keys(product_status).map(key => <Select.Option
                         key={key} value={key}>{product_status[key]}</Select.Option>)}
                 </Select>
+                </Popover>
             }
             return product_status[prod.actions[0].status]
         }
 
         return (
-            <Paper className={'tabel_container'}>
+            <Paper className={'order_container'}>
                 <Space direction={"vertical"}>
                     <Typography noWrap>{selectOrder.title}</Typography>
                     <Typography noWrap>Статус: {order_status[selectOrder.actions[0].status]}</Typography>
@@ -241,7 +284,9 @@ const Orders = (props) => {
                                     <TableCell>Количество</TableCell>
                                     <TableCell>Комментарий</TableCell>
                                     <TableCell>Крайний срок</TableCell>
+                                    <TableCell>Отгружено</TableCell>
                                     <TableCell>Статус</TableCell>
+                                    <TableCell>Комментарий исполнителя</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -255,7 +300,9 @@ const Orders = (props) => {
                                         <TableCell>{prod.count} {prod.catalog?.unit}</TableCell>
                                         <TableCell>{prod.comment}</TableCell>
                                         <TableCell>{deadline}</TableCell>
+                                        <TableCell>{prod.count_result ? `${prod.count_result} ${prod.catalog?.unit}` : null}</TableCell>
                                         <TableCell>{actions(prod)}</TableCell>
+                                        <TableCell>{prod.actions[0].reason}</TableCell>
                                     </TableRow>
                                 })}
                             </TableBody>
