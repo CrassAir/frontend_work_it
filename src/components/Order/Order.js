@@ -139,6 +139,14 @@ const Orders = (props) => {
                                    }}
                 >Доставлен</Button>
             }
+            if (selectOrder.creator_id === props.user.username && selectOrder.actions[0].status === 'canceling') {
+                coordBtn = <Button variant={'contained'}
+                                   size={'small'}
+                                   onClick={() => {
+                                       props.editOrder(selectOrder.id, {action: 'created'})
+                                   }}
+                >Возобновить</Button>
+            }
             return (
                 <Space direction={"horizontal"} className={'send_btn'}>
                     {coordBtn}

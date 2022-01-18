@@ -183,7 +183,11 @@ export const deleteOrder = (order_id) => {
     return dispatch => {
         dispatch(deleteOrderStart());
         api.delete(getApiUrl() + `remote/order/${order_id}/`).then(res => {
-                dispatch(deleteOrderSuccess(res.data));
+                if (typeof res.data === 'object') {
+                    dispatch(editOrderSuccess(res.data))
+                    return
+                }
+                dispatch(deleteOrderSuccess(res.data))
             }
         ).catch(err => {
             dispatch(deleteOrderFail(err));
@@ -194,7 +198,7 @@ export const deleteOrder = (order_id) => {
 export const tryGetOrderProducts = (order_id) => {
     return dispatch => {
         dispatch(tryGetProductsStart());
-        api.get(getApiUrl() + 'remote/product/?order_id='+order_id).then(res => {
+        api.get(getApiUrl() + 'remote/product/?order_id=' + order_id).then(res => {
                 dispatch(tryGetProductsSuccess(res.data));
             }
         ).catch(err => {
