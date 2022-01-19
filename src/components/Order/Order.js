@@ -290,7 +290,7 @@ const Orders = (props) => {
                 </Space>
                 {button()}
                 <TableContainer component={Box}>
-                    <SimpleBar style={{maxHeight: '100%'}}>
+                    <SimpleBar style={{maxHeight: '75vh'}}>
                         <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
                             <TableHead>
                                 <TableRow>
@@ -386,6 +386,7 @@ const Orders = (props) => {
                                     }
                                     let ordre_id = `${order.id}`.padStart(6, '0')
                                     let date_create = moment(order.date_create)
+                                    if (!order.products) return null
                                     let deadline = moment(order.products[0].deadline)
                                     order.products.forEach(val => {
                                         if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)

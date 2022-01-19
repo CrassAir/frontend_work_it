@@ -86,12 +86,11 @@ const OrderForm = (props) => {
     }
 
     return (
-        <Paper className={'tabel_container'}>
+        <Paper className={'order_container'}>
             {props.copy || props.edit ? <Button sx={{float: 'right'}} variant={'text'} size={'small'}
                                                 onClick={() => props.closeForm()}>Назад</Button> : null}
             <Typography noWrap>Новый заказ</Typography>
             <ConfigProvider locale={locale}>
-
                 <Form className={'order_form'}
                       onFinish={(values) => {
                           console.log(values)
@@ -106,7 +105,7 @@ const OrderForm = (props) => {
                         {(fields, {add, remove}) => {
                             return (
                                 <TableContainer component={Box}>
-                                    <SimpleBar style={{maxHeight: '100%'}}>
+                                    <SimpleBar style={{maxHeight: '75vh'}}>
                                         <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
                                             <TableHead>
                                                 <TableRow>
