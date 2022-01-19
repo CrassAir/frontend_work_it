@@ -80,6 +80,7 @@ const OrderForm = (props) => {
             onCancel={closeModal}
             closable
             footer={null}
+            destroyOnClose
         >
             <ProductsForm name={createProduct} closeForm={closeModal}/>
         </Modal>

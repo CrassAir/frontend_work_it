@@ -19,9 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add rules to order">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix order scroll">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Order/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/OrderForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/OrderForm.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +153,7 @@
       <workItem from="1640600298749" duration="4525000" />
       <workItem from="1641802630054" duration="11463000" />
       <workItem from="1641873833294" duration="20666000" />
-      <workItem from="1642063294802" duration="89164000" />
+      <workItem from="1642063294802" duration="92343000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -379,7 +379,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642579574242</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="fix order scroll">
+      <created>1642590235252</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1642590235252</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +405,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix Tabel" />
     <MESSAGE value="fix auth actions" />
     <MESSAGE value="cleanup project, fix eslinter" />
     <MESSAGE value="fix project to build" />
@@ -423,7 +429,8 @@
     <MESSAGE value="fix Order.js" />
     <MESSAGE value="fix change status on order" />
     <MESSAGE value="add rules to order" />
-    <option name="LAST_COMMIT_MESSAGE" value="add rules to order" />
+    <MESSAGE value="fix order scroll" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix order scroll" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -470,10 +477,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642052470875" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642579578676">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642590239314">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642579578676" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642590239314" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
     <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1642158021721">
       <screen x="0" y="0" width="1920" height="1032" />
