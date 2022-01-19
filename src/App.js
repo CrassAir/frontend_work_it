@@ -66,6 +66,8 @@ const App = (props) => {
                 <Route exact path="change_password" element={<Navigate to={'/'}/>}/>
                 <Route path="/" element={<MainPage/>}>
                     <Route path="tabel" element={<Tabel/>}/>
+                    {props.user.rules_template_account?.can_make_order ?
+                        <Route path="order" element={<Order/>}/> : null}
                 </Route>
             </Routes>
         )

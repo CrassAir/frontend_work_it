@@ -13,10 +13,10 @@ import IconButton from "@mui/material/IconButton";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import ProductsForm from "../Catalog/Products/form";
-import {addOrder, deleteOrderProduct, editOrder} from "../../store/action/ordersActions";
+import {addOrder, deleteOrderProduct, editOrder, getOrderLocations} from "../../store/action/ordersActions";
 import locale from "antd/lib/locale/ru_RU";
 import moment from "moment";
 
@@ -24,6 +24,10 @@ const OrderForm = (props) => {
     const [newOrderProd, setNewOrderProd] = useState([])
     const [createProduct, setCreateProduct] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState(null);
+
+    useEffect(() => {
+        if (!props.orderLocations) props.getOrderLocations()
+    }, [])
 
     let data
     if (props.copy >= 0) data = props.orderProducts?.map((val, index) => {
@@ -112,8 +116,9 @@ const OrderForm = (props) => {
                                                     <TableCell>Производитель</TableCell>
                                                     <TableCell>Количество</TableCell>
                                                     <TableCell>Ед. изм</TableCell>
-                                                    <TableCell>Комментарий</TableCell>
+                                                    <TableCell>Объект</TableCell>
                                                     <TableCell>Крайний срок</TableCell>
+                                                    <TableCell>Комментарий</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -190,12 +195,23 @@ const OrderForm = (props) => {
                                                         <TableCell>{product?.unit}</TableCell>
                                                         <TableCell>
                                                             <Form.Item
-                                                                name={[name, 'comment']}
+                                                                name={[name, 'location_id']}
+                                                                rules={[{
+                                                                    required: true,
+                                                                    message: 'Пожалуйста укажите объект'
+                                                                }]}
                                                             >
-                                                                <Input.TextArea autoSize={{minRows: 1, maxRows: 6}}
-                                                                                size={"small"}
-                                                                                style={{minWidth: 150}}
-                                                                />
+                                                                <Select
+                                                                    style={{minWidth: 130}}
+                                                                    placeholder="Объект"
+                                                                >
+                                                                    {props.orderLocations?.map(val => {
+                                                                        return <Select.Option
+                                                                            key={val.id} value={val.id}>
+                                                                            {val.name}
+                                                                        </Select.Option>
+                                                                    })}
+                                                                </Select>
                                                             </Form.Item>
                                                         </TableCell>
                                                         <TableCell>
@@ -207,11 +223,21 @@ const OrderForm = (props) => {
                                                                 }]}
                                                             >
                                                                 <DatePicker
+                                                                    style={{minWidth: 130}}
                                                                     disabledDate={(current) => current && current < moment().endOf('day')}
                                                                 />
                                                             </Form.Item>
                                                         </TableCell>
-
+                                                        <TableCell>
+                                                            <Form.Item
+                                                                name={[name, 'comment']}
+                                                            >
+                                                                <Input.TextArea autoSize={{minRows: 1, maxRows: 6}}
+                                                                                size={"small"}
+                                                                                style={{minWidth: 150}}
+                                                                />
+                                                            </Form.Item>
+                                                        </TableCell>
                                                     </TableRow>
                                                 })}
                                             </TableBody>
@@ -242,12 +268,14 @@ const mapStateToProps = (state) => ({
     orders: state.orders,
     products: state.products,
     orderProducts: state.orderProducts,
+    orderLocations: state.orderLocations,
 })
 
 const mapDispatchToProps = (dispatch) => ({
     addOrder: (values) => dispatch(addOrder(values)),
     editOrder: (order_id, values) => dispatch(editOrder(order_id, values)),
     deleteOrderProduct: (product_id) => dispatch(deleteOrderProduct(product_id)),
+    getOrderLocations: () => dispatch(getOrderLocations())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)

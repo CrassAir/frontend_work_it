@@ -1020,6 +1020,27 @@ const deleteOrderProductsFail = (state, action) => {
     })
 }
 
+const getOrderLocationsStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getOrderLocationsSuccess = (state, action) => {
+    return updateObject(state, {
+        orderLocations: action.orderLocations,
+        loading: false,
+    })
+}
+
+const getOrderLocationsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 //</editor-fold >
 
 const reducer = (state = initialState, action) => {
@@ -1104,6 +1125,13 @@ const reducer = (state = initialState, action) => {
             return deleteOrderProductsSuccess(state, action);
         case actionTypes.DELETE_ORDER_PRODUCT_FAIL:
             return deleteOrderProductsFail(state, action);
+
+        case actionTypes.GET_ORDER_LOCATIONS_START:
+            return getOrderLocationsStart(state, action);
+        case actionTypes.GET_ORDER_LOCATIONS_SUCCESS:
+            return getOrderLocationsSuccess(state, action);
+        case actionTypes.GET_ORDER_LOCATIONS_FAIL:
+            return getOrderLocationsFail(state, action);
 
         //</editor-fold>
 

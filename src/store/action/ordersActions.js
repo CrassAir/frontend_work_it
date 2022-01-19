@@ -143,6 +143,26 @@ const deleteOrderProductFail = (error) => {
     }
 }
 
+const getOrderLocationsStart = () => {
+    return {
+        type: actionTypes.GET_ORDER_LOCATIONS_START
+    }
+}
+
+const getOrderLocationsSuccess = (orderLocations) => {
+    return {
+        type: actionTypes.GET_ORDER_LOCATIONS_SUCCESS,
+        orderLocations: orderLocations
+    }
+}
+
+const getOrderLocationsFail = (error) => {
+    return {
+        type: actionTypes.GET_ORDER_LOCATIONS_FAIL,
+        error: error
+    }
+}
+
 export const tryGetOrders = () => {
     return dispatch => {
         dispatch(tryGetOrdersStart());
@@ -227,6 +247,19 @@ export const deleteOrderProduct = (id) => {
             }
         ).catch(err => {
             dispatch(deleteOrderProductFail(err));
+        });
+    }
+}
+
+
+export const getOrderLocations = () => {
+    return dispatch => {
+        dispatch(getOrderLocationsStart());
+        api.get(getApiUrl() + 'remote/location/').then(res => {
+                dispatch(getOrderLocationsSuccess(res.data));
+            }
+        ).catch(err => {
+            dispatch(getOrderLocationsFail(err));
         });
     }
 }

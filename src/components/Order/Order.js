@@ -4,7 +4,7 @@ import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import Paper from "@mui/material/Paper";
 import SimpleBar from "simplebar-react";
 import {MenuItem, MenuList} from "@mui/material";
-import {Input, Select, Space, Button as AntBtn, Popover, Form} from "antd";
+import {Select, Space, Popover, Form} from "antd";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {
@@ -22,7 +22,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import SendIcon from '@mui/icons-material/Send';
+import PrintIcon from '@mui/icons-material/Print';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -40,6 +40,7 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import {tryPrintOrder} from "../../api/api";
 
 
 const Orders = (props) => {
@@ -178,6 +179,14 @@ const Orders = (props) => {
                             </ListItemIcon>
                             <ListItemText>Создать копию</ListItemText>
                         </MenuItem>
+                        <MenuItem onClick={() => {
+                            tryPrintOrder(selectOrder.id)
+                        }}>
+                            <ListItemIcon>
+                                <PrintIcon fontSize="small"/>
+                            </ListItemIcon>
+                            <ListItemText>Печать</ListItemText>
+                        </MenuItem>
                         {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status !== 'delivered' ?
                             <MenuItem onClick={() => {
                                 setEdit(selectOrder.id)
@@ -290,8 +299,9 @@ const Orders = (props) => {
                                     <TableCell>Производитель</TableCell>
                                     <TableCell>Харакстеристики</TableCell>
                                     <TableCell>Количество</TableCell>
-                                    <TableCell>Комментарий</TableCell>
+                                    <TableCell>Объект</TableCell>
                                     <TableCell>Крайний срок</TableCell>
+                                    <TableCell>Комментарий</TableCell>
                                     <TableCell>Отгружено</TableCell>
                                     <TableCell>Статус</TableCell>
                                     <TableCell>Комментарий исполнителя</TableCell>
@@ -306,8 +316,9 @@ const Orders = (props) => {
                                         <TableCell>{prod.catalog?.manufacturer}</TableCell>
                                         <TableCell>{prod.catalog?.feature}</TableCell>
                                         <TableCell>{prod.count} {prod.catalog?.unit}</TableCell>
-                                        <TableCell>{prod.comment}</TableCell>
+                                        <TableCell>{prod.location?.name}</TableCell>
                                         <TableCell>{deadline}</TableCell>
+                                        <TableCell>{prod.comment}</TableCell>
                                         <TableCell>{prod.count_result ? `${prod.count_result} ${prod.catalog?.unit}` : null}</TableCell>
                                         <TableCell>{actions(prod)}</TableCell>
                                         <TableCell>{prod.actions[0].reason}</TableCell>

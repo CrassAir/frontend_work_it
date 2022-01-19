@@ -11,7 +11,7 @@ import {getWsLiveDataUrl} from "../../api/urls";
 
 const MainPage = (props) => {
     const listAdminUrl = ['/calendar', '/catalog', '/row', '/tabel', '/order']
-    const listUrl = ['/tabel']
+    const listUrl = ['/tabel', '/order']
 
     const [tabVal, setTabVal] = useState(0)
     const [activeList, setActiveList] = useState(listUrl)
@@ -89,6 +89,15 @@ const MainPage = (props) => {
         navigate(activeList[index])
     }
 
+    const tabOnRules = () => {
+        if (!props.user) return null
+        let rules = props.user.rules_template_account
+
+        if (rules.can_make_order) {
+            return <Tab label="Заказы" index={1}/>
+        }
+    }
+
     if (props.user.is_admin || props.user.is_superuser) {
         return (
             <div>
@@ -119,7 +128,7 @@ const MainPage = (props) => {
                 <Toolbar>
                     <Tabs value={tabVal} sx={{flexGrow: 1}} onChange={onSelectTab}>
                         <Tab label="Табель" index={0}/>
-                        {/*<Tab label="Заказы" index={1}/>*/}
+                        {tabOnRules()}
                     </Tabs>
                     <Button color="inherit" onClick={() => props.logout()}>Выход</Button>
                 </Toolbar>

@@ -19,10 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix Order.js">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="fix change status on order">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Order/OrderForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/OrderForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/action/ordersActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/ordersActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +159,7 @@
       <workItem from="1640600298749" duration="4525000" />
       <workItem from="1641802630054" duration="11463000" />
       <workItem from="1641873833294" duration="20666000" />
-      <workItem from="1642063294802" duration="78123000" />
+      <workItem from="1642063294802" duration="86889000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -365,7 +371,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642492353112</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="fix change status on order">
+      <created>1642496033291</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1642496033291</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +397,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change row" />
     <MESSAGE value="add splitter" />
     <MESSAGE value="fix Tabel" />
     <MESSAGE value="fix auth actions" />
@@ -409,7 +421,8 @@
     <MESSAGE value="add OrderForm.js" />
     <MESSAGE value="fix OrderForm.js" />
     <MESSAGE value="fix Order.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix Order.js" />
+    <MESSAGE value="fix change status on order" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix change status on order" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -456,10 +469,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642052470875" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642492358382">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1642496037095">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642492358382" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642496037095" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
     <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1642158021721">
       <screen x="0" y="0" width="1920" height="1032" />
