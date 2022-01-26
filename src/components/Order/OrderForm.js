@@ -255,7 +255,7 @@ const OrderForm = (props) => {
                     </Form.List>
                     <Form.Item>
                         <Button style={{float: 'right'}} variant={'contained'} color={'success'}
-                                type={'submit'}>На согласование</Button>
+                                type={'submit'}>Создать</Button>
                     </Form.Item>
                 </Form>
             </ConfigProvider>

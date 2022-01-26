@@ -4,7 +4,7 @@ import Splitter, {SplitDirection} from "@devbookhq/splitter";
 import Paper from "@mui/material/Paper";
 import SimpleBar from "simplebar-react";
 import {MenuItem, MenuList} from "@mui/material";
-import {Select, Space, Popover, Form} from "antd";
+import {Form, Popover, Select, Space} from "antd";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {
@@ -43,7 +43,6 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import {tryPrintOrder} from "../../api/api";
 import {useParams} from "react-router";
 import {useNavigate} from 'react-router-dom';
-
 
 
 const Orders = (props) => {
@@ -87,6 +86,7 @@ const Orders = (props) => {
     const order_status = {
         all: 'Все',
         created: 'Создан',
+        in_agreement: 'На согласовании',
         canceling: 'Отменен',
         agreed: 'Согласован',
         not_agreed: 'Не согласован',
@@ -121,7 +121,7 @@ const Orders = (props) => {
         const button = () => {
             let coordBtn
             if (selectOrder.coordinator_id === props.user.username) {
-                if (selectOrder.actions[0].status === 'created') {
+                if (selectOrder.actions[0].status === 'in_agreement') {
                     coordBtn = <ButtonGroup variant="contained" size="small">
                         <Button startIcon={<CheckIcon/>}
                                 color={'success'}
@@ -164,13 +164,24 @@ const Orders = (props) => {
                     >Не доставлен</Button>
                 </ButtonGroup>
             }
-            if (selectOrder.creator_id === props.user.username && selectOrder.actions[0].status === 'canceling') {
-                coordBtn = <Button variant={'contained'}
-                                   size={'small'}
-                                   onClick={() => {
-                                       props.editOrder(selectOrder.id, {action: 'created'})
-                                   }}
-                >Возобновить</Button>
+            if (selectOrder.creator_id === props.user.username) {
+                if (selectOrder.actions[0].status === 'canceling') {
+                    coordBtn = <Button variant={'contained'}
+                                       size={'small'}
+                                       onClick={() => {
+                                           props.editOrder(selectOrder.id, {action: 'created'})
+                                       }}
+                    >Возобновить</Button>
+                }
+                if (selectOrder.actions[0].status === 'created') {
+                    coordBtn = <Button variant={'contained'} startIcon={<CheckIcon/>}
+                                       color={'success'}
+                                       size={'small'}
+                                       onClick={() => {
+                                           props.editOrder(selectOrder.id, {action: 'in_agreement'})
+                                       }}
+                    >На согласование</Button>
+                }
             }
             return (
                 <Space direction={"horizontal"} className={'send_btn'}>
@@ -427,7 +438,7 @@ const Orders = (props) => {
                                         className={className}
                                         selected={order === selectOrder}
                                         key={order.id}
-                                        onClick={() => navigate(`/order/${order.id.toString()}`, { replace: true })}>
+                                        onClick={() => navigate(`/order/${order.id.toString()}`, {replace: true})}>
                                         <Typography noWrap>{order.title}</Typography>
                                     </MenuItem>
                                 })
