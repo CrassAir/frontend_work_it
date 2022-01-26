@@ -114,7 +114,7 @@ const Tabel = (props) => {
                 <DialogTitle>{'Спасибо что пользуетесь нашем табелем'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                            {'Пожалйуста оцените качество табеля'}
+                        {'Пожалйуста оцените качество табеля'}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -252,11 +252,11 @@ const Tabel = (props) => {
                                                        scope="row">{fullName}</TableCell>
                                             <TableCell align="center">{row.employee_code}</TableCell>
                                             <TableCell align="center">{row.post}</TableCell>
-                                            {Array.from({length: dayInMonth}, (_, index) => {
-                                                let data = row.cells[index]
+                                            {Array.from({length: dayInMonth}, (_, sub_index) => {
+                                                let data = row.cells[sub_index]
                                                 if (!data) return false
                                                 let hours = data.hours_control ? data.hours_control : data.hours_manual
-                                                let className = setCellClassName(index + 1)
+                                                let className = setCellClassName(sub_index + 1)
                                                 // Подсвечивает ячейку если часы перко отличны от часов факт
                                                 if (data.hours_perco && data.hours_perco < Math.round(data.hours_manual) && !data.hours_control) className = 'warning'
                                                 // Просчет суммы часов
@@ -274,6 +274,13 @@ const Tabel = (props) => {
                                                     >
                                                         <Input style={{padding: 2, textAlign: 'center'}}
                                                                maxLength={2}
+                                                               id={`${index}_${sub_index}`}
+                                                               onKeyDown={e => {
+                                                                   if (e.key === "ArrowRight") document.getElementById(`${index}_${sub_index + 1}`)?.focus()
+                                                                   if (e.key === "ArrowLeft") document.getElementById(`${index}_${sub_index - 1}`)?.focus()
+                                                                   if (e.key === "ArrowDown") document.getElementById(`${index + 1}_${sub_index}`)?.focus()
+                                                                   if (e.key === "ArrowUp") document.getElementById(`${index - 1}_${sub_index}`)?.focus()
+                                                               }}
                                                                size="small"/>
                                                     </Form.Item>
 
@@ -281,7 +288,7 @@ const Tabel = (props) => {
 
                                                 return <TableCell
                                                     className={className}
-                                                    key={'trtc_' + index}
+                                                    key={'trtc_' + sub_index}
                                                     align="center">
                                                     <Space direction={"vertical"}>
                                                         {cellComp}

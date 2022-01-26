@@ -10,8 +10,8 @@ import {getWsLiveDataUrl} from "../../api/urls";
 
 
 const MainPage = (props) => {
-    const listAdminUrl = ['/calendar', '/catalog', '/row', '/tabel', '/order']
-    const listUrl = ['/tabel', '/order']
+    const listAdminUrl = ['calendar', 'catalog', 'row', 'tabel', 'order']
+    const listUrl = ['tabel', 'order']
 
     const [tabVal, setTabVal] = useState(0)
     const [activeList, setActiveList] = useState(listUrl)
@@ -72,7 +72,7 @@ const MainPage = (props) => {
             setActiveList(listAdminUrl)
         }
         if (location.pathname !== '/') {
-            setTabVal(aList.indexOf(location.pathname))
+            setTabVal(aList.indexOf(location.pathname.split('/')[1]))
         } else {
             navigate(aList[0])
         }

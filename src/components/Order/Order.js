@@ -41,9 +41,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {tryPrintOrder} from "../../api/api";
+import {useParams} from "react-router";
+import {useNavigate} from 'react-router-dom';
+
 
 
 const Orders = (props) => {
+    const navigate = useNavigate()
+    const {orderId} = useParams()
     const [selectOrder, setSelectOrder] = useState(null)
     const [created, setCreated] = useState(false)
     const [copy, setCopy] = useState(null)
@@ -58,6 +63,16 @@ const Orders = (props) => {
     useEffect(() => {
         props.tryGetOrders()
     }, [])
+
+    useEffect(() => {
+        if (props.orders && orderId) {
+            setSelectOrder(props.orders.find(val => val.id.toString() === orderId))
+            setCreated(false)
+            setCopy(false)
+            setEdit(false)
+            props.tryGetOrderProducts(orderId)
+        }
+    }, [orderId, props.orders])
 
     useEffect(() => {
         if (!props.products) props.getProducts()
@@ -76,6 +91,7 @@ const Orders = (props) => {
         agreed: 'Согласован',
         not_agreed: 'Не согласован',
         delivered: 'Доставлен',
+        not_delivered: 'Не доставлен',
     }
 
     const generateTabel = () => {
@@ -132,13 +148,21 @@ const Orders = (props) => {
                 }
             }
             if (selectOrder.executor_id === props.user.username && selectOrder.actions[0].status === 'agreed') {
-                coordBtn = <Button variant={'contained'} startIcon={<CheckIcon/>}
-                                   color={'success'}
-                                   size={'small'}
-                                   onClick={() => {
-                                       props.editOrder(selectOrder.id, {action: 'delivered'})
-                                   }}
-                >Доставлен</Button>
+                coordBtn = <ButtonGroup variant="contained" size="small">
+                    <Button startIcon={<CheckIcon/>}
+                            color={'success'}
+
+                            onClick={() => {
+                                props.editOrder(selectOrder.id, {action: 'delivered'})
+                            }}
+                    >Доставлен</Button>
+                    <Button startIcon={<ClearIcon/>}
+                            color={'error'}
+                            onClick={() => {
+                                props.editOrder(selectOrder.id, {action: 'not_delivered'})
+                            }}
+                    >Не доставлен</Button>
+                </ButtonGroup>
             }
             if (selectOrder.creator_id === props.user.username && selectOrder.actions[0].status === 'canceling') {
                 coordBtn = <Button variant={'contained'}
@@ -316,7 +340,7 @@ const Orders = (props) => {
                                         <TableCell>{prod.catalog?.manufacturer}</TableCell>
                                         <TableCell>{prod.catalog?.feature}</TableCell>
                                         <TableCell>{prod.count} {prod.catalog?.unit}</TableCell>
-                                        <TableCell>{prod.location?.name}</TableCell>
+                                        <TableCell sx={{minWidth: '120px'}}>{prod.location?.name}</TableCell>
                                         <TableCell>{deadline}</TableCell>
                                         <TableCell>{prod.comment}</TableCell>
                                         <TableCell>{prod.count_result ? `${prod.count_result} ${prod.catalog?.unit}` : null}</TableCell>
@@ -377,6 +401,13 @@ const Orders = (props) => {
                         <MenuList disableListWrap>
                             {!props.orders ? null :
                                 props.orders.map(order => {
+                                    let className
+                                    if (order.actions[0].status === 'delivered') {
+                                        className = 'delivered'
+                                    }
+                                    if (order.actions[0].status === 'not_agreed') {
+                                        className = 'not_agreed'
+                                    }
                                     if (switchStatus !== 'all') {
                                         if (order.actions[0].status !== switchStatus) return null
                                     }
@@ -384,24 +415,19 @@ const Orders = (props) => {
                                         if (!order.products.some(val => val.name.toLowerCase().includes(searchValue)) &&
                                             !order.creator_fio.toLowerCase().includes(searchValue)) return null
                                     }
-                                    let ordre_id = `${order.id}`.padStart(6, '0')
+                                    let order_id = `${order.id}`.padStart(6, '0')
                                     let date_create = moment(order.date_create)
                                     if (!order.products) return null
                                     let deadline = moment(order.products[0].deadline)
                                     order.products.forEach(val => {
                                         if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)
                                     })
-                                    order['title'] = `№${ordre_id}, ${order.creator_fio} от ${date_create.format('DD-MM-YYYY')} к ${deadline.format('DD-MM-YYYY')}`
+                                    order['title'] = `№${order_id}, ${order.creator_fio} от ${date_create.format('DD-MM-YYYY')} к ${deadline.format('DD-MM-YYYY')}`
                                     return <MenuItem
+                                        className={className}
                                         selected={order === selectOrder}
                                         key={order.id}
-                                        onClick={() => {
-                                            setSelectOrder(order)
-                                            setCreated(false)
-                                            setCopy(false)
-                                            setEdit(false)
-                                            props.tryGetOrderProducts(order.id)
-                                        }}>
+                                        onClick={() => navigate(`/order/${order.id.toString()}`, { replace: true })}>
                                         <Typography noWrap>{order.title}</Typography>
                                     </MenuItem>
                                 })

@@ -47,7 +47,9 @@ const App = (props) => {
                         <Route path="catalog" element={<Catalog/>}/>
                         <Route path="row" element={<RowTasks/>}/>
                         <Route path="tabel" element={<Tabel/>}/>
-                        <Route path="order" element={<Order/>}/>
+                        <Route path="order" element={<Order/>}>
+                            <Route path=":orderId" element={<Order/>}/>
+                        </Route>
                     </Route>
                 </Routes>
             )
