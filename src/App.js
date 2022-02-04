@@ -69,7 +69,9 @@ const App = (props) => {
                 <Route path="/" element={<MainPage/>}>
                     <Route path="tabel" element={<Tabel/>}/>
                     {props.user.rules_template_account?.can_make_order ?
-                        <Route path="order" element={<Order/>}/> : null}
+                         <Route path="order" element={<Order/>}>
+                            <Route path=":orderId" element={<Order/>}/>
+                        </Route> : null}
                 </Route>
             </Routes>
         )

@@ -222,7 +222,7 @@ const Orders = (props) => {
                             </ListItemIcon>
                             <ListItemText>Печать</ListItemText>
                         </MenuItem>
-                        {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status !== 'delivered' ?
+                        {selectOrder.creator_id === props.user.username && selectOrder.actions[0].status === 'created' ?
                             <MenuItem onClick={() => {
                                 setEdit(selectOrder.id)
                                 setAnchorEl(null)
@@ -319,7 +319,10 @@ const Orders = (props) => {
             <Paper className={'order_container'}>
                 <Space direction={"vertical"}>
                     <Typography noWrap>{selectOrder.title}</Typography>
-                    <Typography noWrap>Статус: {order_status[selectOrder.actions[0].status]}</Typography>
+                    <Space direction={"horizontal"} size={'large'}>
+                        <Typography noWrap>Статус: {order_status[selectOrder.actions[0].status]}</Typography>
+                        <Typography noWrap>Дата:{moment(selectOrder.actions[0].date_create).format('DD-MM-YYYY')}</Typography>
+                    </Space>
                     {selectOrder.actions[0].status === 'not_agreed' ?
                         <Typography noWrap>По причине: {selectOrder.comment}</Typography> : null}
                 </Space>
@@ -338,6 +341,7 @@ const Orders = (props) => {
                                     <TableCell>Крайний срок</TableCell>
                                     <TableCell>Комментарий</TableCell>
                                     <TableCell>Отгружено</TableCell>
+                                    <TableCell>Дата доставки</TableCell>
                                     <TableCell>Статус</TableCell>
                                     <TableCell>Комментарий исполнителя</TableCell>
                                 </TableRow>
@@ -345,6 +349,7 @@ const Orders = (props) => {
                             <TableBody>
                                 {props.orderProducts.map((prod, index) => {
                                     let deadline = prod.deadline ? moment(prod.deadline).format('DD-MM-YYYY') : ''
+                                    let delivered = ["delivered", "not_delivered"].includes(prod.actions[0].status) ? moment(prod.actions[0].date_create).format('DD-MM-YYYY') : ''
                                     return <TableRow key={'tr_' + index}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell sx={{minWidth: '200px'}}>{prod.catalog?.name}</TableCell>
@@ -355,6 +360,7 @@ const Orders = (props) => {
                                         <TableCell>{deadline}</TableCell>
                                         <TableCell>{prod.comment}</TableCell>
                                         <TableCell>{prod.count_result ? `${prod.count_result} ${prod.catalog?.unit}` : null}</TableCell>
+                                        <TableCell>{delivered}</TableCell>
                                         <TableCell>{actions(prod)}</TableCell>
                                         <TableCell>{prod.actions[0].reason}</TableCell>
                                     </TableRow>
