@@ -175,7 +175,7 @@ const Tabel = (props) => {
                 openTabelBtn = <Button variant={'contained'} startIcon={<LockOpenIcon/>} size={'small'}
                                        onClick={() => props.tryOpenCellsInTabel(selectTabel.id)}>Открыть табель</Button>
             }
-            return <Space direction={"horizontal"} className={'send_btn'}>
+            return <Space direction={"horizontal"}>
                 {openTabelBtn}
                 <Button variant={'contained'} startIcon={<PersonAddAltIcon/>} size={'small'}
                         onClick={() => setModalVisible(true)}>Добавить сотрудника</Button>
@@ -201,11 +201,11 @@ const Tabel = (props) => {
                 }}
             >
                 <Paper className={'tabel_container'}>
-                    <Space direction={"horizontal"}>
+                    <Space direction={"horizontal"} className={'title'}>
                         <Typography className={'tabel_title'}>{selectTabel.department_name}</Typography>
                         {selectTabel.checked_cro ? <CheckCircleIcon color={'success'}/> : null}
+                        {button()}
                     </Space>
-                    {button()}
                     <TableContainer component={Box}>
                         <SimpleBar style={{maxHeight: '100%'}}>
                             <Table size={'small'} className={'tabel_table'} stickyHeader={true} sx={{minWidth: 650}}>

@@ -57,7 +57,7 @@ const Orders = (props) => {
     const [searchValue, setSearchValue] = useState(null)
     const [formVis, setFormVis] = useState(null)
     const [switchStatus, setSwitchStatus] = useState('all')
-    const [initSplitter] = useState([28, 72])
+    const [initSplitter] = useState([35, 65])
 
     useEffect(() => {
         props.tryGetOrders()
@@ -425,6 +425,9 @@ const Orders = (props) => {
                                     if (order.actions[0].status === 'not_agreed') {
                                         className = 'not_agreed'
                                     }
+                                    if (order.actions[0].status === 'in_agreement') {
+                                        className = 'in_agreement'
+                                    }
                                     if (switchStatus !== 'all') {
                                         if (order.actions[0].status !== switchStatus) return null
                                     }
@@ -435,7 +438,7 @@ const Orders = (props) => {
                                     let order_id = `${order.id}`.padStart(6, '0')
                                     let date_create = moment(order.date_create)
                                     if (!order.products) return null
-                                    let deadline = moment(order.products[0].deadline)
+                                    let deadline = moment(order.products[0]?.deadline)
                                     order.products.forEach(val => {
                                         if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)
                                     })

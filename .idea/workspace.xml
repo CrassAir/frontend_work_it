@@ -19,10 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add new status to order">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add date_create in status prdouct and order">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Order/Order.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Order/OrderForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/OrderForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +158,8 @@
       <workItem from="1641802630054" duration="11463000" />
       <workItem from="1641873833294" duration="20666000" />
       <workItem from="1642063294802" duration="107657000" />
-      <workItem from="1643956051771" duration="756000" />
+      <workItem from="1643956051771" duration="6180000" />
+      <workItem from="1644812035934" duration="3815000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -408,7 +413,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643173746397</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="add date_create in status prdouct and order">
+      <created>1643956833131</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1643956833131</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +439,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add notictak and websocket" />
     <MESSAGE value="add check toekn from beck and logoff if chang user permissions" />
     <MESSAGE value="fix authCheckState" />
     <MESSAGE value="one call rating dialog" />
@@ -452,7 +463,8 @@
     <MESSAGE value="fix double init on form" />
     <MESSAGE value="add change url on select order" />
     <MESSAGE value="add new status to order" />
-    <option name="LAST_COMMIT_MESSAGE" value="add new status to order" />
+    <MESSAGE value="add date_create in status prdouct and order" />
+    <option name="LAST_COMMIT_MESSAGE" value="add date_create in status prdouct and order" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1638534557571">
@@ -499,10 +511,10 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1642052470875" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1643173749518">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1643956837090">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1643173749518" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/0.0.1920.1032/-1600.104.1600.852@0.0.1920.1032" timestamp="1643956837090" />
     <state x="552" y="249" key="Vcs.Push.Dialog.v2/1920.-1079.1920.1056/0.0.1920.1032@0.0.1920.1032" timestamp="1638386981860" />
     <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1642158021721">
       <screen x="0" y="0" width="1920" height="1032" />

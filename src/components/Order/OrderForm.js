@@ -94,7 +94,7 @@ const OrderForm = (props) => {
             <ConfigProvider locale={locale}>
                 <Form className={'order_form'}
                       onFinish={(values) => {
-                          console.log(values)
+                          if (!values.products) return
                           if (props.copy || !data) {
                               props.addOrder(values)
                           } else {
@@ -148,13 +148,13 @@ const OrderForm = (props) => {
                                                                     showSearch
                                                                     placeholder="Товар"
                                                                     onSearch={(e) => setSearchValue(e)}
-                                                                    notFoundContent={<Typography
-                                                                        sx={{cursor: 'pointer', color: 'black'}}
-                                                                        variant={'caption'}
-                                                                        onClick={() => setCreateProduct(searchValue)}>
-                                                                        Добавить в справочник "{searchValue}"
-                                                                    </Typography>}
                                                                     onSelect={(inx) => {
+                                                                        if (inx === "search") {
+                                                                            setCreateProduct(searchValue)
+                                                                            remove(name)
+                                                                            add()
+                                                                            return
+                                                                        }
                                                                         let prod = newOrderProd.find(val => val.key === key)
                                                                         if (prod) prod.value = props.products.find(val => val.id === inx)
                                                                         else newOrderProd.push({
@@ -163,9 +163,12 @@ const OrderForm = (props) => {
                                                                         })
                                                                         setNewOrderProd([...newOrderProd])
                                                                     }}
-                                                                    filterOption={(input, option) =>
-                                                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                                                    }
+                                                                    filterOption={(input, option) => {
+                                                                        if (option.key === "search") {
+                                                                            return true
+                                                                        }
+                                                                        return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                                    }}
                                                                 >
                                                                     {props.products?.map(val => {
                                                                         return <Select.Option
@@ -173,6 +176,13 @@ const OrderForm = (props) => {
                                                                             {`${val.name} ${val?.feature}`}
                                                                         </Select.Option>
                                                                     })}
+                                                                    <Select.Option key="search" value="search">
+                                                                        <Typography
+                                                                            sx={{cursor: 'pointer', color: 'black'}}
+                                                                            variant={'caption'}>
+                                                                            Добавить в справочник "{searchValue}"
+                                                                        </Typography>
+                                                                    </Select.Option>
                                                                 </Select>
                                                             </Form.Item>
                                                         </TableCell>
