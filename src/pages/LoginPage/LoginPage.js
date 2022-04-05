@@ -5,62 +5,73 @@ import Button from '@mui/material/Button';
 import {authLogin} from '../../store/action/authActions'
 import {Form, Card} from 'antd'
 import {useSnackbar} from "notistack";
-
+import Loading from '../../components/Loading/Loading'
 
 const LoginPage = (props) => {
     const {enqueueSnackbar} = useSnackbar()
+    const {error, loading, auth} = props
 
     useEffect(() => {
-        if (props.error) {
-            enqueueSnackbar(props.error.response.data.detail, {variant: 'error'});
+        if (error) {
+            if (error.response) {
+                enqueueSnackbar(error.response.data.detail, {variant: 'error'});
+            } else {
+                console.log(error)
+                enqueueSnackbar(error.toString(), {variant: 'error'});
+            }
         }
-    }, [props.error])
+    }, [error])
 
     return (
-        <Card className={'login_card'}>
-            <Form
-                onFinish={(values) => {
-                    props.auth(values.username, values.password)
-                }}
-            >
-                <Form.Item
-                    name="username"
-                    getValueProps={(e) => {}}
-                    required={true}
-                    // rules={[{ required: true, message: 'Please input your username!' }]}
+        <div>{loading ? <Loading/> : null}
+            <Card className={'login_card'}>
+                <Form
+                    onFinish={(values) => {
+                        auth(values.username, values.password)
+                    }}
                 >
-                    <TextField
-                        required
-                        label="Логин"
-                        variant="standard"
-                        fullWidth
-                    />
+                    <Form.Item
+                        name="username"
+                        getValueProps={(e) => {
+                        }}
+                        required={true}
+                        // rules={[{ required: true, message: 'Please input your username!' }]}
+                    >
+                        <TextField
+                            required
+                            label="Логин"
+                            variant="standard"
+                            fullWidth
+                        />
 
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    getValueProps={(e) => {}}
-                    required={true}
-                    // rules={[{ required: true, message: 'Please input your username!' }]}
-                >
-                    <TextField
-                        required
-                        label="Пароль"
-                        type="password"
-                        fullWidth
-                        variant="standard"
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button type='Submit' variant="contained">Войти</Button>
-                </Form.Item>
-            </Form>
-        </Card>
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        getValueProps={(e) => {
+                        }}
+                        required={true}
+                        // rules={[{ required: true, message: 'Please input your username!' }]}
+                    >
+                        <TextField
+                            required
+                            label="Пароль"
+                            type="password"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type='Submit' variant="contained">Войти</Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 
 const mapStateToProps = (state) => ({
-    error: state.error
+    error: state.error,
+    loading: state.loading
 })
 
 const mapDispatchToProps = (dispatch) => ({

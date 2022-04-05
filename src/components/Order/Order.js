@@ -199,6 +199,10 @@ const Orders = (props) => {
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
+                        transformOrigin={{
+                            vertical: 'center',
+                            horizontal: 'right',
+                        }}
                         open={open}
                         onClose={() => setAnchorEl(null)}
                         MenuListProps={{
@@ -317,18 +321,21 @@ const Orders = (props) => {
 
         return (
             <Paper className={'order_container'}>
-                <Space direction={"vertical"}>
-                    <Typography noWrap>{selectOrder.title}</Typography>
-                    <Space direction={"horizontal"} size={'large'}>
-                        <Typography noWrap>Статус: {order_status[selectOrder.actions[0].status]}</Typography>
-                        <Typography noWrap>Дата:{moment(selectOrder.actions[0].date_create).format('DD-MM-YYYY')}</Typography>
+                <Space direction={"horizontal"} className={'title'}>
+                    <Space direction={"vertical"}>
+                        <Typography noWrap>{selectOrder.title}</Typography>
+                        <Space direction={"horizontal"} size={"large"}>
+                            <Typography noWrap>Статус: {order_status[selectOrder.actions[0].status]}</Typography>
+                            <Typography
+                                noWrap>Дата:{moment(selectOrder.actions[0].date_create).format('DD-MM-YYYY')}</Typography>
+                        </Space>
+                        {selectOrder.actions[0].status === 'not_agreed' ?
+                            <Typography noWrap>По причине: {selectOrder.comment}</Typography> : null}
                     </Space>
-                    {selectOrder.actions[0].status === 'not_agreed' ?
-                        <Typography noWrap>По причине: {selectOrder.comment}</Typography> : null}
+                    {button()}
                 </Space>
-                {button()}
                 <TableContainer component={Box}>
-                    <SimpleBar style={{maxHeight: '75vh'}}>
+                    <SimpleBar style={{maxHeight: '100%'}}>
                         <Table size={'small'} stickyHeader={true} sx={{minWidth: 650}}>
                             <TableHead>
                                 <TableRow>
@@ -418,7 +425,7 @@ const Orders = (props) => {
                         <MenuList disableListWrap>
                             {!props.orders ? null :
                                 props.orders.map(order => {
-                                    let className
+                                    let className = 'empty'
                                     if (order.actions[0].status === 'delivered') {
                                         className = 'delivered'
                                     }

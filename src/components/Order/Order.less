@@ -15,23 +15,33 @@
   border-radius: 5px;
   background-color: white;
   height: 87vh;
+  display: flex;
+  flex-direction: column;
 
   table {
     margin-bottom: 10px;
   }
+
+  .MuiBox-root {
+    overflow: hidden;
+  }
+}
+
+.empty {
+  border-left: 3px solid inherit !important;
 }
 
 .delivered {
   background-color: hsla(100, 100%, 50%, 0.2) !important;
-  border-right: 3px solid green !important;
+  border-left: 3px solid green !important;
 }
 
 .not_agreed {
   background-color: hsla(0, 100%, 50%, 0.2) !important;
-  border-right: 3px solid red !important;
+  border-left: 3px solid red !important;
 }
 
 .in_agreement {
   background-color: hsla(50, 100%, 50%, 0.2) !important;
-  border-right: 3px solid yellow !important;
+  border-left: 3px solid yellow !important;
 }

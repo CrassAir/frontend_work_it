@@ -166,7 +166,8 @@ const getOrderLocationsFail = (error) => {
 export const tryGetOrders = () => {
     return dispatch => {
         dispatch(tryGetOrdersStart());
-        api.get(getApiUrl() + 'remote/order/').then(res => {
+        api.get(getApiUrl() + 'remote/order/order/').then(res => {
+                console.log(res.data)
                 dispatch(tryGetOrdersSuccess(res.data));
             }
         ).catch(err => {
@@ -178,7 +179,7 @@ export const tryGetOrders = () => {
 export const addOrder = (values) => {
     return dispatch => {
         dispatch(addOrderStart());
-        api.post(getApiUrl() + 'remote/order/', values).then(res => {
+        api.post(getApiUrl() + 'remote/order/order/', values).then(res => {
                 dispatch(addOrderSuccess(res.data));
             }
         ).catch(err => {
@@ -190,7 +191,7 @@ export const addOrder = (values) => {
 export const editOrder = (order_id, values) => {
     return dispatch => {
         dispatch(editOrderStart());
-        api.patch(getApiUrl() + `remote/order/${order_id}/`, values).then(res => {
+        api.patch(getApiUrl() + `remote/order/order/${order_id}/`, values).then(res => {
                 dispatch(editOrderSuccess(res.data));
             }
         ).catch(err => {
@@ -202,7 +203,7 @@ export const editOrder = (order_id, values) => {
 export const deleteOrder = (order_id) => {
     return dispatch => {
         dispatch(deleteOrderStart());
-        api.delete(getApiUrl() + `remote/order/${order_id}/`).then(res => {
+        api.delete(getApiUrl() + `remote/order/order/${order_id}/`).then(res => {
                 if (typeof res.data === 'object') {
                     dispatch(editOrderSuccess(res.data))
                     return
@@ -218,7 +219,7 @@ export const deleteOrder = (order_id) => {
 export const tryGetOrderProducts = (order_id) => {
     return dispatch => {
         dispatch(tryGetProductsStart());
-        api.get(getApiUrl() + 'remote/product/?order_id=' + order_id).then(res => {
+        api.get(getApiUrl() + 'remote/order/product/?order_id=' + order_id).then(res => {
                 dispatch(tryGetProductsSuccess(res.data));
             }
         ).catch(err => {
@@ -230,7 +231,7 @@ export const tryGetOrderProducts = (order_id) => {
 export const editOrderProduct = (prod_id, values) => {
     return dispatch => {
         dispatch(editOrderProductStart());
-        api.patch(getApiUrl() + `remote/product/${prod_id}/`, values).then(res => {
+        api.patch(getApiUrl() + `remote/order/product/${prod_id}/`, values).then(res => {
                 dispatch(editOrderProductSuccess(res.data));
             }
         ).catch(err => {
@@ -242,7 +243,7 @@ export const editOrderProduct = (prod_id, values) => {
 export const deleteOrderProduct = (id) => {
     return dispatch => {
         dispatch(deleteOrderProductStart());
-        api.delete(getApiUrl() + `remote/product/${id}/`).then(res => {
+        api.delete(getApiUrl() + `remote/order/product/${id}/`).then(res => {
                 dispatch(deleteOrderProductSuccess(id));
             }
         ).catch(err => {
@@ -255,7 +256,7 @@ export const deleteOrderProduct = (id) => {
 export const getOrderLocations = () => {
     return dispatch => {
         dispatch(getOrderLocationsStart());
-        api.get(getApiUrl() + 'remote/location/').then(res => {
+        api.get(getApiUrl() + 'remote/order/location/').then(res => {
                 dispatch(getOrderLocationsSuccess(res.data));
             }
         ).catch(err => {

@@ -22,6 +22,7 @@ const initialState = {
     products: null,
     orders: null,
     orderProducts: null,
+    document: null,
 }
 
 //<editor-fold defaultstate="collapsed" desc="Account">
@@ -1043,6 +1044,52 @@ const getOrderLocationsFail = (state, action) => {
 
 //</editor-fold >
 
+//<editor-fold defaultstate="collapsed" desc="Wiki">
+
+const getCatalogsStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getCatalogsSuccess = (state, action) => {
+    return updateObject(state, {
+        catalogs: action.catalogs,
+        loading: false,
+    })
+}
+
+const getCatalogsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const getDocumentStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const getDocumentSuccess = (state, action) => {
+    return updateObject(state, {
+        document: action.document,
+        loading: false,
+    })
+}
+
+const getDocumentFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+//</editor-fold >
+
 const reducer = (state = initialState, action) => {
     console.log(action.type)
     switch (action.type) {
@@ -1132,6 +1179,24 @@ const reducer = (state = initialState, action) => {
             return getOrderLocationsSuccess(state, action);
         case actionTypes.GET_ORDER_LOCATIONS_FAIL:
             return getOrderLocationsFail(state, action);
+
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Wiki">
+
+        case actionTypes.GET_CATALOGS_START:
+            return getCatalogsStart(state, action);
+        case actionTypes.GET_CATALOGS_SUCCESS:
+            return getCatalogsSuccess(state, action);
+        case actionTypes.GET_CATALOGS_FAIL:
+            return getCatalogsFail(state, action);
+
+        case actionTypes.GET_DOCUMENT_START:
+            return getDocumentStart(state, action);
+        case actionTypes.GET_DOCUMENT_SUCCESS:
+            return getDocumentSuccess(state, action);
+        case actionTypes.GET_DOCUMENT_FAIL:
+            return getDocumentFail(state, action);
 
         //</editor-fold>
 

@@ -85,7 +85,7 @@ const deleteProductFail = (error) => {
 export const getProducts = () => {
     return dispatch => {
         dispatch(getProductsStart());
-        api.get(getApiUrl() + 'remote/product_catalog/').then(res => {
+        api.get(getApiUrl() + 'remote/order/product_catalog/').then(res => {
                 dispatch(getProductsSuccess(res.data));
             }
         ).catch(err => {
@@ -97,7 +97,7 @@ export const getProducts = () => {
 export const addProduct = (values) => {
     return dispatch => {
         dispatch(addProductStart());
-        api.post(getApiUrl() + 'remote/product_catalog/', values).then(res => {
+        api.post(getApiUrl() + 'remote/order/product_catalog/', values).then(res => {
                 dispatch(addProductSuccess(res.data));
             }
         ).catch(err => {
@@ -109,7 +109,7 @@ export const addProduct = (values) => {
 export const editProduct = (id, values) => {
     return dispatch => {
         dispatch(editProductStart());
-        api.patch(getApiUrl() + `remote/product_catalog/${id}/`, values).then(res => {
+        api.patch(getApiUrl() + `remote/order/product_catalog/${id}/`, values).then(res => {
                 dispatch(editProductSuccess(res.data));
             }
         ).catch(err => {
@@ -121,7 +121,7 @@ export const editProduct = (id, values) => {
 export const deleteProduct = (id) => {
     return dispatch => {
         dispatch(deleteProductStart());
-        api.delete(getApiUrl() + `remote/product_catalog/${id}/`).then(res => {
+        api.delete(getApiUrl() + `remote/order/product_catalog/${id}/`).then(res => {
                 dispatch(deleteProductSuccess(id));
             }
         ).catch(err => {

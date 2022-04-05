@@ -14,6 +14,7 @@ import ChangePassword from "./pages/LoginPage/ChangePassword";
 import {SnackbarProvider} from "notistack";
 import Catalog from "./components/Catalog/Catalog";
 import Order from "./components/Order/Order";
+import Wiki from "./components/Wiki/Wiki";
 
 
 const App = (props) => {
@@ -49,6 +50,9 @@ const App = (props) => {
                         <Route path="tabel" element={<Tabel/>}/>
                         <Route path="order" element={<Order/>}>
                             <Route path=":orderId" element={<Order/>}/>
+                        </Route>
+                        <Route path="wiki" element={<Wiki/>}>
+                            <Route path=":wikiId" element={<Wiki/>}/>
                         </Route>
                     </Route>
                 </Routes>
