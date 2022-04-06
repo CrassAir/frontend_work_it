@@ -32,7 +32,7 @@ const MainPage = (props) => {
 
         ws.onmessage = ev => {
             let data = JSON.parse(ev.data)
-            console.log(data)
+            // console.log(data)
             // if (data.logoff === props.user.username) {
             //     props.logout()
             //     return
