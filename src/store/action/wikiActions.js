@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import api from "../../api/api";
 import {getApiUrl} from "../../api/urls";
+import {UPDATE_CATALOG_START} from "./actionTypes";
 
 
 const tryGetCatalogsStart = () => {
@@ -19,6 +20,25 @@ const tryGetCatalogsSuccess = (catalogs) => {
 const tryGetCatalogsFail = (error) => {
     return {
         type: actionTypes.GET_CATALOGS_FAIL,
+        error: error
+    }
+}
+
+const tryUpdateCatalogStart = () => {
+    return {
+        type: actionTypes.UPDATE_CATALOG_START
+    }
+}
+
+const tryUpdateCatalogSuccess = () => {
+    return {
+        type: actionTypes.UPDATE_CATALOG_SUCCESS,
+    }
+}
+
+const tryUpdateCatalogFail = (error) => {
+    return {
+        type: actionTypes.UPDATE_CATALOG_FAIL,
         error: error
     }
 }
@@ -51,6 +71,19 @@ export const tryGetCatalogs = () => {
             }
         ).catch(err => {
             dispatch(tryGetCatalogsFail(err));
+        });
+    }
+}
+
+export const tryUpdateCatalog = (id, values) => {
+    return dispatch => {
+        dispatch(tryUpdateCatalogStart());
+        api.patch(getApiUrl() + `remote/wiki/catalogs/${id}/`, values).then(res => {
+                dispatch(tryUpdateCatalogSuccess());
+                dispatch(tryGetCatalogs())
+            }
+        ).catch(err => {
+            dispatch(tryUpdateCatalogFail(err));
         });
     }
 }

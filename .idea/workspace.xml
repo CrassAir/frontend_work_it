@@ -19,17 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add wiki">
-      <change afterPath="$PROJECT_DIR$/src/components/Wiki/WIkiDoc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" afterDir="false" />
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add wikiDoc">
+      <change afterPath="$PROJECT_DIR$/src/components/Wiki/CatalogForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/Wiki.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/Wiki.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/Wiki.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/Wiki.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/styles.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/ordersActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/ordersActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/action/wikiActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/wikiActions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +168,7 @@
       <workItem from="1647866152091" duration="619000" />
       <workItem from="1648619439438" duration="96000" />
       <workItem from="1648623944292" duration="108000" />
-      <workItem from="1649051600499" duration="44369000" />
+      <workItem from="1649051600499" duration="72818000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -444,7 +443,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649163566894</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="add wikiDoc">
+      <created>1649250424420</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1649250424420</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +468,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="one call rating dialog" />
     <MESSAGE value="add print btn" />
     <MESSAGE value="fix bugs" />
     <MESSAGE value="add Catalog.js" />
@@ -487,7 +492,8 @@
     <MESSAGE value="add date_create in status prdouct and order" />
     <MESSAGE value="change style tabel" />
     <MESSAGE value="add wiki" />
-    <option name="LAST_COMMIT_MESSAGE" value="add wiki" />
+    <MESSAGE value="add wikiDoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="add wikiDoc" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

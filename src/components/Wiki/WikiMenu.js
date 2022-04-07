@@ -5,17 +5,17 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {Badge, Collapse, ListItemButton, styled} from "@mui/material";
-import {Folder, FolderOpen} from "@mui/icons-material";
+import {CreateNewFolder, Folder, FolderOpen} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import CatalogForm from "./CatalogForm";
+import {Modal} from "antd";
 
 
 const WikiMenu = (props) => {
     const {document, catalogs, user} = props
 
     const [catalogCollapse, setCatalogCollapse] = useState([])
-
-    // useEffect(() => {
-    //     tryGetCatalogs()
-    // }, [])
+    const [catalogModal, setCatalogModal] = useState(false)
 
     useEffect(() => {
         console.log(document)
@@ -34,7 +34,7 @@ const WikiMenu = (props) => {
     const StyledBadge = styled(Badge)(({theme}) => ({
         '& .MuiBadge-badge': {
             top: '50%',
-            left: -15,
+            right: -20,
         },
     }));
 
@@ -49,52 +49,94 @@ const WikiMenu = (props) => {
             topViews = 0
         }
         let open = catalogCollapse.includes(catalog.id)
-        let list_cats = catalog.children.map((cat) => {
+        let listCats = catalog.children.map((cat) => {
             let result;
             [views, result] = recursiveCatalog(cat, index)
             return result
         })
 
-        let list_docs = catalog.documents.map((doc) => {
+        let listDocs = catalog.documents.map((doc) => {
             let have = false
             if (!doc.views.find(acc => acc.username === user.username)) {
                 views++
                 topViews++
                 have = true
             }
-            return <ListItem key={`item-${catalog.id}-${doc.id}`} sx={{paddingBottom: 0, paddingTop: 0}}>
+            return <ListItem sx={{pl: (index + 1) * 2}} key={`item-${catalog.id}-${doc.id}`} disablePadding>
                 <ListItemButton onClick={() => {
                     props.tryGetDocument(doc.id)
                 }}>
-                    <ListItemText sx={{marginLeft: `${index * 7}px`}} primary={doc.name}/>
-                    {have ? <ListItemText sx={{position: 'absolute', right: 0}} secondary='новый'/> : null}
+                    <ListItemText primary={doc.name}/>
+                    {have ? <ListItemText sx={{position: 'absolute', right: 10}} secondary='новый'/> : null}
                     {/*<InsertDriveFileTwoTone color={have ? 'warning': 'inherit'} sx={{position: 'absolute', right: 0}} />*/}
                 </ListItemButton>
             </ListItem>
         })
 
-        return [views, <ul key={`catalog-${catalog.id}`}>
-            <ListItemButton onClick={() => {
-                if (open) {
-                    catalogCollapse.splice(catalogCollapse.indexOf(catalog.id), 1)
-                } else {
-                    catalogCollapse.push(catalog.id)
-                }
-                setCatalogCollapse([...catalogCollapse])
+        let editButton = []
+        let disabled = true
+        if (catalog.access_edit.includes(user.username)) {
+            disabled = false
+            editButton.push(<IconButton key={`create_btn-${catalog.id}`} onClick={() => {
+                console.log(catalog)
+                setCatalogModal(true)
             }}>
-                <ListItemText sx={{marginLeft: `${index * 5}px`}} secondary={catalog.name}/>
-                <StyledBadge badgeContent={index === 0 ? topViews : views} color={'primary'} anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
+                <CreateNewFolder/>
+            </IconButton>)
+        }
+        editButton.push(<IconButton disabled={disabled} key={`view_btn-${catalog.id}`} edge="end" onClick={() => {
+            console.log('edit')
+            setCatalogModal(catalog)
+        }}>
+            {open ? <FolderOpen color={'disabled'}/> : <Folder color={'disabled'}/>}
+        </IconButton>)
+
+        return [views, <div key={`catalog-${catalog.id}`}>
+            <ListItem sx={{pl: index * 2}} disablePadding secondaryAction={editButton}>
+
+                <ListItemButton onClick={() => {
+                    if (open) {
+                        catalogCollapse.splice(catalogCollapse.indexOf(catalog.id), 1)
+                    } else {
+                        catalogCollapse.push(catalog.id)
+                    }
+                    setCatalogCollapse([...catalogCollapse])
                 }}>
-                    {open ? <FolderOpen color={'disabled'}/> : <Folder color={'disabled'}/>}
-                </StyledBadge>
-            </ListItemButton>
+                    <StyledBadge badgeContent={index === 0 ? topViews : views} color={'primary'} anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}>
+                        <ListItemText secondary={catalog.name}/>
+                    </StyledBadge>
+                </ListItemButton>
+            </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
-                {list_cats}
-                {list_docs}
+                <List disablePadding key={`doc-${catalog.id}`}>
+                    {listCats}
+                    {listDocs}
+                </List>
             </Collapse>
-        </ul>]
+        </div>
+        ]
+    }
+
+
+    const modal = () => {
+        const title = catalogModal.id ? 'Редактирование' : 'Создание'
+
+        const closeModal = () => {
+            setCatalogModal(false)
+        }
+
+        return <Modal
+            visible={!!catalogModal}
+            title={title}
+            footer={false}
+            destroyOnClose
+            onCancel={closeModal}
+        >
+            <CatalogForm close={closeModal} catalog={catalogModal}/>
+        </Modal>
     }
 
     // Если данные не прилетели то вернуть заглушку( пока не сделано )
@@ -103,25 +145,24 @@ const WikiMenu = (props) => {
     }
 
     return (
-        <List
-            sx={{
-                width: '100%',
-                bgcolor: 'background.paper',
-                position: 'relative',
-                overflow: 'auto',
-                marginTop: '5px',
-                marginBottom: '5px',
-                // maxHeight: '80vh',
-                '& ul': {padding: 0},
-            }}
-            subheader={<li/>}
-        >
-            {catalogs.map((catalog) => {
-                let result;
-                [topViews, result] = recursiveCatalog(catalog, -1)
-                return result
-            })}
-        </List>
+        <div>
+            <List
+                sx={{
+                    width: '100%',
+                    bgcolor: 'background.paper',
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                }}
+                subheader={<li/>}
+            >
+                {catalogs.map((catalog) => {
+                    let result;
+                    [topViews, result] = recursiveCatalog(catalog, -1)
+                    return result
+                })}
+            </List>
+            {modal()}
+        </div>
     )
 }
 

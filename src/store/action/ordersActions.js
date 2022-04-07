@@ -167,7 +167,7 @@ export const tryGetOrders = () => {
     return dispatch => {
         dispatch(tryGetOrdersStart());
         api.get(getApiUrl() + 'remote/order/order/').then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 dispatch(tryGetOrdersSuccess(res.data));
             }
         ).catch(err => {
