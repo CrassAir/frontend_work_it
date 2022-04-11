@@ -1067,6 +1067,46 @@ const getCatalogsFail = (state, action) => {
     })
 }
 
+const createCatalogStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const createCatalogSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+    })
+}
+
+const createCatalogFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const updateCatalogStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const updateCatalogSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+    })
+}
+
+const updateCatalogFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 const getDocumentStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -1190,6 +1230,20 @@ const reducer = (state = initialState, action) => {
             return getCatalogsSuccess(state, action);
         case actionTypes.GET_CATALOGS_FAIL:
             return getCatalogsFail(state, action);
+
+        case actionTypes.CREATE_CATALOG_START:
+            return createCatalogStart(state, action);
+        case actionTypes.CREATE_CATALOG_SUCCESS:
+            return createCatalogSuccess(state, action);
+        case actionTypes.CREATE_CATALOG_FAIL:
+            return createCatalogFail(state, action);
+
+        case actionTypes.UPDATE_CATALOG_START:
+            return updateCatalogStart(state, action);
+        case actionTypes.UPDATE_CATALOG_SUCCESS:
+            return updateCatalogSuccess(state, action);
+        case actionTypes.UPDATE_CATALOG_FAIL:
+            return updateCatalogFail(state, action);
 
         case actionTypes.GET_DOCUMENT_START:
             return getDocumentStart(state, action);

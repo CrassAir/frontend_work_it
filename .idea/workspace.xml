@@ -19,16 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add wikiDoc">
-      <change afterPath="$PROJECT_DIR$/src/components/Wiki/CatalogForm.js" afterDir="false" />
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add wikiMenu update catalog">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Wiki/CatalogForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/CatalogForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/ordersActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/ordersActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/action/wikiActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/wikiActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +165,7 @@
       <workItem from="1647866152091" duration="619000" />
       <workItem from="1648619439438" duration="96000" />
       <workItem from="1648623944292" duration="108000" />
-      <workItem from="1649051600499" duration="72818000" />
+      <workItem from="1649051600499" duration="78294000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -450,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649250424420</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="add wikiMenu update catalog">
+      <created>1649336346172</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1649336346172</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -468,7 +472,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add print btn" />
     <MESSAGE value="fix bugs" />
     <MESSAGE value="add Catalog.js" />
     <MESSAGE value="add opertions" />
@@ -493,7 +496,8 @@
     <MESSAGE value="change style tabel" />
     <MESSAGE value="add wiki" />
     <MESSAGE value="add wikiDoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="add wikiDoc" />
+    <MESSAGE value="add wikiMenu update catalog" />
+    <option name="LAST_COMMIT_MESSAGE" value="add wikiMenu update catalog" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -14,7 +14,7 @@ import {Modal} from "antd";
 const WikiMenu = (props) => {
     const {document, catalogs, user} = props
 
-    const [catalogCollapse, setCatalogCollapse] = useState([])
+    const [catalogCollapse, setCatalogCollapse] = useState(new Set([]))
     const [catalogModal, setCatalogModal] = useState(false)
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const WikiMenu = (props) => {
         if (index === 0) {
             topViews = 0
         }
-        let open = catalogCollapse.includes(catalog.id)
+        let open = catalogCollapse.has(catalog.id)
         let listCats = catalog.children.map((cat) => {
             let result;
             [views, result] = recursiveCatalog(cat, index)
@@ -78,14 +78,17 @@ const WikiMenu = (props) => {
         if (catalog.access_edit.includes(user.username)) {
             disabled = false
             editButton.push(<IconButton key={`create_btn-${catalog.id}`} onClick={() => {
-                console.log(catalog)
-                setCatalogModal(true)
+                let newCat = JSON.parse(JSON.stringify(catalog))
+                delete newCat.name
+                newCat['create'] = true
+                catalogCollapse.add(catalog.id)
+                setCatalogCollapse(new Set([...catalogCollapse]))
+                setCatalogModal(newCat)
             }}>
                 <CreateNewFolder/>
             </IconButton>)
         }
         editButton.push(<IconButton disabled={disabled} key={`view_btn-${catalog.id}`} edge="end" onClick={() => {
-            console.log('edit')
             setCatalogModal(catalog)
         }}>
             {open ? <FolderOpen color={'disabled'}/> : <Folder color={'disabled'}/>}
@@ -96,11 +99,11 @@ const WikiMenu = (props) => {
 
                 <ListItemButton onClick={() => {
                     if (open) {
-                        catalogCollapse.splice(catalogCollapse.indexOf(catalog.id), 1)
+                        catalogCollapse.delete(catalog.id)
                     } else {
-                        catalogCollapse.push(catalog.id)
+                        catalogCollapse.add(catalog.id)
                     }
-                    setCatalogCollapse([...catalogCollapse])
+                    setCatalogCollapse(new Set([...catalogCollapse]))
                 }}>
                     <StyledBadge badgeContent={index === 0 ? topViews : views} color={'primary'} anchorOrigin={{
                         vertical: 'top',
@@ -122,7 +125,7 @@ const WikiMenu = (props) => {
 
 
     const modal = () => {
-        const title = catalogModal.id ? 'Редактирование' : 'Создание'
+        const title = catalogModal.create ? 'Создание' : 'Редактирование'
 
         const closeModal = () => {
             setCatalogModal(false)

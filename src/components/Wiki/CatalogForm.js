@@ -2,16 +2,18 @@ import React, {useState} from 'react';
 import {Form, Input, Select, Switch, TreeSelect} from 'antd';
 import {connect} from "react-redux";
 import Button from "@mui/material/Button";
-import {tryUpdateCatalog} from "../../store/action/wikiActions";
+import {tryCreateCatalog, tryUpdateCatalog} from "../../store/action/wikiActions";
 
-const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog}) => {
+const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatalog}) => {
     const [form] = Form.useForm()
     const [inheritance, setInheritance] = useState(catalog.inheritance)
     const [access, setAccess] = useState(catalog.inheritance ? catalog.parent?.access : catalog.access)
     const [accessEdit, setAccessEdit] = useState(catalog.inheritance ? catalog.parent?.access_edit : catalog.access_edit)
 
-    const okText = catalog.id ? 'Редактировать' : 'Создать'
+    const okText = catalog.create ? 'Создать' : 'Редактировать'
+    const parent_id = catalog.create ? catalog.id : catalog.parent?.id
 
+    console.log(catalog.create)
     const treeData = [...catalogs]
     const recursiveTreeData = (tree) => {
         return tree.map(val => {
@@ -49,7 +51,9 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog}) => {
     }
 
     const formFinish = values => {
-        if (catalog.id) {
+        if (catalog.create) {
+            tryCreateCatalog(values)
+        } else {
             tryUpdateCatalog(catalog.id, values)
         }
         close()
@@ -64,13 +68,14 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog}) => {
             initialValues={{
                 inheritance: inheritance,
                 name: catalog.name,
-                parent: catalog.parent?.id,
+                parent_id: parent_id,
+                ord: catalog.ord ? catalog.ord : 0,
                 access: access,
                 access_edit: accessEdit,
             }}
         >
             <Form.Item
-                name="parent"
+                name="parent_id"
                 label="Родитель"
             >
                 <TreeSelect
@@ -84,6 +89,12 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog}) => {
                 rules={[{required: true, message: 'Введите название каталога!'}]}
             >
                 <Input/>
+            </Form.Item>
+             <Form.Item
+                name="ord"
+                label="Сортировка"
+            >
+                <Input type={'number'}/>
             </Form.Item>
             <Form.Item name='inheritance' label="Наследование прав" valuePropName="checked">
                 <Switch onChange={chaneInheritance}/>
@@ -120,6 +131,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+    tryCreateCatalog: (values) => dispatch(tryCreateCatalog(values)),
     tryUpdateCatalog: (id, values) => dispatch(tryUpdateCatalog(id, values))
 })
 
