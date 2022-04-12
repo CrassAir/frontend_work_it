@@ -5,22 +5,30 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {Badge, Collapse, ListItemButton, styled} from "@mui/material";
-import {CreateNewFolder, Folder, FolderOpen} from "@mui/icons-material";
+import {CreateNewFolder, Folder, FolderOpen, NoteAdd} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import CatalogForm from "./CatalogForm";
 import {Modal} from "antd";
+import DocumentForm from "./DocumentForm";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 const WikiMenu = (props) => {
-    const {document, catalogs, user} = props
+    const {catalogs, user} = props
+
+    // если нужно что бы каталоги были в строке запроса, но скорее всего нет
+    const params = useParams()
+    const navigate = useNavigate()
+    console.log(params)
+    // const [catalogCollapse, setCatalogCollapse] = useState(new Set(params['*']?.split('/')))
 
     const [catalogCollapse, setCatalogCollapse] = useState(new Set([]))
     const [catalogModal, setCatalogModal] = useState(false)
+    const [documentModal, setDocumentModal] = useState(false)
 
     useEffect(() => {
-        console.log(document)
         props.tryGetCatalogs()
-    }, [document])
+    }, [])
 
     useEffect(() => {
         if (catalogs) {
@@ -30,6 +38,12 @@ const WikiMenu = (props) => {
             // return () => clearInterval(id);
         }
     }, [catalogs])
+
+    useEffect(() => {
+        if (params.docId) {
+            props.tryGetDocument(params.docId)
+        }
+    }, [params])
 
     const StyledBadge = styled(Badge)(({theme}) => ({
         '& .MuiBadge-badge': {
@@ -48,7 +62,8 @@ const WikiMenu = (props) => {
         if (index === 0) {
             topViews = 0
         }
-        let open = catalogCollapse.has(catalog.id)
+        let selected = false
+        let open = catalogCollapse.has(catalog.id.toString())
         let listCats = catalog.children.map((cat) => {
             let result;
             [views, result] = recursiveCatalog(cat, index)
@@ -63,10 +78,15 @@ const WikiMenu = (props) => {
                 have = true
             }
             return <ListItem sx={{pl: (index + 1) * 2}} key={`item-${catalog.id}-${doc.id}`} disablePadding>
-                <ListItemButton onClick={() => {
-                    props.tryGetDocument(doc.id)
-                }}>
-                    <ListItemText primary={doc.name}/>
+                <ListItemButton
+                    selected={params.docId === doc.id.toString()}
+                    onClick={() => {
+                        navigate(`${doc.id}`)
+                        if (have) {
+                            props.tryGetCatalogs()
+                        }
+                    }}>
+                    <ListItemText secondary={doc.name}/>
                     {have ? <ListItemText sx={{position: 'absolute', right: 10}} secondary='новый'/> : null}
                     {/*<InsertDriveFileTwoTone color={have ? 'warning': 'inherit'} sx={{position: 'absolute', right: 0}} />*/}
                 </ListItemButton>
@@ -77,16 +97,24 @@ const WikiMenu = (props) => {
         let disabled = true
         if (catalog.access_edit.includes(user.username)) {
             disabled = false
+            editButton.push(<IconButton key={`new_doc_btn-${catalog.id}`} onClick={() => {
+                catalogCollapse.add(catalog.id.toString())
+                setCatalogCollapse(new Set([...catalogCollapse]))
+                setDocumentModal({catalog: catalog, create: true})
+            }}>
+                <NoteAdd/>
+            </IconButton>)
             editButton.push(<IconButton key={`create_btn-${catalog.id}`} onClick={() => {
                 let newCat = JSON.parse(JSON.stringify(catalog))
                 delete newCat.name
                 newCat['create'] = true
-                catalogCollapse.add(catalog.id)
+                catalogCollapse.add(catalog.id.toString())
                 setCatalogCollapse(new Set([...catalogCollapse]))
                 setCatalogModal(newCat)
             }}>
                 <CreateNewFolder/>
             </IconButton>)
+
         }
         editButton.push(<IconButton disabled={disabled} key={`view_btn-${catalog.id}`} edge="end" onClick={() => {
             setCatalogModal(catalog)
@@ -96,15 +124,19 @@ const WikiMenu = (props) => {
 
         return [views, <div key={`catalog-${catalog.id}`}>
             <ListItem sx={{pl: index * 2}} disablePadding secondaryAction={editButton}>
+                <ListItemButton
+                    onClick={() => {
+                        if (open) {
+                            catalogCollapse.delete(catalog.id.toString())
+                        } else {
+                            catalogCollapse.add(catalog.id.toString())
+                        }
 
-                <ListItemButton onClick={() => {
-                    if (open) {
-                        catalogCollapse.delete(catalog.id)
-                    } else {
-                        catalogCollapse.add(catalog.id)
-                    }
-                    setCatalogCollapse(new Set([...catalogCollapse]))
-                }}>
+                        // для навигации если нужен каталог
+                        // navigate([...catalogCollapse].join('/'))
+
+                        setCatalogCollapse(new Set([...catalogCollapse]))
+                    }}>
                     <StyledBadge badgeContent={index === 0 ? topViews : views} color={'primary'} anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
@@ -124,7 +156,7 @@ const WikiMenu = (props) => {
     }
 
 
-    const modal = () => {
+    const catalogModalBuilder = () => {
         const title = catalogModal.create ? 'Создание' : 'Редактирование'
 
         const closeModal = () => {
@@ -139,6 +171,22 @@ const WikiMenu = (props) => {
             onCancel={closeModal}
         >
             <CatalogForm close={closeModal} catalog={catalogModal}/>
+        </Modal>
+    }
+
+    const documentModalBuilder = () => {
+        const closeModal = () => {
+            setDocumentModal(false)
+        }
+
+        return <Modal
+            visible={!!documentModal}
+            title={'Создание'}
+            footer={false}
+            destroyOnClose
+            onCancel={closeModal}
+        >
+            <DocumentForm close={closeModal} data={documentModal}/>
         </Modal>
     }
 
@@ -164,7 +212,8 @@ const WikiMenu = (props) => {
                     return result
                 })}
             </List>
-            {modal()}
+            {catalogModalBuilder()}
+            {documentModalBuilder()}
         </div>
     )
 }
@@ -173,7 +222,6 @@ const WikiMenu = (props) => {
 const mapStateToProps = (state) => ({
     user: state.user,
     catalogs: state.catalogs,
-    document: state.document,
 })
 
 const mapDispatchToProps = (dispatch) => ({

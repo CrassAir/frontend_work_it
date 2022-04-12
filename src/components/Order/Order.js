@@ -55,6 +55,7 @@ const Orders = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [searchValue, setSearchValue] = useState(null)
+    let searchTimer;
     const [formVis, setFormVis] = useState(null)
     const [switchStatus, setSwitchStatus] = useState('all')
     const [initSplitter] = useState([35, 65])
@@ -380,6 +381,13 @@ const Orders = (props) => {
         )
     }
 
+    const searchInOrders = (e) => {
+        clearTimeout(searchTimer)
+        searchTimer = setTimeout(() => {
+            setSearchValue(e.target.value.toLowerCase())
+        }, 500)
+    }
+
     return (
         <div className={'main_tabel'}>
             <Splitter direction={SplitDirection.Horizontal}
@@ -393,7 +401,7 @@ const Orders = (props) => {
                             <TextField
                                 label="Поиск"
                                 // variant="standard"
-                                onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
+                                onChange={searchInOrders}
                                 size={'small'}
                                 sx={{minWidth: 200}}
                                 InputProps={{

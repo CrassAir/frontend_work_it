@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 import api from "../../api/api";
 import {getApiUrl} from "../../api/urls";
 
-
+//<editor-fold defaultstate="collapsed" desc="Catalog">
 const tryGetCatalogsStart = () => {
     return {
         type: actionTypes.GET_CATALOGS_START
@@ -61,6 +61,33 @@ const tryUpdateCatalogFail = (error) => {
     }
 }
 
+const tryDeleteCatalogStart = () => {
+    return {
+        type: actionTypes.DELETE_CATALOG_START
+    }
+}
+
+const tryDeleteCatalogSuccess = () => {
+    return {
+        type: actionTypes.DELETE_CATALOG_SUCCESS,
+    }
+}
+
+const tryDeleteCatalogFail = (error) => {
+    return {
+        type: actionTypes.DELETE_CATALOG_FAIL,
+        error: error
+    }
+}
+
+//</editor-fold>
+
+const unmountDocument = () => {
+    return {
+        type: actionTypes.UNMOUNT_DOCUMENT,
+    }
+}
+
 const tryGetDocumentStart = () => {
     return {
         type: actionTypes.GET_DOCUMENT_START
@@ -77,6 +104,25 @@ const tryGetDocumentSuccess = (document) => {
 const tryGetDocumentFail = (error) => {
     return {
         type: actionTypes.GET_DOCUMENT_FAIL,
+        error: error
+    }
+}
+
+const tryCreateDocumentStart = () => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_START
+    }
+}
+
+const tryCreateDocumentSuccess = () => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_SUCCESS,
+    }
+}
+
+const tryCreateDocumentFail = (error) => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_FAIL,
         error: error
     }
 }
@@ -119,6 +165,25 @@ export const tryUpdateCatalog = (id, values) => {
     }
 }
 
+export const tryUnmountDocument = () => {
+    return dispatch => {
+        dispatch(unmountDocument())
+    }
+}
+
+export const tryDeleteCatalog = (id) => {
+    return dispatch => {
+        dispatch(tryDeleteCatalogStart());
+        api.delete(getApiUrl() + `remote/wiki/catalogs/${id}/`).then(res => {
+                dispatch(tryDeleteCatalogSuccess());
+                dispatch(tryGetCatalogs())
+            }
+        ).catch(err => {
+            dispatch(tryDeleteCatalogFail(err));
+        });
+    }
+}
+
 export const tryGetDocument = (id) => {
     return dispatch => {
         dispatch(tryGetDocumentStart());
@@ -130,3 +195,29 @@ export const tryGetDocument = (id) => {
         });
     }
 }
+
+export const tryCreateDocument = (values) => {
+    return dispatch => {
+        dispatch(tryCreateDocumentStart());
+        api.post(getApiUrl() + `remote/wiki/documents/`, values).then(res => {
+                dispatch(tryCreateDocumentSuccess());
+                dispatch(tryGetCatalogs())
+            }
+        ).catch(err => {
+            dispatch(tryCreateDocumentFail(err));
+        });
+    }
+}
+
+export const tryUpdateDocument = (id, values) => {
+    return dispatch => {
+        dispatch(tryCreateDocumentStart());
+        api.patch(getApiUrl() + `remote/wiki/documents/${id}/`, values).then(res => {
+                dispatch(tryCreateDocumentSuccess());
+            }
+        ).catch(err => {
+            dispatch(tryCreateDocumentFail(err));
+        });
+    }
+}
+

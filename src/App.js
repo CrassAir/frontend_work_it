@@ -24,6 +24,18 @@ const App = (props) => {
         props.authCheckState()
     }, [])
 
+    const routesOnRules = () => {
+        if (!props.user) return null
+        let rules = props.user.rules_template_account
+        let route = []
+        if (rules.can_make_order) {
+            route.push(<Route path="order" element={<Order/>}>
+                <Route path=":orderId" element={<Order/>}/>
+            </Route>)
+        }
+        return route
+    }
+
     const routes = () => {
         if (location.pathname === '/logout') {
             props.logout()
@@ -52,7 +64,7 @@ const App = (props) => {
                             <Route path=":orderId" element={<Order/>}/>
                         </Route>
                         <Route path="wiki" element={<Wiki/>}>
-                            <Route path=":wikiId" element={<Wiki/>}/>
+                            <Route path=":docId" element={<Wiki/>}/>
                         </Route>
                     </Route>
                 </Routes>
@@ -72,10 +84,7 @@ const App = (props) => {
                 <Route exact path="change_password" element={<Navigate to={'/'}/>}/>
                 <Route path="/" element={<MainPage/>}>
                     <Route path="tabel" element={<Tabel/>}/>
-                    {props.user.rules_template_account?.can_make_order ?
-                         <Route path="order" element={<Order/>}>
-                            <Route path=":orderId" element={<Order/>}/>
-                        </Route> : null}
+                    {routesOnRules()}
                 </Route>
             </Routes>
         )

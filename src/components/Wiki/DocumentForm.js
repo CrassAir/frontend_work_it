@@ -2,24 +2,44 @@ import React, {useEffect, useState} from 'react';
 import {Form, Input, Popconfirm, Select, Switch, TreeSelect} from 'antd';
 import {connect} from "react-redux";
 import Button from "@mui/material/Button";
-import {tryCreateCatalog, tryDeleteCatalog, tryUpdateCatalog} from "../../store/action/wikiActions";
+import {tryCreateDocument} from "../../store/action/wikiActions";
 
-const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatalog, tryDeleteCatalog}) => {
+const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
     const [form] = Form.useForm()
-    const [inheritance, setInheritance] = useState(catalog.inheritance)
-    const [access, setAccess] = useState(catalog.inheritance ? catalog.parent?.access : catalog.access)
-    const [accessEdit, setAccessEdit] = useState(catalog.inheritance ? catalog.parent?.access_edit : catalog.access_edit)
+    const [inheritance, setInheritance] = useState(true)
+    const [access, setAccess] = useState(data.catalog.access)
+    const [accessEdit, setAccessEdit] = useState(data.catalog.access_edit)
 
-    const okText = catalog.create ? 'Создать' : 'Редактировать'
-    const parent_id = catalog.create ? catalog.id : catalog.parent?.id
+    const okText = data.create ? 'Создать' : 'Редактировать'
+
+    const initialValues = {
+        inheritance: true,
+        name: data.document?.name,
+        ord: data.document?.ord ? data.document?.ord : 0,
+        catalog_id: data.catalog.id,
+        access: access,
+        access_edit: accessEdit,
+        publish: document?.publish,
+    }
 
     useEffect(() => {
-        if (inheritance && catalog.parent) {
-            setAccess(catalog.parent.access)
-            setAccessEdit(catalog.parent.access_edit)
+        if (document) {
+            setInheritance(data.document?.inheritance)
+            setAccess(data.document?.inheritance ? data.catalog.access : data.document?.access)
+            setAccessEdit(data.document?.inheritance ? data.catalog.access_edit : data.document?.access_edit)
+            initialValues.inheritance = data.document?.inheritance
+            form.setFieldsValue(initialValues)
+        }
+    }, [document])
+
+
+    useEffect(() => {
+        if (inheritance) {
+            setAccess(data.catalog.access)
+            setAccessEdit(data.catalog.access_edit)
         } else {
-            setAccess(catalog.access)
-            setAccessEdit(catalog.access_edit)
+            setAccess(data.document?.access)
+            setAccessEdit(data.document?.access_edit)
         }
     }, [inheritance])
 
@@ -31,16 +51,13 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatal
 
     const treeData = [...catalogs]
     const recursiveTreeData = (tree) => {
-        return tree.reduce((result, element) => {
-            if (catalog.create || element.id !== catalog.id) {
-                result.push({
-                    title: element.name,
-                    value: element.id,
-                    children: recursiveTreeData(element.children)
-                })
+        return tree.map(val => {
+            return {
+                title: val.name,
+                value: val.id,
+                children: recursiveTreeData(val.children)
             }
-            return result
-        }, [])
+        })
     }
 
     const recursiveFindAccess = (id, catalogs) => {
@@ -55,12 +72,13 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatal
     }
 
     const formFinish = values => {
-        if (catalog.create) {
-            tryCreateCatalog(values)
+        if (data.create) {
+            console.log('create', values)
+            tryCreateDocument(values)
         } else {
-            tryUpdateCatalog(catalog.id, values)
+            // tryUpdateCatalog(catalog.id, values)
         }
-        close()
+        if (close) close()
     }
 
     return (
@@ -69,25 +87,8 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatal
             layout="vertical"
             name="form_in_modal"
             onFinish={formFinish}
-            initialValues={{
-                inheritance: inheritance,
-                name: catalog.name,
-                parent_id: parent_id,
-                ord: catalog.ord ? catalog.ord : 0,
-                access: access,
-                access_edit: accessEdit,
-                publish: true,
-            }}
+            initialValues={initialValues}
         >
-            <Form.Item
-                name="parent_id"
-                label="Родитель"
-            >
-                <TreeSelect
-                    onChange={(val) => inheritance ? recursiveFindAccess(val, catalogs) : null}
-                    treeData={[{title: '', value: ''}, ...recursiveTreeData(treeData)]}
-                />
-            </Form.Item>
             <Form.Item
                 name="name"
                 label="Название"
@@ -96,12 +97,21 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatal
                 <Input/>
             </Form.Item>
             <Form.Item
+                name="catalog_id"
+                label="Каталог"
+            >
+                <TreeSelect
+                    onChange={(val) => inheritance ? recursiveFindAccess(val, catalogs) : null}
+                    treeData={recursiveTreeData(treeData)}
+                />
+            </Form.Item>
+            <Form.Item
                 name="ord"
                 label="Сортировка"
             >
                 <Input type={'number'}/>
             </Form.Item>
-            <Form.Item name='publish' label="Опубликовать" valuePropName="checked">
+            <Form.Item hidden={data.create} name='publish' label="Опубликовать" valuePropName="checked">
                 <Switch/>
             </Form.Item>
             <Form.Item name='inheritance' label="Наследование прав" valuePropName="checked">
@@ -130,11 +140,11 @@ const CatalogForm = ({catalog, close, catalogs, tryUpdateCatalog, tryCreateCatal
             <Form.Item style={{margin: 0}}>
                 <Button style={{float: 'right'}} variant={'contained'} color={'success'}
                         type={'submit'}>{okText}</Button>
-                {!catalog.create ?
+                {!data.create ?
                     <Popconfirm title={'Вы уверены что хотите удалить каталог?'} okText={'Да'} cancelText={'Нет'}
                                 onConfirm={() => {
-                                    tryDeleteCatalog(catalog.id)
-                                    close()
+                                    // tryDeleteCatalog(catalog.id)
+                                    if (close) close()
                                 }}>
                         <Button style={{float: 'left'}} variant={'contained'} color={'error'}>Удалить</Button>
                     </Popconfirm> : null}
@@ -147,9 +157,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    tryCreateCatalog: (values) => dispatch(tryCreateCatalog(values)),
-    tryUpdateCatalog: (id, values) => dispatch(tryUpdateCatalog(id, values)),
-    tryDeleteCatalog: (id) => dispatch(tryDeleteCatalog(id)),
+    tryCreateDocument: (values) => dispatch(tryCreateDocument(values)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CatalogForm)
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentForm)

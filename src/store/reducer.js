@@ -1107,10 +1107,38 @@ const updateCatalogFail = (state, action) => {
     })
 }
 
+const deleteCatalogStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const deleteCatalogSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+    })
+}
+
+const deleteCatalogFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const unmountDocument = (state, action) => {
+    return updateObject(state, {
+        document: null
+    })
+}
+
 const getDocumentStart = (state, action) => {
     return updateObject(state, {
         error: null,
         loading: true,
+        animDoc: false,
+        // document: null,
     })
 }
 
@@ -1118,10 +1146,31 @@ const getDocumentSuccess = (state, action) => {
     return updateObject(state, {
         document: action.document,
         loading: false,
+        animDoc: true,
     })
 }
 
 const getDocumentFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
+const createDocumentStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const createDocumentSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+    })
+}
+
+const createDocumentFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false,
@@ -1245,12 +1294,29 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_CATALOG_FAIL:
             return updateCatalogFail(state, action);
 
+        case actionTypes.DELETE_CATALOG_START:
+            return deleteCatalogStart(state, action);
+        case actionTypes.DELETE_CATALOG_SUCCESS:
+            return deleteCatalogSuccess(state, action);
+        case actionTypes.DELETE_CATALOG_FAIL:
+            return deleteCatalogFail(state, action);
+
+        case actionTypes.UNMOUNT_DOCUMENT:
+            return unmountDocument(state, action);
+
         case actionTypes.GET_DOCUMENT_START:
             return getDocumentStart(state, action);
         case actionTypes.GET_DOCUMENT_SUCCESS:
             return getDocumentSuccess(state, action);
         case actionTypes.GET_DOCUMENT_FAIL:
             return getDocumentFail(state, action);
+
+        case actionTypes.CREATE_DOCUMENT_START:
+            return createDocumentStart(state, action);
+        case actionTypes.CREATE_DOCUMENT_SUCCESS:
+            return createDocumentSuccess(state, action);
+        case actionTypes.CREATE_DOCUMENT_FAIL:
+            return createDocumentFail(state, action);
 
         //</editor-fold>
 

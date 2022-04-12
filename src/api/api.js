@@ -47,10 +47,18 @@ export default api;
 export const uploadPriceFile = (price) => {
     const header = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data'
         }
     }
     api.post(getApiUrl() + 'technological-operations/upload_file/', price.file, header).then(res => {
         console.log(res.data)
     }).catch(err => console.log(err))
+}
+
+export const trySaveBodyDocument = (id, body) => {
+    api.patch(getApiUrl() + `remote/wiki/documents/${id}/save_body/`, {body: body}).then(res => {
+        console.log(res.data)
+    }).catch(err => {
+        console.log(err)
+    })
 }

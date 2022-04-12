@@ -66,6 +66,14 @@ const MainPage = (props) => {
     };
 
     useEffect(() => {
+        connect()
+        return () => {
+            webSocket?.close()
+            cleanup()
+        }
+    }, [])
+
+    useEffect(() => {
         let aList = listUrl
         if (props.user.is_admin || props.user.is_superuser) {
             aList = listAdminUrl
@@ -76,12 +84,7 @@ const MainPage = (props) => {
         } else {
             navigate(aList[0])
         }
-        connect()
-        return () => {
-            webSocket?.close()
-            cleanup()
-        }
-    }, [])
+    }, [location])
 
 
     const onSelectTab = (_, index) => {
