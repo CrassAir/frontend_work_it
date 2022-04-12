@@ -20,12 +20,12 @@ const WIkiDoc = ({document, user, tryGetDocument}) => {
         sunEditor.current = ref;
         sunEditor.current.disabled()
         sunEditor.current.toolbar.enable()
-        console.log(sunEditor.current.toolbar)
     };
 
     if (!document) {
         return <div/>
     }
+
 
     const drawer = () => {
         return <Drawer
@@ -40,7 +40,7 @@ const WIkiDoc = ({document, user, tryGetDocument}) => {
             destroyOnClose
             bodyStyle={{background: "#d3d3d3"}}
         >
-            <WIkiDocEdit document={document}/>
+            <WIkiDocEdit />
         </Drawer>
     }
 

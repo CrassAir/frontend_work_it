@@ -211,12 +211,12 @@ export const tryCreateDocument = (values) => {
 
 export const tryUpdateDocument = (id, values) => {
     return dispatch => {
-        dispatch(tryCreateDocumentStart());
+        dispatch({type: actionTypes.UPDATE_DOCUMENT_START});
         api.patch(getApiUrl() + `remote/wiki/documents/${id}/`, values).then(res => {
-                dispatch(tryCreateDocumentSuccess());
+                dispatch({type: actionTypes.UPDATE_DOCUMENT_SUCCESS, document: res.data});
             }
         ).catch(err => {
-            dispatch(tryCreateDocumentFail(err));
+            dispatch({type: actionTypes.UPDATE_DOCUMENT_FAIL, error: err});
         });
     }
 }

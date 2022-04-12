@@ -31,7 +31,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {cleanup} from "@testing-library/react";
 import SimpleBar from "simplebar-react";
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
@@ -64,10 +63,14 @@ const Tabel = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
 
     const [selectUser, setSelectUser] = useState(null)
+    let timerScroll, timerReview;
 
     useEffect(() => {
-        if (!localStorage.getItem('is_rating')) setTimeout(() => setVisibleReviewDialog(true), 15000)
-        return () => cleanup()
+        if (!localStorage.getItem('is_rating')) timerReview = setTimeout(() => setVisibleReviewDialog(true), 15000)
+        return () => {
+            clearTimeout(timerScroll)
+            clearTimeout(timerReview)
+        }
     }, [])
 
     useEffect(() => {
@@ -77,7 +80,7 @@ const Tabel = (props) => {
     }, [props.tabels])
 
     useEffect(() => {
-        setTimeout(() => document.getElementsByClassName('now')[0]?.scrollIntoView({
+        timerScroll = setTimeout(() => document.getElementsByClassName('now')[0]?.scrollIntoView({
             block: 'nearest',
             inline: "end",
             behavior: "smooth"

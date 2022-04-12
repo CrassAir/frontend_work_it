@@ -8,11 +8,7 @@ import {Form, Popover, Select, Space} from "antd";
 import moment from "moment";
 import Typography from "@mui/material/Typography";
 import {
-    deleteOrder,
-    editOrder,
-    editOrderProduct,
-    tryGetOrderProducts,
-    tryGetOrders
+    deleteOrder, editOrder, editOrderProduct, tryGetOrderProducts, tryGetOrders
 } from "../../store/action/ordersActions";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from "@mui/icons-material/Add";
@@ -43,6 +39,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import {tryPrintOrder} from "../../api/api";
 import {useParams} from "react-router";
 import {useNavigate} from 'react-router-dom';
+import Fade from 'react-reveal/Fade';
 
 
 const Orders = (props) => {
@@ -79,9 +76,7 @@ const Orders = (props) => {
     }, [edit, copy, created])
 
     const product_status = {
-        processed: 'Обрабатывается',
-        canceling: 'Снят с производства',
-        delivered: 'Доставлен',
+        processed: 'Обрабатывается', canceling: 'Снят с производства', delivered: 'Доставлен',
     }
 
     const order_status = {
@@ -184,8 +179,7 @@ const Orders = (props) => {
                     >На согласование</Button>
                 }
             }
-            return (
-                <Space direction={"horizontal"} className={'send_btn'}>
+            return (<Space direction={"horizontal"} className={'send_btn'}>
                     {coordBtn}
                     <IconButton
                         id="basic-button"
@@ -201,8 +195,7 @@ const Orders = (props) => {
                         id="basic-menu"
                         anchorEl={anchorEl}
                         transformOrigin={{
-                            vertical: 'center',
-                            horizontal: 'right',
+                            vertical: 'center', horizontal: 'right',
                         }}
                         open={open}
                         onClose={() => setAnchorEl(null)}
@@ -246,11 +239,9 @@ const Orders = (props) => {
                                     <DeleteIcon fontSize="small"/>
                                 </ListItemIcon>
                                 <ListItemText>Отменить</ListItemText>
-                            </MenuItem>
-                            : null}
+                            </MenuItem> : null}
                     </Menu>
-                </Space>
-            )
+                </Space>)
         }
 
         const actions = (prod) => {
@@ -320,8 +311,7 @@ const Orders = (props) => {
             return product_status[prod.actions[0].status]
         }
 
-        return (
-            <Paper className={'order_container'}>
+        return (<Paper className={'order_container'}>
                 <Space direction={"horizontal"} className={'title'}>
                     <Space direction={"vertical"}>
                         <Typography noWrap>{selectOrder.title}</Typography>
@@ -377,8 +367,7 @@ const Orders = (props) => {
                         </Table>
                     </SimpleBar>
                 </TableContainer>
-            </Paper>
-        )
+            </Paper>)
     }
 
     const searchInOrders = (e) => {
@@ -388,92 +377,89 @@ const Orders = (props) => {
         }, 500)
     }
 
-    return (
-        <div className={'main_tabel'}>
+    return (<div className={'main_tabel'}>
             <Splitter direction={SplitDirection.Horizontal}
                       gutterClassName="custom-gutter-horizontal"
                       draggerClassName="custom-dragger-horizontal"
                       initialSizes={initSplitter}
                       minWidths={[500, 500]}>
-                <Paper className={'paper'}>
-                    <SimpleBar style={{maxHeight: '100%'}}>
-                        <Space direction='horizontal' style={{margin: 10}}>
-                            <TextField
-                                label="Поиск"
-                                // variant="standard"
-                                onChange={searchInOrders}
-                                size={'small'}
-                                sx={{minWidth: 200}}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <SearchIcon/>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                fullWidth
-                            />
-                            <Select
-                                defaultValue={switchStatus}
-                                size={"large"}
-                                style={{minWidth: 150}}
-                                onSelect={(inx) => {
-                                    setSwitchStatus(inx)
-                                }}
-                            >
-                                {Object.keys(order_status).map(key => <Select.Option
-                                    key={key} value={key}>{order_status[key]}</Select.Option>)}
-                            </Select>
-                            <Button variant={'contained'} startIcon={<AddIcon/>} color={'success'}
-                                    onClick={() => {
-                                        setCreated(true)
-                                    }}
-                            >Создать</Button>
-                        </Space>
-                        <MenuList disableListWrap>
-                            {!props.orders ? null :
-                                props.orders.map(order => {
-                                    let className = 'empty'
-                                    if (order.actions[0].status === 'delivered') {
-                                        className = 'delivered'
-                                    }
-                                    if (order.actions[0].status === 'not_agreed') {
-                                        className = 'not_agreed'
-                                    }
-                                    if (order.actions[0].status === 'in_agreement') {
-                                        className = 'in_agreement'
-                                    }
-                                    if (switchStatus !== 'all') {
-                                        if (order.actions[0].status !== switchStatus) return null
-                                    }
-                                    if (searchValue) {
-                                        if (!order.products.some(val => val.name.toLowerCase().includes(searchValue)) &&
-                                            !order.creator_fio.toLowerCase().includes(searchValue)) return null
-                                    }
-                                    let order_id = `${order.id}`.padStart(6, '0')
-                                    let date_create = moment(order.date_create)
-                                    if (!order.products) return null
-                                    let deadline = moment(order.products[0]?.deadline)
-                                    order.products.forEach(val => {
-                                        if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)
-                                    })
-                                    order['title'] = `№${order_id}, ${order.creator_fio} от ${date_create.format('DD-MM-YYYY')} к ${deadline.format('DD-MM-YYYY')}`
-                                    return <MenuItem
-                                        className={className}
-                                        selected={order === selectOrder}
-                                        key={order.id}
-                                        onClick={() => navigate(`/order/${order.id.toString()}`, {replace: true})}>
-                                        <Typography noWrap>{order.title}</Typography>
-                                    </MenuItem>
-                                })
-                            }
-                        </MenuList>
-                    </SimpleBar>
-                </Paper>
+                <Fade left>
+                    <div style={{height: '100%'}}>
+                        <Paper className={'paper'}>
+                            <SimpleBar style={{maxHeight: '100%'}}>
+                                <Space direction='horizontal' style={{margin: 10}}>
+                                    <TextField
+                                        label="Поиск"
+                                        // variant="standard"
+                                        onChange={searchInOrders}
+                                        size={'small'}
+                                        sx={{minWidth: 200}}
+                                        InputProps={{
+                                            endAdornment: (<InputAdornment position="end">
+                                                    <SearchIcon/>
+                                                </InputAdornment>),
+                                        }}
+                                        fullWidth
+                                    />
+                                    <Select
+                                        defaultValue={switchStatus}
+                                        size={"large"}
+                                        style={{minWidth: 150}}
+                                        onSelect={(inx) => {
+                                            setSwitchStatus(inx)
+                                        }}
+                                    >
+                                        {Object.keys(order_status).map(key => <Select.Option
+                                            key={key} value={key}>{order_status[key]}</Select.Option>)}
+                                    </Select>
+                                    <Button variant={'contained'} startIcon={<AddIcon/>} color={'success'}
+                                            onClick={() => {
+                                                setCreated(true)
+                                            }}
+                                    >Создать</Button>
+                                </Space>
+                                <MenuList disableListWrap>
+                                    {!props.orders ? null : props.orders.map(order => {
+                                        let className = 'empty'
+                                        if (order.actions[0].status === 'delivered') {
+                                            className = 'delivered'
+                                        }
+                                        if (order.actions[0].status === 'not_agreed') {
+                                            className = 'not_agreed'
+                                        }
+                                        if (order.actions[0].status === 'in_agreement') {
+                                            className = 'in_agreement'
+                                        }
+                                        if (switchStatus !== 'all') {
+                                            if (order.actions[0].status !== switchStatus) return null
+                                        }
+                                        if (searchValue) {
+                                            if (!order.products.some(val => val.name.toLowerCase().includes(searchValue)) && !order.creator_fio.toLowerCase().includes(searchValue)) return null
+                                        }
+                                        let order_id = `${order.id}`.padStart(6, '0')
+                                        let date_create = moment(order.date_create)
+                                        if (!order.products) return null
+                                        let deadline = moment(order.products[0]?.deadline)
+                                        order.products.forEach(val => {
+                                            if (moment(deadline).isAfter(val.deadline)) deadline = moment(val.deadline)
+                                        })
+                                        order['title'] = `№${order_id}, ${order.creator_fio} от ${date_create.format('DD-MM-YYYY')} к ${deadline.format('DD-MM-YYYY')}`
+                                        return <MenuItem
+                                            className={className}
+                                            selected={order === selectOrder}
+                                            key={order.id}
+                                            onClick={() => navigate(`/order/${order.id.toString()}`, {replace: true})}>
+                                            <Typography noWrap>{order.title}</Typography>
+                                        </MenuItem>
+                                    })}
+                                </MenuList>
+                            </SimpleBar>
+                        </Paper>
+                    </div>
+                </Fade>
                 {generateTabel()}
             </Splitter>
-        </div>
-    )
+        </div>)
 }
 
 const mapStateToProps = (state) => ({
@@ -481,6 +467,7 @@ const mapStateToProps = (state) => ({
     orders: state.orders,
     orderProducts: state.orderProducts,
     products: state.products,
+    animOrd: state.animOrd,
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -23,6 +23,7 @@ const initialState = {
     orders: null,
     orderProducts: null,
     document: null,
+    animDoc: false,
 }
 
 //<editor-fold defaultstate="collapsed" desc="Account">
@@ -1177,6 +1178,27 @@ const createDocumentFail = (state, action) => {
     })
 }
 
+const updateDocumentStart = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: true,
+    })
+}
+
+const updateDocumentSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        document: action.document
+    })
+}
+
+const updateDocumentFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
+
 //</editor-fold >
 
 const reducer = (state = initialState, action) => {
@@ -1317,6 +1339,13 @@ const reducer = (state = initialState, action) => {
             return createDocumentSuccess(state, action);
         case actionTypes.CREATE_DOCUMENT_FAIL:
             return createDocumentFail(state, action);
+
+        case actionTypes.UPDATE_DOCUMENT_START:
+            return updateDocumentStart(state, action);
+        case actionTypes.UPDATE_DOCUMENT_SUCCESS:
+            return updateDocumentSuccess(state, action);
+        case actionTypes.UPDATE_DOCUMENT_FAIL:
+            return updateDocumentFail(state, action);
 
         //</editor-fold>
 

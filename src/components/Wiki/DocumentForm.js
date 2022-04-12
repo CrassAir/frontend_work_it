@@ -2,21 +2,21 @@ import React, {useEffect, useState} from 'react';
 import {Form, Input, Popconfirm, Select, Switch, TreeSelect} from 'antd';
 import {connect} from "react-redux";
 import Button from "@mui/material/Button";
-import {tryCreateDocument} from "../../store/action/wikiActions";
+import {tryCreateDocument, tryUpdateDocument} from "../../store/action/wikiActions";
 
-const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
+const DocumentForm = ({create, catalogs, document, close, tryCreateDocument, tryUpdateDocument}) => {
     const [form] = Form.useForm()
     const [inheritance, setInheritance] = useState(true)
-    const [access, setAccess] = useState(data.catalog.access)
-    const [accessEdit, setAccessEdit] = useState(data.catalog.access_edit)
+    const [access, setAccess] = useState(document.catalog.access)
+    const [accessEdit, setAccessEdit] = useState(document.catalog.access_edit)
 
-    const okText = data.create ? 'Создать' : 'Редактировать'
+    const okText = create ? 'Создать' : 'Редактировать'
 
     const initialValues = {
         inheritance: true,
-        name: data.document?.name,
-        ord: data.document?.ord ? data.document?.ord : 0,
-        catalog_id: data.catalog.id,
+        name: document.name,
+        ord: document.ord ? document.ord : 0,
+        catalog_id: document.catalog.id,
         access: access,
         access_edit: accessEdit,
         publish: document?.publish,
@@ -24,10 +24,10 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
 
     useEffect(() => {
         if (document) {
-            setInheritance(data.document?.inheritance)
-            setAccess(data.document?.inheritance ? data.catalog.access : data.document?.access)
-            setAccessEdit(data.document?.inheritance ? data.catalog.access_edit : data.document?.access_edit)
-            initialValues.inheritance = data.document?.inheritance
+            setInheritance(document?.inheritance)
+            setAccess(document?.inheritance ? document.catalog.access : document?.access)
+            setAccessEdit(document?.inheritance ? document.catalog.access_edit : document?.access_edit)
+            initialValues.inheritance = document?.inheritance
             form.setFieldsValue(initialValues)
         }
     }, [document])
@@ -35,11 +35,11 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
 
     useEffect(() => {
         if (inheritance) {
-            setAccess(data.catalog.access)
-            setAccessEdit(data.catalog.access_edit)
+            setAccess(document.catalog.access)
+            setAccessEdit(document.catalog.access_edit)
         } else {
-            setAccess(data.document?.access)
-            setAccessEdit(data.document?.access_edit)
+            setAccess(document?.access)
+            setAccessEdit(document?.access_edit)
         }
     }, [inheritance])
 
@@ -72,11 +72,10 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
     }
 
     const formFinish = values => {
-        if (data.create) {
-            console.log('create', values)
+        if (create) {
             tryCreateDocument(values)
         } else {
-            // tryUpdateCatalog(catalog.id, values)
+            tryUpdateDocument(document.id, values)
         }
         if (close) close()
     }
@@ -111,7 +110,7 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
             >
                 <Input type={'number'}/>
             </Form.Item>
-            <Form.Item hidden={data.create} name='publish' label="Опубликовать" valuePropName="checked">
+            <Form.Item hidden={create} name='publish' label="Опубликовать" valuePropName="checked">
                 <Switch/>
             </Form.Item>
             <Form.Item name='inheritance' label="Наследование прав" valuePropName="checked">
@@ -140,7 +139,7 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
             <Form.Item style={{margin: 0}}>
                 <Button style={{float: 'right'}} variant={'contained'} color={'success'}
                         type={'submit'}>{okText}</Button>
-                {!data.create ?
+                {!create ?
                     <Popconfirm title={'Вы уверены что хотите удалить каталог?'} okText={'Да'} cancelText={'Нет'}
                                 onConfirm={() => {
                                     // tryDeleteCatalog(catalog.id)
@@ -154,10 +153,12 @@ const DocumentForm = ({data, catalogs, document, close, tryCreateDocument}) => {
 }
 const mapStateToProps = (state) => ({
     catalogs: state.catalogs,
+    document: state.document,
 })
 
 const mapDispatchToProps = (dispatch) => ({
     tryCreateDocument: (values) => dispatch(tryCreateDocument(values)),
+    tryUpdateDocument: (id, values) => dispatch(tryUpdateDocument(id, values)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentForm)

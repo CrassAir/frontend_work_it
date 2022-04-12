@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import {SEOptionsEdit} from "./utils";
 import {trySaveBodyDocument} from "../../api/api";
 import DocumentForm from "./DocumentForm";
+import {connect} from "react-redux";
 
 
 const WIkiDocEdit = ({document}) => {
@@ -22,7 +23,8 @@ const WIkiDocEdit = ({document}) => {
     return (
         <div className={'main_sun'}>
             <Paper sx={{marginRight: '10px', padding: '10px', height: '100%'}}>
-                <DocumentForm data={{catalog: document.catalog, document: document, create: false}}/>
+                {/*<DocumentForm data={{catalog: document.catalog, document: document, create: false}}/>*/}
+                <DocumentForm create={false}/>
                 {/*<Button style={{float: 'right', margin: '5px'}} variant={'contained'} color={'success'}*/}
                 {/*>Опубликовать</Button>*/}
             </Paper>
@@ -47,4 +49,11 @@ const WIkiDocEdit = ({document}) => {
     )
 }
 
-export default WIkiDocEdit
+const mapStateToProps = (state) => ({
+    document: state.document, user: state.user,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WIkiDocEdit)

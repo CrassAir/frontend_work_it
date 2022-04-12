@@ -19,7 +19,6 @@ const WikiMenu = (props) => {
     // если нужно что бы каталоги были в строке запроса, но скорее всего нет
     const params = useParams()
     const navigate = useNavigate()
-    console.log(params)
     // const [catalogCollapse, setCatalogCollapse] = useState(new Set(params['*']?.split('/')))
 
     const [catalogCollapse, setCatalogCollapse] = useState(new Set([]))
@@ -62,7 +61,6 @@ const WikiMenu = (props) => {
         if (index === 0) {
             topViews = 0
         }
-        let selected = false
         let open = catalogCollapse.has(catalog.id.toString())
         let listCats = catalog.children.map((cat) => {
             let result;
