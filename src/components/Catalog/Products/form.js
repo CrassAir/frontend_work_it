@@ -17,7 +17,7 @@ const ProductsForm = (props) => {
 
     const [selectUnit, setSelectUnit] = useState(data?.unit)
 
-    const unit = ['Шт', 'Кг', 'г', 'л', 'м', 'м3', 'м2', 'уп']
+    const unit = ['Шт', 'Кг', 'г', 'л', 'см', 'м', 'м2', 'м3', 'уп']
 
     // const normFile = (e) => {
     //     console.log('Upload event:', e)

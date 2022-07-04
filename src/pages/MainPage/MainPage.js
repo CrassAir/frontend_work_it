@@ -10,7 +10,7 @@ import {getWsLiveDataUrl} from "../../api/urls";
 
 
 const MainPage = (props) => {
-    const listAdminUrl = ['calendar', 'catalog', 'row', 'tabel', 'order', 'wiki']
+    const listAdminUrl = ['calendar', 'catalog', 'row', 'tabel', 'order', 'wiki', 'new_order']
     const listUrl = ['tabel', 'order']
 
     const [tabVal, setTabVal] = useState(0)
@@ -113,6 +113,7 @@ const MainPage = (props) => {
                             <Tab label="Табель" index={3}/>
                             <Tab label="Заказы" index={4}/>
                             <Tab label="Вики" index={5}/>
+                            <Tab label="Новые заказы" index={6}/>
                         </Tabs>
                         <Button color="inherit" onClick={() => {
                             props.logout()

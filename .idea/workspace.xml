@@ -19,18 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="add WIkiDocEdit.js">
+    <list default="true" id="0038ecc5-82f6-4dd4-950b-d071c8fac003" name="Changes" comment="change Order.js and Tabel.js">
+      <change afterPath="$PROJECT_DIR$/src/components/NewOrder/OrderCalendar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NewOrder/OrderCalendar.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NewOrder/SteperCreate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Catalog.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Catalog/Products/form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Order/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabel/Tabel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/DocumentForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/DocumentForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/WIkiDoc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/WIkiDoc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/WIkiDocEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/WIkiDocEdit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Wiki/WikiMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/wikiActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/wikiActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/styles.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/styles.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +83,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="17.1.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Wiki" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/NewOrder" />
     <property name="list.type.of.created.stylesheet" value="Less" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
@@ -104,11 +102,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\frontend_work_it\src\components\NewOrder" />
       <recent name="C:\Projects\frontend_work_it\src\components\Wiki" />
       <recent name="C:\Projects\frontend_work_it\src\components" />
       <recent name="C:\Projects\frontend_work_it\src\components\Order" />
       <recent name="C:\Projects\frontend_work_it\src\store\action\catalogActions" />
-      <recent name="C:\Projects\frontend_work_it\src\components\Catalog\Products" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Projects\frontend_work_it\src\components\Catalog\TechnologicalOperations" />
@@ -170,7 +168,17 @@
       <workItem from="1647866152091" duration="619000" />
       <workItem from="1648619439438" duration="96000" />
       <workItem from="1648623944292" duration="108000" />
-      <workItem from="1649051600499" duration="130784000" />
+      <workItem from="1649051600499" duration="132214000" />
+      <workItem from="1649840062747" duration="461000" />
+      <workItem from="1649995948610" duration="314000" />
+      <workItem from="1649998476508" duration="1193000" />
+      <workItem from="1651205176685" duration="2046000" />
+      <workItem from="1651827070985" duration="75000" />
+      <workItem from="1652258888827" duration="3000" />
+      <workItem from="1652872483200" duration="20000" />
+      <workItem from="1653043958503" duration="8000" />
+      <workItem from="1654154204224" duration="205000" />
+      <workItem from="1656908143770" duration="10293000" />
     </task>
     <task id="LOCAL-00001" summary="change row">
       <created>1638158952020</created>
@@ -473,7 +481,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649756679887</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="change Order.js and Tabel.js">
+      <created>1649768249643</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1649768249643</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,7 +506,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add opertions" />
     <MESSAGE value="many fix" />
     <MESSAGE value="add vegetationPhases" />
     <MESSAGE value="change url logics, change Tabel.js" />
@@ -516,7 +530,8 @@
     <MESSAGE value="add wikiMenu update catalog" />
     <MESSAGE value="fix CatalogForm.js" />
     <MESSAGE value="add WIkiDocEdit.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="add WIkiDocEdit.js" />
+    <MESSAGE value="change Order.js and Tabel.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="change Order.js and Tabel.js" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

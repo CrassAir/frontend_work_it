@@ -117,7 +117,7 @@ const Orders = (props) => {
         const button = () => {
             let coordBtn
             if (selectOrder.coordinator_id === props.user.username) {
-                if (selectOrder.actions[0].status === 'in_agreement') {
+                if (['in_agreement', 'agreed', 'not_agreed'].includes(selectOrder.actions[0].status)) {
                     coordBtn = <ButtonGroup variant="contained" size="small">
                         <Button startIcon={<CheckIcon/>}
                                 color={'success'}
@@ -132,15 +132,6 @@ const Orders = (props) => {
                                 }}
                         >Отклонить</Button>
                     </ButtonGroup>
-                }
-                if (selectOrder.actions[0].status === 'not_agreed') {
-                    coordBtn = <Button variant={'contained'} startIcon={<CheckIcon/>}
-                                       color={'success'}
-                                       size={'small'}
-                                       onClick={() => {
-                                           props.editOrder(selectOrder.id, {action: 'agreed'})
-                                       }}
-                    >Согласовать</Button>
                 }
             }
             if (selectOrder.executor_id === props.user.username && selectOrder.actions[0].status === 'agreed') {

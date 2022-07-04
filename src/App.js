@@ -15,6 +15,7 @@ import {SnackbarProvider} from "notistack";
 import Catalog from "./components/Catalog/Catalog";
 import Order from "./components/Order/Order";
 import Wiki from "./components/Wiki/Wiki";
+import OrderCalendar from "./components/NewOrder/OrderCalendar";
 
 
 const App = (props) => {
@@ -62,6 +63,9 @@ const App = (props) => {
                         <Route path="tabel" element={<Tabel/>}/>
                         <Route path="order" element={<Order/>}>
                             <Route path=":orderId" element={<Order/>}/>
+                        </Route>
+                        <Route path="new_order" element={<OrderCalendar/>}>
+                            <Route path=":orderId" element={<OrderCalendar/>}/>
                         </Route>
                         <Route path="wiki" element={<Wiki/>}>
                             <Route path=":docId" element={<Wiki/>}/>
